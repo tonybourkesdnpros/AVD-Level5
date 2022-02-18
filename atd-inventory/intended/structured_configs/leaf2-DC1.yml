@@ -1,6 +1,6 @@
 router_bgp:
   as: '65101'
-  router_id: 192.0.255.4
+  router_id: 192.0.200.4
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -41,6 +41,30 @@ router_bgp:
     10.255.251.0:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: leaf1-DC1
+    172.31.255.6:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: spine1-DC1_Ethernet3
+    172.31.255.8:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: spine2-DC1_Ethernet3
+    172.31.255.10:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: spine3-DC1_Ethernet3
+    192.0.200.1:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: spine1-DC1
+      remote_as: '65001'
+    192.0.200.2:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: spine2-DC1
+      remote_as: '65001'
+    192.0.200.3:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: spine3-DC1
+      remote_as: '65001'
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -50,8 +74,8 @@ router_bgp:
         activate: true
   vrfs:
     Tenant_A_OP_Zone:
-      router_id: 192.0.255.4
-      rd: 192.0.255.4:10
+      router_id: 192.0.200.4
+      rd: 192.0.200.4:10
       route_targets:
         import:
           evpn:
@@ -66,7 +90,7 @@ router_bgp:
       - connected
   vlan_aware_bundles:
     Tenant_A_OP_Zone:
-      rd: 192.0.255.4:10
+      rd: 192.0.200.4:10
       route_targets:
         both:
         - '10:10'
@@ -75,7 +99,7 @@ router_bgp:
       vlan: 110
     Tenant_A_VMOTION:
       tenant: Tenant_A
-      rd: 192.0.255.4:55160
+      rd: 192.0.200.4:55160
       route_targets:
         both:
         - 55160:55160
@@ -219,6 +243,33 @@ ethernet_interfaces:
     channel_group:
       id: 1
       mode: active
+  Ethernet3:
+    peer: spine1-DC1
+    peer_interface: Ethernet3
+    peer_type: spine
+    description: P2P_LINK_TO_SPINE1-DC1_Ethernet3
+    mtu: 1500
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.7/31
+  Ethernet4:
+    peer: spine2-DC1
+    peer_interface: Ethernet3
+    peer_type: spine
+    description: P2P_LINK_TO_SPINE2-DC1_Ethernet3
+    mtu: 1500
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.9/31
+  Ethernet5:
+    peer: spine3-DC1
+    peer_interface: Ethernet3
+    peer_type: spine
+    description: P2P_LINK_TO_SPINE3-DC1_Ethernet3
+    mtu: 1500
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.11/31
 mlag_configuration:
   domain_id: pod1
   local_interface: Vlan4094
@@ -245,7 +296,7 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.0.255.4/32
+    ip_address: 192.0.200.4/32
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
@@ -259,7 +310,7 @@ prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
       10:
-        action: permit 192.0.255.0/24 eq 32
+        action: permit 192.0.200.0/24 eq 32
       20:
         action: permit 192.0.254.0/24 eq 32
 router_bfd:
