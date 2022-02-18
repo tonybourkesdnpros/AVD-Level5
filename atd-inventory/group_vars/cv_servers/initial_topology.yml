@@ -1,29 +1,50 @@
 ---
 CVP_DEVICES_INIT:
-  - fqdn: spine1
+  - fqdn: spine1-DC1
     parentContainerName: STAGING
     configlets:
-      - BaseIPv4_Spine1
-  - fqdn: spine2
+      - 'spine1-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: spine2-DC1
     parentContainerName: STAGING
     configlets:
-      - BaseIPv4_Spine2
-  - fqdn: leaf1
+      - 'spine2-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: spine3-DC1
     parentContainerName: STAGING
     configlets:
-      - BaseIPv4_Leaf1
-  - fqdn: leaf2
+      - 'spine3-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: leaf1-DC1
     parentContainerName: STAGING
     configlets:
-      - BaseIPv4_Leaf2
-  - fqdn: leaf3
+      - 'leaf1-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: leaf2-DC1
     parentContainerName: STAGING
     configlets:
-      - BaseIPv4_Leaf3
-  - fqdn: leaf4
+      - 'leaf2-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: leaf3-DC1
     parentContainerName: STAGING
     configlets:
-      - BaseIPv4_Leaf4
+      - 'leaf3-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: leaf4-DC1
+    parentContainerName: STAGING
+    configlets:
+      - 'leaf4-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: borderleaf1-DC1
+    parentContainerName: STAGING
+    configlets:
+      - 'borderleaf1-DC1-BASE'
+      - 'ATD-INFRA'
+  - fqdn: borderleaf2-DC1
+    parentContainerName: STAGING
+    configlets:
+      - 'borderleaf2-DC1-BASE'
+      - 'ATD-INFRA'
 
 CVP_CONTAINERS_INIT:
   STAGING:
@@ -34,7 +55,7 @@ CVP_CONTAINERS_INIT:
     parentContainerName: Tenant
 
 CVP_CONTAINERS_DELETE:
-  Leaf:
-    parentContainerName: Tenant
-  Spine:
-    parentContainerName: Tenant
+  Leaf-DC1:
+    parentContainerName: DC1
+  Spine-DC1:
+    parentContainerName: DC1
