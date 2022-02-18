@@ -99,15 +99,9 @@ Verify the fabric is configured
     show ip bgp summary
     show bgp evpn summary
 
+The BGP sessions may not be in Established, but that's OK. The key is the configuration was pushed from AVD. 
 
-### Run the other playbooks
-
-
-
-
-
-
-# Execute Tasks in CVP manually
+## Run the other playbooks
 
 # Run audit playbook to validate Fabric states
     ansible-playbook playbooks/atd-validate-states.yml
@@ -116,6 +110,6 @@ Verify the fabric is configured
     ansible-playbook playbooks/atd-snapshot.yml
 
 
-## License
+### License
 
 Project is published under [Apache License]().
