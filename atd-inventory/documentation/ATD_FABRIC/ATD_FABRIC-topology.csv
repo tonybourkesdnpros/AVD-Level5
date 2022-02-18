@@ -1,0 +1,9 @@
+Node Type,Node,Node Interface,Peer Type,Peer,Peer Interface
+l3leaf,leaf1-DC1,Ethernet1,mlag_peer,leaf2-DC1,Ethernet1
+l3leaf,leaf1-DC1,Ethernet2,mlag_peer,leaf2-DC1,Ethernet2
+l3leaf,leaf2-DC1,Ethernet1,mlag_peer,leaf1-DC1,Ethernet1
+l3leaf,leaf2-DC1,Ethernet2,mlag_peer,leaf1-DC1,Ethernet2
+l3leaf,leaf3-DC1,Ethernet1,mlag_peer,leaf4-DC1,Ethernet1
+l3leaf,leaf3-DC1,Ethernet2,mlag_peer,leaf4-DC1,Ethernet2
+l3leaf,leaf4-DC1,Ethernet1,mlag_peer,leaf3-DC1,Ethernet1
+l3leaf,leaf4-DC1,Ethernet2,mlag_peer,leaf3-DC1,Ethernet2
