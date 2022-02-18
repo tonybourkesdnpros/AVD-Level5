@@ -83,7 +83,7 @@ You can try changing the loopback_ipv4_pool parameter in atd-inventory/group_var
 
 Rerun the configuration generation
 
-    ansible-playbook playbooks/atd-fabric-deploy.yml --tags=generate
+    ansible-playbook playbooks/atd-fabric-deploy.yml --tags=build
 
 This will re-create the configuration files. Note that loopback0 has changed to the 192.0.200.0/24 address space. 
 
