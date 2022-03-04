@@ -28,9 +28,6 @@ The DC1 portion of the Level 5 lab topology consists of 3 Spines, 6 Leafs and 2 
 
 Make sure to reset your lab to the default configlet assignments (BASE configlets and ATD-INFRA). You can use the ATD-Reset-Level5 repo to do this: https://github.com/tonybourkesdnpros/ATD-Reset-Level5
 
-### Setup your git global config (optional)
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
 
 ### Clone this Repository
 Make sure you're in the persist directory, then clone this repository:
@@ -53,17 +50,6 @@ edit credentials in vscode: atd-inventory/inventory.yml
 
 (put your lab password in for ansible_password and ansible_ssh_pass)
 
-### Run Playbook to Prepare CloudVision for AVD
-
-The atd-prepare-lab.yml playbook will move leafs and spines in DC1 into a STAGING container to simulate switches just being discovered through ZTP
-
-    ansible-playbook playbooks/atd-prepare-lab.yml
-    
-(This will likely generate an error, that's OK, you can continue)
-
-### Execute Tasks in CVP manually
-
-The playbook will create tasks, but not a change control, so create a change control with the open tasks and execute the change control. 
 
 ### Run Playbook to Generate Configuration files
 
