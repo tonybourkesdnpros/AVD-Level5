@@ -61,17 +61,17 @@ View the generated configuration files:
 
     ls atd-inventory/intended/configs
 
-Look at leaf1-DC1.cfg, and note the loopback0 IP address. It should be in the 192.0.255.0/24 address space (as a /32). 
+Look at leaf1-DC1.cfg, and note the loopback0 IP address. It should be in the 192.0.200.0/24 address space (as a /32). 
 
-You can try changing the loopback_ipv4_pool parameter in atd-inventory/group_vars/ATD_FABRIC.yml from 192.0.255.0/24 to 192.0.200.0/24
+You can try changing the loopback_ipv4_pool parameter in atd-inventory/group_vars/ATD_FABRIC.yml from 192.0.200.0/24 to 192.198.200.0/24
 
-    loopback_ipv4_pool: 192.0.200.0/24
+    loopback_ipv4_pool: 192.168.200.0/24
 
 Rerun the configuration generation
 
     ansible-playbook playbooks/atd-fabric-deploy.yml --tags=build
 
-This will re-create the configuration files. Note that loopback0 has changed to the 192.0.200.0/24 address space. 
+This will re-create the configuration files. Note that loopback0 has changed to the 192.198.200.0/24 address space. 
 
 # Build the Fabric
 
