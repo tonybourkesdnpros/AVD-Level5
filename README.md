@@ -34,13 +34,6 @@ Make sure you're in the persist directory, then clone this repository:
 
     git clone https://github.com/tonybourkesdnpros/AVD-Level5
 
-### Install Components
-You will need to run these commands every time your lab environment starts up (most of the Linux system isn't persistent across reboots)
-
-    ansible-galaxy collection install arista.eos
-    ansible-galaxy collection install arista.cvp
-    ansible-galaxy collection install arista.avd
-    pip3 install cvprac --upgrade
 
 # Work with Playbooks
 
