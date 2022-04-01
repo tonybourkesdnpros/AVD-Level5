@@ -30,13 +30,13 @@ spine:
     mlag: false
   nodes:
     spine1-DC1:
-      id: 1
+      id: 11
       mgmt_ip: 192.168.0.11/24
     spine2-DC1:
-      id: 2
+      id: 12
       mgmt_ip: 192.168.0.12/24
     spine3-DC1:
-      id: 3
+      id: 13
       mgmt_ip: 192.168.0.13/24
 # Leaf switch groups
 # A maximum of two nodes can form a leaf group
@@ -48,7 +48,7 @@ l3leaf:
     loopback_ipv4_pool: 192.0.200.0/24
     loopback_ipv4_offset: 2
     vtep_loopback_ipv4_pool: 192.0.254.0/24
-    uplink_interfaces: [Ethernet3, Ethernet4, Ethernet5]
+    uplink_interfaces: [Ethernet3, Ethernet4, Ethernet5, Ethernet6, Ethernet7]
     uplink_switches: [spine1-DC1, spine2-DC1, spine3-DC1]
     uplink_ipv4_pool: 172.31.255.0/24
     mlag_interfaces: [Ethernet1, Ethernet2]
@@ -85,7 +85,17 @@ l3leaf:
           id: 4
           mgmt_ip: 192.168.0.24/24
           uplink_switch_interfaces: [Ethernet5, Ethernet5, Ethernet5]
-
+    pod3:
+      bgp_as: 65103
+      nodes:
+        borderleaf1-DC1:
+          id: 5
+          mgmt_ip: 192.168.0.25/24
+          uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
+        borderleaf2-DC1:
+          id: 6
+          mgmt_ip: 192.168.0.26/24
+          uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]
 #### Override for vEOS Lab Caveats ####
 
 # Disable update wait-for-convergence and update wait-for-install,

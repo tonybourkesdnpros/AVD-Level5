@@ -1,5 +1,13 @@
 ---
 CVP_DEVICES:
+  - fqdn: borderleaf1-DC1
+    parentContainerName: pod3
+    configlets:
+      - AVD_borderleaf1-DC1
+  - fqdn: borderleaf2-DC1
+    parentContainerName: pod3
+    configlets:
+      - AVD_borderleaf2-DC1
   - fqdn: leaf1-DC1
     parentContainerName: pod1
     configlets:
@@ -42,4 +50,6 @@ CVP_CONTAINERS:
   pod1:
     parentContainerName: ATD_LEAFS
   pod2:
+    parentContainerName: ATD_LEAFS
+  pod3:
     parentContainerName: ATD_LEAFS

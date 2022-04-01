@@ -53,15 +53,15 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
       description: spine3-DC1_Ethernet5
-    192.0.200.1:
+    192.0.200.11:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine1-DC1
       remote_as: '65001'
-    192.0.200.2:
+    192.0.200.12:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine2-DC1
       remote_as: '65001'
-    192.0.200.3:
+    192.0.200.13:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine3-DC1
       remote_as: '65001'
@@ -284,8 +284,7 @@ route_maps:
         type: permit
         set:
         - origin incomplete
-        description: Make routes learned over MLAG Peer-link less preferred on spines
-          to ensure optimal routing
+        description: Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
   RM-CONN-2-BGP:
     sequence_numbers:
       10:

@@ -1,7 +1,6 @@
 # ATD_FABRIC
 
 # Table of Contents
-<!-- toc -->
 
 - [Fabric Switches and Management IP](#fabric-switches-and-management-ip)
   - [Fabric Switches with inband Management IP](#fabric-switches-with-inband-management-ip)
@@ -14,11 +13,12 @@
   - [VTEP Loopback VXLAN Tunnel Source Interfaces (VTEPs Only)](#vtep-loopback-vxlan-tunnel-source-interfaces-vteps-only)
   - [VTEP Loopback Node allocation](#vtep-loopback-node-allocation)
 
-<!-- toc -->
 # Fabric Switches and Management IP
 
 | POD | Type | Node | Management IP | Platform | Provisioned in CloudVision |
 | --- | ---- | ---- | ------------- | -------- | -------------------------- |
+| ATD_FABRIC | l3leaf | borderleaf1-DC1 | 192.168.0.25/24 | cEOS-LAB | Provisioned |
+| ATD_FABRIC | l3leaf | borderleaf2-DC1 | 192.168.0.26/24 | cEOS-LAB | Provisioned |
 | ATD_FABRIC | l3leaf | leaf1-DC1 | 192.168.0.21/24 | cEOS-LAB | Provisioned |
 | ATD_FABRIC | l3leaf | leaf2-DC1 | 192.168.0.22/24 | cEOS-LAB | Provisioned |
 | ATD_FABRIC | l3leaf | leaf3-DC1 | 192.168.0.23/24 | cEOS-LAB | Provisioned |
@@ -37,6 +37,14 @@
 
 | Type | Node | Node Interface | Peer Type | Peer Node | Peer Interface |
 | ---- | ---- | -------------- | --------- | ----------| -------------- |
+| l3leaf | borderleaf1-DC1 | Ethernet1 | mlag_peer | borderleaf2-DC1 | Ethernet1 |
+| l3leaf | borderleaf1-DC1 | Ethernet2 | mlag_peer | borderleaf2-DC1 | Ethernet2 |
+| l3leaf | borderleaf1-DC1 | Ethernet3 | spine | spine1-DC1 | Ethernet6 |
+| l3leaf | borderleaf1-DC1 | Ethernet4 | spine | spine2-DC1 | Ethernet6 |
+| l3leaf | borderleaf1-DC1 | Ethernet5 | spine | spine3-DC1 | Ethernet6 |
+| l3leaf | borderleaf2-DC1 | Ethernet3 | spine | spine1-DC1 | Ethernet7 |
+| l3leaf | borderleaf2-DC1 | Ethernet4 | spine | spine2-DC1 | Ethernet7 |
+| l3leaf | borderleaf2-DC1 | Ethernet5 | spine | spine3-DC1 | Ethernet7 |
 | l3leaf | leaf1-DC1 | Ethernet1 | mlag_peer | leaf2-DC1 | Ethernet1 |
 | l3leaf | leaf1-DC1 | Ethernet2 | mlag_peer | leaf2-DC1 | Ethernet2 |
 | l3leaf | leaf1-DC1 | Ethernet3 | spine | spine1-DC1 | Ethernet2 |
@@ -60,12 +68,18 @@
 
 | Uplink IPv4 Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ---------------- | ------------------- | ------------------ | ------------------ |
-| 172.31.255.0/24 | 256 | 24 | 9.38 % |
+| 172.31.255.0/24 | 256 | 36 | 14.07 % |
 
 ## Point-To-Point Links Node Allocation
 
 | Node | Node Interface | Node IP Address | Peer Node | Peer Interface | Peer IP Address |
 | ---- | -------------- | --------------- | --------- | -------------- | --------------- |
+| borderleaf1-DC1 | Ethernet3 | 172.31.255.25/31 | spine1-DC1 | Ethernet6 | 172.31.255.24/31 |
+| borderleaf1-DC1 | Ethernet4 | 172.31.255.27/31 | spine2-DC1 | Ethernet6 | 172.31.255.26/31 |
+| borderleaf1-DC1 | Ethernet5 | 172.31.255.29/31 | spine3-DC1 | Ethernet6 | 172.31.255.28/31 |
+| borderleaf2-DC1 | Ethernet3 | 172.31.255.31/31 | spine1-DC1 | Ethernet7 | 172.31.255.30/31 |
+| borderleaf2-DC1 | Ethernet4 | 172.31.255.33/31 | spine2-DC1 | Ethernet7 | 172.31.255.32/31 |
+| borderleaf2-DC1 | Ethernet5 | 172.31.255.35/31 | spine3-DC1 | Ethernet7 | 172.31.255.34/31 |
 | leaf1-DC1 | Ethernet3 | 172.31.255.1/31 | spine1-DC1 | Ethernet2 | 172.31.255.0/31 |
 | leaf1-DC1 | Ethernet4 | 172.31.255.3/31 | spine2-DC1 | Ethernet2 | 172.31.255.2/31 |
 | leaf1-DC1 | Ethernet5 | 172.31.255.5/31 | spine3-DC1 | Ethernet2 | 172.31.255.4/31 |
@@ -83,30 +97,34 @@
 
 | Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------- | ------------------- | ------------------ | ------------------ |
-| 192.0.200.0/24 | 256 | 7 | 2.74 % |
+| 192.0.200.0/24 | 256 | 9 | 3.52 % |
 
 ## Loopback0 Interfaces Node Allocation
 
 | POD | Node | Loopback0 |
 | --- | ---- | --------- |
+| ATD_FABRIC | borderleaf1-DC1 | 192.0.200.7/32 |
+| ATD_FABRIC | borderleaf2-DC1 | 192.0.200.8/32 |
 | ATD_FABRIC | leaf1-DC1 | 192.0.200.3/32 |
 | ATD_FABRIC | leaf2-DC1 | 192.0.200.4/32 |
 | ATD_FABRIC | leaf3-DC1 | 192.0.200.5/32 |
 | ATD_FABRIC | leaf4-DC1 | 192.0.200.6/32 |
-| ATD_FABRIC | spine1-DC1 | 192.0.200.1/32 |
-| ATD_FABRIC | spine2-DC1 | 192.0.200.2/32 |
-| ATD_FABRIC | spine3-DC1 | 192.0.200.3/32 |
+| ATD_FABRIC | spine1-DC1 | 192.0.200.11/32 |
+| ATD_FABRIC | spine2-DC1 | 192.0.200.12/32 |
+| ATD_FABRIC | spine3-DC1 | 192.0.200.13/32 |
 
 ## VTEP Loopback VXLAN Tunnel Source Interfaces (VTEPs Only)
 
 | VTEP Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | --------------------- | ------------------- | ------------------ | ------------------ |
-| 192.0.254.0/24 | 256 | 4 | 1.57 % |
+| 192.0.254.0/24 | 256 | 6 | 2.35 % |
 
 ## VTEP Loopback Node allocation
 
 | POD | Node | Loopback1 |
 | --- | ---- | --------- |
+| ATD_FABRIC | borderleaf1-DC1 | 192.0.254.7/32 |
+| ATD_FABRIC | borderleaf2-DC1 | 192.0.254.7/32 |
 | ATD_FABRIC | leaf1-DC1 | 192.0.254.3/32 |
 | ATD_FABRIC | leaf2-DC1 | 192.0.254.3/32 |
 | ATD_FABRIC | leaf3-DC1 | 192.0.254.5/32 |

@@ -1,6 +1,5 @@
 # leaf3-DC1
 # Table of Contents
-<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
@@ -54,7 +53,6 @@
   - [Virtual Source NAT Configuration](#virtual-source-nat-configuration)
 - [Quality Of Service](#quality-of-service)
 
-<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -116,15 +114,14 @@ ip name-server vrf default 192.168.2.1
 ### Management API HTTP Summary
 
 | HTTP | HTTPS |
-| ---------- | ---------- |
-| default | true |
+| ---- | ----- |
+| False | True |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | default | - | - |
-
 
 ### Management API HTTP Configuration
 
@@ -242,7 +239,7 @@ STP mode: **mstp**
 
 ### Global Spanning-Tree Settings
 
-Spanning Tree disabled for VLANs: **4093-4094**
+- Spanning Tree disabled for VLANs: **4093-4094**
 
 ## Spanning Tree Device Configuration
 
@@ -484,24 +481,24 @@ interface Vlan4094
 
 ### VXLAN Interface Summary
 
-#### Source Interface: Loopback1
+| Setting | Value |
+| ------- | ----- |
+| Source Interface | Loopback1 |
+| UDP port | 4789 |
+| EVPN MLAG Shared Router MAC | mlag-system-id |
 
-#### UDP port: 4789
+#### VLAN to VNI, Flood List and Multicast Group Mappings
 
-#### EVPN MLAG Shared Router MAC : mlag-system-id
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 110 | 10110 | - | - |
+| 160 | 55160 | - | - |
 
-#### VLAN to VNI and Flood List Mappings
+#### VRF to VNI and Multicast Group Mappings
 
-| VLAN | VNI | Flood List |
-| ---- | --- | ---------- |
-| 110 | 10110 | - |
-| 160 | 55160 | - |
-
-#### VRF to VNI Mappings
-
-| VLAN | VNI |
-| ---- | --- |
-| Tenant_A_OP_Zone | 10 |
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| Tenant_A_OP_Zone | 10 | - |
 
 ### VXLAN Interface Device Configuration
 
@@ -546,7 +543,8 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true|| default | false |
+| default | true |
+| default | false |
 | Tenant_A_OP_Zone | true |
 
 ### IP Routing Device Configuration
@@ -562,9 +560,9 @@ ip routing vrf Tenant_A_OP_Zone
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false || default | false |
+| default | false |
+| default | false |
 | Tenant_A_OP_Zone | false |
-
 
 ## Static Routes
 
@@ -605,7 +603,7 @@ ip route 0.0.0.0/0 10.255.0.1
 | -------- | ----- |
 | Address Family | evpn |
 | Source | Loopback0 |
-| Bfd | true |
+| BFD | True |
 | Ebgp multihop | 3 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
@@ -630,29 +628,33 @@ ip route 0.0.0.0/0 10.255.0.1
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Send-community | Maximum-routes |
-| -------- | --------- | --- | -------------- | -------------- |
-| 10.255.251.5 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.255.12 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.14 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.16 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 192.0.200.1 | 65001 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.0.200.2 | 65001 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.0.200.3 | 65001 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 10.255.251.5 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Tenant_A_OP_Zone | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD |
+| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- |
+| 10.255.251.5 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
+| 172.31.255.12 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.14 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.16 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 192.0.200.11 | 65001 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.0.200.12 | 65001 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.0.200.13 | 65001 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 10.255.251.5 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Tenant_A_OP_Zone | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
 
 ### Router BGP EVPN Address Family
 
-#### Router BGP EVPN MAC-VRFs
+#### EVPN Peer Groups
 
-##### VLAN aware bundles
+| Peer Group | Activate |
+| ---------- | -------- |
+| EVPN-OVERLAY-PEERS | True |
+
+### Router BGP VLAN Aware Bundles
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | Tenant_A_OP_Zone | 192.0.200.5:10 | 10:10 | - | - | learned | 110 |
 | Tenant_A_VMOTION | 192.0.200.5:55160 | 55160:55160 | - | - | learned | 160 |
 
-#### Router BGP EVPN VRFs
+### Router BGP VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
@@ -698,15 +700,15 @@ router bgp 65102
    neighbor 172.31.255.16 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.16 remote-as 65001
    neighbor 172.31.255.16 description spine3-DC1_Ethernet4
-   neighbor 192.0.200.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.200.1 remote-as 65001
-   neighbor 192.0.200.1 description spine1-DC1
-   neighbor 192.0.200.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.200.2 remote-as 65001
-   neighbor 192.0.200.2 description spine2-DC1
-   neighbor 192.0.200.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.200.3 remote-as 65001
-   neighbor 192.0.200.3 description spine3-DC1
+   neighbor 192.0.200.11 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.0.200.11 remote-as 65001
+   neighbor 192.0.200.11 description spine1-DC1
+   neighbor 192.0.200.12 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.0.200.12 remote-as 65001
+   neighbor 192.0.200.12 description spine2-DC1
+   neighbor 192.0.200.13 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.0.200.13 remote-as 65001
+   neighbor 192.0.200.13 description spine3-DC1
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle Tenant_A_OP_Zone
@@ -748,7 +750,7 @@ router bgp 65102
 | -------- | ---------- | ---------- |
 | 1200 | 1200 | 3 |
 
-### Router BFD Multihop Device Configuration
+### Router BFD Device Configuration
 
 ```eos
 !
@@ -762,8 +764,9 @@ router bfd
 
 ### IP IGMP Snooping Summary
 
-IGMP snooping is globally enabled.
-
+| IGMP Snooping | Fast Leave | Interface Restart Query | Proxy | Restart Query Interval | Robustness Variable |
+| ------------- | ---------- | ----------------------- | ----- | ---------------------- | ------------------- |
+| Enabled | - | - | - | - | - |
 
 ### IP IGMP Snooping Device Configuration
 

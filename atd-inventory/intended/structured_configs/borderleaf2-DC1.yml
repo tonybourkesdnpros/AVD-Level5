@@ -1,6 +1,6 @@
 router_bgp:
-  as: '65102'
-  router_id: 192.0.200.5
+  as: '65103'
+  router_id: 192.0.200.8
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -10,7 +10,7 @@ router_bgp:
   peer_groups:
     MLAG-IPv4-UNDERLAY-PEER:
       type: ipv4
-      remote_as: '65102'
+      remote_as: '65103'
       next_hop_self: true
       password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
@@ -38,21 +38,21 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   neighbors:
-    10.255.251.5:
+    10.255.251.8:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
-      description: leaf4-DC1
-    172.31.255.12:
+      description: borderleaf1-DC1
+    172.31.255.30:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: spine1-DC1_Ethernet4
-    172.31.255.14:
+      description: spine1-DC1_Ethernet7
+    172.31.255.32:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: spine2-DC1_Ethernet4
-    172.31.255.16:
+      description: spine2-DC1_Ethernet7
+    172.31.255.34:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: spine3-DC1_Ethernet4
+      description: spine3-DC1_Ethernet7
     192.0.200.11:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine1-DC1
@@ -74,8 +74,8 @@ router_bgp:
         activate: true
   vrfs:
     Tenant_A_OP_Zone:
-      router_id: 192.0.200.5
-      rd: 192.0.200.5:10
+      router_id: 192.0.200.8
+      rd: 192.0.200.8:10
       route_targets:
         import:
           evpn:
@@ -84,13 +84,13 @@ router_bgp:
           evpn:
           - '10:10'
       neighbors:
-        10.255.251.5:
+        10.255.251.8:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
   vlan_aware_bundles:
     Tenant_A_OP_Zone:
-      rd: 192.0.200.5:10
+      rd: 192.0.200.8:10
       route_targets:
         both:
         - '10:10'
@@ -99,7 +99,7 @@ router_bgp:
       vlan: 110
     Tenant_A_VMOTION:
       tenant: Tenant_A
-      rd: 192.0.200.5:55160
+      rd: 192.0.200.8:55160
       route_targets:
         both:
         - 55160:55160
@@ -155,7 +155,7 @@ management_interfaces:
     description: oob_management
     shutdown: false
     vrf: default
-    ip_address: 192.168.0.23/24
+    ip_address: 192.168.0.26/24
     gateway: 10.255.0.1
     type: oob
 management_api_http:
@@ -188,12 +188,12 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 10.255.251.4/31
+    ip_address: 10.255.251.9/31
     mtu: 1500
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
-    ip_address: 10.255.252.4/31
+    ip_address: 10.255.252.9/31
     no_autostate: true
     mtu: 1500
   Vlan110:
@@ -210,11 +210,11 @@ vlan_interfaces:
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone'
     vrf: Tenant_A_OP_Zone
-    ip_address: 10.255.251.4/31
+    ip_address: 10.255.251.9/31
     mtu: 1500
 port_channel_interfaces:
   Port-Channel1:
-    description: MLAG_PEER_leaf4-DC1_Po1
+    description: MLAG_PEER_borderleaf1-DC1_Po1
     type: switched
     shutdown: false
     vlans: 2-4094
@@ -224,20 +224,20 @@ port_channel_interfaces:
     - MLAG
 ethernet_interfaces:
   Ethernet1:
-    peer: leaf4-DC1
+    peer: borderleaf1-DC1
     peer_interface: Ethernet1
     peer_type: mlag_peer
-    description: MLAG_PEER_leaf4-DC1_Ethernet1
+    description: MLAG_PEER_borderleaf1-DC1_Ethernet1
     type: switched
     shutdown: false
     channel_group:
       id: 1
       mode: active
   Ethernet2:
-    peer: leaf4-DC1
+    peer: borderleaf1-DC1
     peer_interface: Ethernet2
     peer_type: mlag_peer
-    description: MLAG_PEER_leaf4-DC1_Ethernet2
+    description: MLAG_PEER_borderleaf1-DC1_Ethernet2
     type: switched
     shutdown: false
     channel_group:
@@ -245,35 +245,35 @@ ethernet_interfaces:
       mode: active
   Ethernet3:
     peer: spine1-DC1
-    peer_interface: Ethernet4
+    peer_interface: Ethernet7
     peer_type: spine
-    description: P2P_LINK_TO_SPINE1-DC1_Ethernet4
+    description: P2P_LINK_TO_SPINE1-DC1_Ethernet7
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.13/31
+    ip_address: 172.31.255.31/31
   Ethernet4:
     peer: spine2-DC1
-    peer_interface: Ethernet4
+    peer_interface: Ethernet7
     peer_type: spine
-    description: P2P_LINK_TO_SPINE2-DC1_Ethernet4
+    description: P2P_LINK_TO_SPINE2-DC1_Ethernet7
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.15/31
+    ip_address: 172.31.255.33/31
   Ethernet5:
     peer: spine3-DC1
-    peer_interface: Ethernet4
+    peer_interface: Ethernet7
     peer_type: spine
-    description: P2P_LINK_TO_SPINE3-DC1_Ethernet4
+    description: P2P_LINK_TO_SPINE3-DC1_Ethernet7
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.17/31
+    ip_address: 172.31.255.35/31
 mlag_configuration:
-  domain_id: pod2
+  domain_id: pod3
   local_interface: Vlan4094
-  peer_address: 10.255.252.5
+  peer_address: 10.255.252.8
   peer_link: Port-Channel1
   reload_delay_mlag: 300
   reload_delay_non_mlag: 330
@@ -295,16 +295,16 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.0.200.5/32
+    ip_address: 192.0.200.8/32
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
-    ip_address: 192.0.254.5/32
+    ip_address: 192.0.254.7/32
   Loopback100:
     description: Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
     shutdown: false
     vrf: Tenant_A_OP_Zone
-    ip_address: 10.255.1.5/32
+    ip_address: 10.255.1.8/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
@@ -322,10 +322,10 @@ ip_igmp_snooping:
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 virtual_source_nat_vrfs:
   Tenant_A_OP_Zone:
-    ip_address: 10.255.1.5
+    ip_address: 10.255.1.8
 vxlan_interface:
   Vxlan1:
-    description: leaf3-DC1_VTEP
+    description: borderleaf2-DC1_VTEP
     vxlan:
       source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
