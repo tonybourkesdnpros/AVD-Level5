@@ -1,0 +1,23 @@
+---
+- name: Assign configlets to devices (via group_vars/CVP.yml)
+  hosts: cv_servers
+  connection: local
+  gather_facts: no
+
+  vars: 
+    path: "{{lookup('env','PWD')}}"
+  vars_files: 
+     - ../atd-inventory/group_vars/CVP-base.yml
+   
+  tasks:
+
+    - name: "Build default container topology"
+      arista.cvp.cv_container_v3:
+        topology: "{{CONTAINERS_DEFAULT}}"
+
+    - name: "Apply configlets for default config"
+      arista.cvp.cv_device_v3:
+        devices: "{{ CVP_DEVICES_DEFAULT }}"
+        state: present
+        apply_mode: strict
+      register: CVP_DEVICES_RESULTS

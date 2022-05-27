@@ -1,0 +1,122 @@
+CVP_CONFIGLETS:
+
+
+
+CONTAINERS_DEFAULT:
+  DC1:
+      parentContainerName: Tenant
+  Spine-DC1:
+      parentContainerName: DC1
+  Leaf-DC1:
+      parentContainerName: DC1
+  Left-DC1:
+      parentContainerName: Leaf-DC1
+  Right-DC1:
+      parentContainerName: Leaf-DC1
+  DC2:
+      parentContainerName: Tenant
+  Spine-DC2:
+      parentContainerName: DC2
+  Leaf-DC2:
+      parentContainerName: DC2
+  Left-DC2:
+      parentContainerName: Leaf-DC2
+  Right-DC2:
+      parentContainerName: Leaf-DC2
+ 
+CVP_DEVICES_DEFAULT:
+  - fqdn: 'leaf1-DC1'
+    parentContainerName: 'Left-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf1-DC1-BASE'
+  - fqdn: 'leaf2-DC1'
+    parentContainerName: 'Right-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf2-DC1-BASE'
+  - fqdn: 'leaf3-DC1'
+    parentContainerName: 'Left-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf3-DC1-BASE'
+  - fqdn: 'leaf4-DC1'
+    parentContainerName: 'Right-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf4-DC1-BASE'
+  - fqdn: 'borderleaf1-DC1'
+    parentContainerName: 'Left-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'borderleaf1-DC1-BASE'
+  - fqdn: 'borderleaf2-DC1'
+    parentContainerName: 'Right-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'borderleaf2-DC1-BASE'
+  - fqdn: 'spine1-DC1'
+    parentContainerName: 'Spine-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine1-DC1-BASE'
+  - fqdn: 'spine2-DC1'
+    parentContainerName: 'Spine-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine2-DC1-BASE'
+  - fqdn: 'spine3-DC1'
+    parentContainerName: 'Spine-DC1'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine3-DC1-BASE'
+  - fqdn: 'leaf1-DC2'
+    parentContainerName: 'Left-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf1-DC2-BASE'
+  - fqdn: 'leaf2-DC2'
+    parentContainerName: 'Right-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf2-DC2-BASE'
+  - fqdn: 'leaf3-DC2'
+    parentContainerName: 'Left-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf3-DC2-BASE'
+  - fqdn: 'leaf4-DC2'
+    parentContainerName: 'Right-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf4-DC2-BASE'
+  - fqdn: 'borderleaf1-DC2'
+    parentContainerName: 'Left-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'borderleaf1-DC2-BASE'
+  - fqdn: 'borderleaf2-DC2'
+    parentContainerName: 'Right-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'borderleaf2-DC2-BASE'
+  - fqdn: 'spine1-DC2'
+    parentContainerName: 'Spine-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine1-DC2-BASE'
+  - fqdn: 'spine2-DC2'
+    parentContainerName: 'Spine-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine2-DC2-BASE'
+  - fqdn: 'spine3-DC2'
+    parentContainerName: 'Spine-DC2'
+    configlets:
+      - 'ATD-INFRA'
+      - 'spine3-DC2-BASE'
+  - fqdn: 'DCI'
+    parentContainerName: 'DCI'
+    configlets:
+      - 'ATD-INFRA'
+      - 'DCI-BASE'

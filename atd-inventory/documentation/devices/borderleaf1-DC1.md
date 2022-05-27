@@ -319,9 +319,9 @@ vlan 4094
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet6 | routed | - | 172.31.255.25/31 | default | 1500 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet6 | routed | - | 172.31.255.27/31 | default | 1500 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet6 | routed | - | 172.31.255.29/31 | default | 1500 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet6 | routed | - | 172.31.255.25/31 | default | 9214 | false | - | - |
+| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet6 | routed | - | 172.31.255.27/31 | default | 9214 | false | - | - |
+| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet6 | routed | - | 172.31.255.29/31 | default | 9214 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -340,21 +340,21 @@ interface Ethernet2
 interface Ethernet3
    description P2P_LINK_TO_SPINE1-DC1_Ethernet6
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.25/31
 !
 interface Ethernet4
    description P2P_LINK_TO_SPINE2-DC1_Ethernet6
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.27/31
 !
 interface Ethernet5
    description P2P_LINK_TO_SPINE3-DC1_Ethernet6
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.29/31
 ```
@@ -432,9 +432,9 @@ interface Loopback100
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan110 |  Tenant_A_OP_Zone_1  |  Tenant_A_OP_Zone  |  -  |  false  |
-| Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  1500  |  false  |
-| Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
-| Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
+| Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  9214  |  false  |
+| Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  9214  |  false  |
+| Vlan4094 |  MLAG_PEER  |  default  |  9214  |  false  |
 
 #### IPv4
 
@@ -459,20 +459,20 @@ interface Vlan110
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
    no shutdown
-   mtu 1500
+   mtu 9214
    vrf Tenant_A_OP_Zone
    ip address 10.255.251.8/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
-   mtu 1500
+   mtu 9214
    ip address 10.255.251.8/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
-   mtu 1500
+   mtu 9214
    no autostate
    ip address 10.255.252.8/31
 ```

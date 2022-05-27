@@ -14,7 +14,7 @@
 
 | Total Tests | Total Tests Passed | Total Tests Failed |
 | ----------- | ------------------ | ------------------ |
-| 426 | 426 | 0 |
+| 426 | 403 | 23 |
 
 ### Summary Totals Devices Under Tests
 
@@ -22,24 +22,24 @@
 | --- | ----------- | ------------ | ------------ | ----------------- |
 | borderleaf1-DC1 |  47 | 47 | 0 | - |
 | borderleaf2-DC1 |  47 | 47 | 0 | - |
-| leaf1-DC1 |  47 | 47 | 0 | - |
+| leaf1-DC1 |  47 | 35 | 12 | Interface State, LLDP Topology, IP Reachability, BGP |
 | leaf2-DC1 |  47 | 47 | 0 | - |
 | leaf3-DC1 |  47 | 47 | 0 | - |
 | leaf4-DC1 |  47 | 47 | 0 | - |
-| spine1-DC1 |  48 | 48 | 0 | - |
-| spine2-DC1 |  48 | 48 | 0 | - |
-| spine3-DC1 |  48 | 48 | 0 | - |
+| spine1-DC1 |  48 | 44 | 4 | Interface State, LLDP Topology, IP Reachability, BGP |
+| spine2-DC1 |  48 | 45 | 3 | Interface State, IP Reachability, BGP |
+| spine3-DC1 |  48 | 44 | 4 | Interface State, LLDP Topology, IP Reachability, BGP |
 
 ### Summary Totals Per Category
 
 | Test Category | Total Tests | Tests Passed | Tests Failed |
 | ------------- | ----------- | ------------ | ------------ |
 | NTP |  9 | 9 | 0 |
-| Interface State |  105 | 105 | 0 |
-| LLDP Topology |  48 | 48 | 0 |
+| Interface State |  105 | 99 | 6 |
+| LLDP Topology |  48 | 43 | 5 |
 | MLAG |  6 | 6 | 0 |
-| IP Reachability |  36 | 36 | 0 |
-| BGP |  87 | 87 | 0 |
+| IP Reachability |  36 | 30 | 6 |
+| BGP |  87 | 81 | 6 |
 | Routing Table |  81 | 81 | 0 |
 | Loopback0 Reachability |  54 | 54 | 0 |
 
@@ -47,6 +47,29 @@
 
 | Test ID | Node | Test Category | Test Description | Test | Test Result | Failure Reason |
 | ------- | ---- | ------------- | ---------------- | ---- | ----------- | -------------- |
+| 22 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_SPINE1-DC1_Ethernet2 | FAIL | interface status: adminDown - line protocol status: down |
+| 23 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_SPINE2-DC1_Ethernet2 | FAIL | interface status: adminDown - line protocol status: down |
+| 24 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_SPINE3-DC1_Ethernet2 | FAIL | interface status: adminDown - line protocol status: down |
+| 40 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet3 | FAIL | interface status: down - line protocol status: down |
+| 46 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet4 | FAIL | interface status: down - line protocol status: down |
+| 52 | spine3-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet5 | FAIL | interface status: down - line protocol status: down |
+| 127 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: spine1-DC1_Ethernet2 | FAIL | Interface Down - N/A |
+| 128 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: spine2-DC1_Ethernet2 | FAIL | Interface Down - N/A |
+| 129 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: spine3-DC1_Ethernet2 | FAIL | Interface Down - N/A |
+| 145 | spine1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet3 | FAIL | Interface Down - N/A |
+| 157 | spine3-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet5 | FAIL | Interface Down - N/A |
+| 175 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet3 - Destination: spine1-DC1_Ethernet2 | FAIL | 100% packet loss |
+| 176 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet4 - Destination: spine2-DC1_Ethernet2 | FAIL | 100% packet loss |
+| 177 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet5 - Destination: spine3-DC1_Ethernet2 | FAIL | 100% packet loss |
+| 187 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet3 | FAIL | 100% packet loss |
+| 193 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet4 | FAIL | 100% packet loss |
+| 199 | spine3-DC1 | IP Reachability | ip reachability test p2p links | Source: spine3-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet5 | FAIL | 100% packet loss |
+| 223 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.0 | FAIL | Session state "Idle" |
+| 224 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.2 | FAIL | Session state "Idle" |
+| 225 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.4 | FAIL | Session state "Idle" |
+| 238 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.1 | FAIL | Session state "Idle" |
+| 244 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.3 | FAIL | Session state "Idle" |
+| 250 | spine3-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.5 | FAIL | Session state "Idle" |
 
 ## All Test Results
 
@@ -73,9 +96,9 @@
 | 19 | borderleaf2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_SPINE3-DC1_Ethernet7 | PASS | - |
 | 20 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet1 - MLAG_PEER_leaf2-DC1_Ethernet1 | PASS | - |
 | 21 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - MLAG_PEER_leaf2-DC1_Ethernet2 | PASS | - |
-| 22 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_SPINE1-DC1_Ethernet2 | PASS | - |
-| 23 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_SPINE2-DC1_Ethernet2 | PASS | - |
-| 24 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_SPINE3-DC1_Ethernet2 | PASS | - |
+| 22 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_SPINE1-DC1_Ethernet2 | FAIL | interface status: adminDown - line protocol status: down |
+| 23 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_SPINE2-DC1_Ethernet2 | FAIL | interface status: adminDown - line protocol status: down |
+| 24 | leaf1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_SPINE3-DC1_Ethernet2 | FAIL | interface status: adminDown - line protocol status: down |
 | 25 | leaf2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet1 - MLAG_PEER_leaf1-DC1_Ethernet1 | PASS | - |
 | 26 | leaf2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - MLAG_PEER_leaf1-DC1_Ethernet2 | PASS | - |
 | 27 | leaf2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_SPINE1-DC1_Ethernet3 | PASS | - |
@@ -91,19 +114,19 @@
 | 37 | leaf4-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_SPINE1-DC1_Ethernet5 | PASS | - |
 | 38 | leaf4-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_SPINE2-DC1_Ethernet5 | PASS | - |
 | 39 | leaf4-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_SPINE3-DC1_Ethernet5 | PASS | - |
-| 40 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet3 | PASS | - |
+| 40 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet3 | FAIL | interface status: down - line protocol status: down |
 | 41 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_LEAF2-DC1_Ethernet3 | PASS | - |
 | 42 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_LEAF3-DC1_Ethernet3 | PASS | - |
 | 43 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_LEAF4-DC1_Ethernet3 | PASS | - |
 | 44 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet6 - P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet3 | PASS | - |
 | 45 | spine1-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet3 | PASS | - |
-| 46 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet4 | PASS | - |
+| 46 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet4 | FAIL | interface status: down - line protocol status: down |
 | 47 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_LEAF2-DC1_Ethernet4 | PASS | - |
 | 48 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_LEAF3-DC1_Ethernet4 | PASS | - |
 | 49 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_LEAF4-DC1_Ethernet4 | PASS | - |
 | 50 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet6 - P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet4 | PASS | - |
 | 51 | spine2-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet7 - P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet4 | PASS | - |
-| 52 | spine3-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet5 | PASS | - |
+| 52 | spine3-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - P2P_LINK_TO_LEAF1-DC1_Ethernet5 | FAIL | interface status: down - line protocol status: down |
 | 53 | spine3-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet3 - P2P_LINK_TO_LEAF2-DC1_Ethernet5 | PASS | - |
 | 54 | spine3-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet4 - P2P_LINK_TO_LEAF3-DC1_Ethernet5 | PASS | - |
 | 55 | spine3-DC1 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet5 - P2P_LINK_TO_LEAF4-DC1_Ethernet5 | PASS | - |
@@ -178,9 +201,9 @@
 | 124 | borderleaf2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: spine3-DC1_Ethernet7 | PASS | - |
 | 125 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: leaf2-DC1_Ethernet1 | PASS | - |
 | 126 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf2-DC1_Ethernet2 | PASS | - |
-| 127 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: spine1-DC1_Ethernet2 | PASS | - |
-| 128 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: spine2-DC1_Ethernet2 | PASS | - |
-| 129 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: spine3-DC1_Ethernet2 | PASS | - |
+| 127 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: spine1-DC1_Ethernet2 | FAIL | Interface Down - N/A |
+| 128 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: spine2-DC1_Ethernet2 | FAIL | Interface Down - N/A |
+| 129 | leaf1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: spine3-DC1_Ethernet2 | FAIL | Interface Down - N/A |
 | 130 | leaf2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet1 - remote: leaf1-DC1_Ethernet1 | PASS | - |
 | 131 | leaf2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet2 | PASS | - |
 | 132 | leaf2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: spine1-DC1_Ethernet3 | PASS | - |
@@ -196,7 +219,7 @@
 | 142 | leaf4-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: spine1-DC1_Ethernet5 | PASS | - |
 | 143 | leaf4-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: spine2-DC1_Ethernet5 | PASS | - |
 | 144 | leaf4-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: spine3-DC1_Ethernet5 | PASS | - |
-| 145 | spine1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet3 | PASS | - |
+| 145 | spine1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet3 | FAIL | Interface Down - N/A |
 | 146 | spine1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: leaf2-DC1_Ethernet3 | PASS | - |
 | 147 | spine1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: leaf3-DC1_Ethernet3 | PASS | - |
 | 148 | spine1-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: leaf4-DC1_Ethernet3 | PASS | - |
@@ -208,7 +231,7 @@
 | 154 | spine2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: leaf4-DC1_Ethernet4 | PASS | - |
 | 155 | spine2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet6 - remote: borderleaf1-DC1_Ethernet4 | PASS | - |
 | 156 | spine2-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet7 - remote: borderleaf2-DC1_Ethernet4 | PASS | - |
-| 157 | spine3-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet5 | PASS | - |
+| 157 | spine3-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet2 - remote: leaf1-DC1_Ethernet5 | FAIL | Interface Down - N/A |
 | 158 | spine3-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet3 - remote: leaf2-DC1_Ethernet5 | PASS | - |
 | 159 | spine3-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet4 - remote: leaf3-DC1_Ethernet5 | PASS | - |
 | 160 | spine3-DC1 | LLDP Topology | LLDP topology - validate peer and interface | local: Ethernet5 - remote: leaf4-DC1_Ethernet5 | PASS | - |
@@ -226,9 +249,9 @@
 | 172 | borderleaf2-DC1 | IP Reachability | ip reachability test p2p links | Source: borderleaf2-DC1_Ethernet3 - Destination: spine1-DC1_Ethernet7 | PASS | - |
 | 173 | borderleaf2-DC1 | IP Reachability | ip reachability test p2p links | Source: borderleaf2-DC1_Ethernet4 - Destination: spine2-DC1_Ethernet7 | PASS | - |
 | 174 | borderleaf2-DC1 | IP Reachability | ip reachability test p2p links | Source: borderleaf2-DC1_Ethernet5 - Destination: spine3-DC1_Ethernet7 | PASS | - |
-| 175 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet3 - Destination: spine1-DC1_Ethernet2 | PASS | - |
-| 176 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet4 - Destination: spine2-DC1_Ethernet2 | PASS | - |
-| 177 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet5 - Destination: spine3-DC1_Ethernet2 | PASS | - |
+| 175 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet3 - Destination: spine1-DC1_Ethernet2 | FAIL | 100% packet loss |
+| 176 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet4 - Destination: spine2-DC1_Ethernet2 | FAIL | 100% packet loss |
+| 177 | leaf1-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf1-DC1_Ethernet5 - Destination: spine3-DC1_Ethernet2 | FAIL | 100% packet loss |
 | 178 | leaf2-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf2-DC1_Ethernet3 - Destination: spine1-DC1_Ethernet3 | PASS | - |
 | 179 | leaf2-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf2-DC1_Ethernet4 - Destination: spine2-DC1_Ethernet3 | PASS | - |
 | 180 | leaf2-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf2-DC1_Ethernet5 - Destination: spine3-DC1_Ethernet3 | PASS | - |
@@ -238,19 +261,19 @@
 | 184 | leaf4-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf4-DC1_Ethernet3 - Destination: spine1-DC1_Ethernet5 | PASS | - |
 | 185 | leaf4-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf4-DC1_Ethernet4 - Destination: spine2-DC1_Ethernet5 | PASS | - |
 | 186 | leaf4-DC1 | IP Reachability | ip reachability test p2p links | Source: leaf4-DC1_Ethernet5 - Destination: spine3-DC1_Ethernet5 | PASS | - |
-| 187 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet3 | PASS | - |
+| 187 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet3 | FAIL | 100% packet loss |
 | 188 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet3 - Destination: leaf2-DC1_Ethernet3 | PASS | - |
 | 189 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet4 - Destination: leaf3-DC1_Ethernet3 | PASS | - |
 | 190 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet5 - Destination: leaf4-DC1_Ethernet3 | PASS | - |
 | 191 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet6 - Destination: borderleaf1-DC1_Ethernet3 | PASS | - |
 | 192 | spine1-DC1 | IP Reachability | ip reachability test p2p links | Source: spine1-DC1_Ethernet7 - Destination: borderleaf2-DC1_Ethernet3 | PASS | - |
-| 193 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet4 | PASS | - |
+| 193 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet4 | FAIL | 100% packet loss |
 | 194 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet3 - Destination: leaf2-DC1_Ethernet4 | PASS | - |
 | 195 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet4 - Destination: leaf3-DC1_Ethernet4 | PASS | - |
 | 196 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet5 - Destination: leaf4-DC1_Ethernet4 | PASS | - |
 | 197 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet6 - Destination: borderleaf1-DC1_Ethernet4 | PASS | - |
 | 198 | spine2-DC1 | IP Reachability | ip reachability test p2p links | Source: spine2-DC1_Ethernet7 - Destination: borderleaf2-DC1_Ethernet4 | PASS | - |
-| 199 | spine3-DC1 | IP Reachability | ip reachability test p2p links | Source: spine3-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet5 | PASS | - |
+| 199 | spine3-DC1 | IP Reachability | ip reachability test p2p links | Source: spine3-DC1_Ethernet2 - Destination: leaf1-DC1_Ethernet5 | FAIL | 100% packet loss |
 | 200 | spine3-DC1 | IP Reachability | ip reachability test p2p links | Source: spine3-DC1_Ethernet3 - Destination: leaf2-DC1_Ethernet5 | PASS | - |
 | 201 | spine3-DC1 | IP Reachability | ip reachability test p2p links | Source: spine3-DC1_Ethernet4 - Destination: leaf3-DC1_Ethernet5 | PASS | - |
 | 202 | spine3-DC1 | IP Reachability | ip reachability test p2p links | Source: spine3-DC1_Ethernet5 - Destination: leaf4-DC1_Ethernet5 | PASS | - |
@@ -274,9 +297,9 @@
 | 220 | borderleaf2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.32 | PASS | - |
 | 221 | borderleaf2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.34 | PASS | - |
 | 222 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.1 | PASS | - |
-| 223 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.0 | PASS | - |
-| 224 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.2 | PASS | - |
-| 225 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.4 | PASS | - |
+| 223 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.0 | FAIL | Session state "Idle" |
+| 224 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.2 | FAIL | Session state "Idle" |
+| 225 | leaf1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.4 | FAIL | Session state "Idle" |
 | 226 | leaf2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.0 | PASS | - |
 | 227 | leaf2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.6 | PASS | - |
 | 228 | leaf2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.8 | PASS | - |
@@ -289,19 +312,19 @@
 | 235 | leaf4-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.18 | PASS | - |
 | 236 | leaf4-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.20 | PASS | - |
 | 237 | leaf4-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.22 | PASS | - |
-| 238 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.1 | PASS | - |
+| 238 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.1 | FAIL | Session state "Idle" |
 | 239 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.7 | PASS | - |
 | 240 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.13 | PASS | - |
 | 241 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.19 | PASS | - |
 | 242 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.25 | PASS | - |
 | 243 | spine1-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.31 | PASS | - |
-| 244 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.3 | PASS | - |
+| 244 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.3 | FAIL | Session state "Idle" |
 | 245 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.9 | PASS | - |
 | 246 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.15 | PASS | - |
 | 247 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.21 | PASS | - |
 | 248 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.27 | PASS | - |
 | 249 | spine2-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.33 | PASS | - |
-| 250 | spine3-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.5 | PASS | - |
+| 250 | spine3-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.5 | FAIL | Session state "Idle" |
 | 251 | spine3-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.11 | PASS | - |
 | 252 | spine3-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.17 | PASS | - |
 | 253 | spine3-DC1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.23 | PASS | - |

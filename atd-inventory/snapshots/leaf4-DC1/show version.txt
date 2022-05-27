@@ -1,0 +1,19 @@
+Arista cEOSLab
+Hardware version: 
+Serial number: leaf4-DC1
+Hardware MAC address: 001c.73c4.c601
+System MAC address: 001c.73c4.c601
+
+Software image version: 4.27.2F-26069621.4272F (engineering build)
+Architecture: i686
+Internal build version: 4.27.2F-26069621.4272F
+Internal build ID: b3360a82-d532-4043-b6b0-50707eede2a9
+Image format version: 1.0
+Image optimization: None
+
+cEOS tools version: 1.1
+Kernel version: 5.4.132-1.el7.elrepo.x86_64
+
+Uptime: 5 hours and 20 minutes
+Total memory: 74120000 kB
+Free memory: 14479320 kB

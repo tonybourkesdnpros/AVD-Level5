@@ -233,12 +233,12 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet2 | P2P_LINK_TO_LEAF1-DC1_Ethernet5 | routed | - | 172.31.255.4/31 | default | 1500 | false | - | - |
-| Ethernet3 | P2P_LINK_TO_LEAF2-DC1_Ethernet5 | routed | - | 172.31.255.10/31 | default | 1500 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_LEAF3-DC1_Ethernet5 | routed | - | 172.31.255.16/31 | default | 1500 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_LEAF4-DC1_Ethernet5 | routed | - | 172.31.255.22/31 | default | 1500 | false | - | - |
-| Ethernet6 | P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet5 | routed | - | 172.31.255.28/31 | default | 1500 | false | - | - |
-| Ethernet7 | P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet5 | routed | - | 172.31.255.34/31 | default | 1500 | false | - | - |
+| Ethernet2 | P2P_LINK_TO_LEAF1-DC1_Ethernet5 | routed | - | 172.31.255.4/31 | default | 9214 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_LEAF2-DC1_Ethernet5 | routed | - | 172.31.255.10/31 | default | 9214 | false | - | - |
+| Ethernet4 | P2P_LINK_TO_LEAF3-DC1_Ethernet5 | routed | - | 172.31.255.16/31 | default | 9214 | false | - | - |
+| Ethernet5 | P2P_LINK_TO_LEAF4-DC1_Ethernet5 | routed | - | 172.31.255.22/31 | default | 9214 | false | - | - |
+| Ethernet6 | P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet5 | routed | - | 172.31.255.28/31 | default | 9214 | false | - | - |
+| Ethernet7 | P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet5 | routed | - | 172.31.255.34/31 | default | 9214 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -247,42 +247,42 @@ vlan internal order ascending range 1006 1199
 interface Ethernet2
    description P2P_LINK_TO_LEAF1-DC1_Ethernet5
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.4/31
 !
 interface Ethernet3
    description P2P_LINK_TO_LEAF2-DC1_Ethernet5
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.10/31
 !
 interface Ethernet4
    description P2P_LINK_TO_LEAF3-DC1_Ethernet5
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.16/31
 !
 interface Ethernet5
    description P2P_LINK_TO_LEAF4-DC1_Ethernet5
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.22/31
 !
 interface Ethernet6
    description P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet5
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.28/31
 !
 interface Ethernet7
    description P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet5
    no shutdown
-   mtu 1500
+   mtu 9214
    no switchport
    ip address 172.31.255.34/31
 ```

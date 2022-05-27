@@ -1,0 +1,15 @@
+Last table change time   : 0:01:47 ago
+Number of table inserts  : 9
+Number of table deletes  : 2
+Number of table drops    : 0
+Number of table age-outs : 1
+
+Port          Neighbor Device ID            Neighbor Port ID    TTL
+---------- ----------------------------- ---------------------- ---
+Et1           spine1-DC1.atd.lab            Ethernet1           120
+Et3           leaf2-DC1.atd.lab             Ethernet4           120
+Et4           leaf3-DC1.atd.lab             Ethernet4           120
+Et5           leaf4-DC1.atd.lab             Ethernet4           120
+Et6           borderleaf1-DC1.atd.lab       Ethernet4           120
+Et7           borderleaf2-DC1.atd.lab       Ethernet4           120
+Et15          OOB-DC1.arista.lab            Ethernet3           120

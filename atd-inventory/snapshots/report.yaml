@@ -1,0 +1,1355 @@
+devices:
+  borderleaf1-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf2-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf2-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet6           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet6           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet6           120
+
+        Et10          core1-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core1-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet1           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet9           120'
+    "show ip interface brief":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf2-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf2-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet6           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet6           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet6           120
+
+        Et10          core1-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core1-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet1           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet9           120'
+    "show interfaces description":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf2-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf2-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet6           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet6           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet6           120
+
+        Et10          core1-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core1-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet1           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet9           120'
+    "show version":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf2-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf2-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet6           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet6           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet6           120
+
+        Et10          core1-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core1-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet1           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet9           120'
+    "show running-config":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf2-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf2-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet6           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet6           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet6           120
+
+        Et10          core1-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core1-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet1           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet9           120'
+  borderleaf2-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf1-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf1-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet7           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet7           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet7           120
+
+        Et10          core2-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core2-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet2           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet10          120'
+    "show ip interface brief":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf1-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf1-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet7           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet7           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet7           120
+
+        Et10          core2-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core2-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet2           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet10          120'
+    "show interfaces description":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf1-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf1-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet7           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet7           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet7           120
+
+        Et10          core2-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core2-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet2           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet10          120'
+    "show version":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf1-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf1-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet7           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet7           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet7           120
+
+        Et10          core2-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core2-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet2           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet10          120'
+    "show running-config":
+      'Last table change time   : 0:10:41 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           borderleaf1-DC1.atd.lab       Ethernet1           120
+
+        Et2           borderleaf1-DC1.atd.lab       Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab            Ethernet7           120
+
+        Et4           spine2-DC1.atd.lab            Ethernet7           120
+
+        Et5           spine3-DC1.atd.lab            Ethernet7           120
+
+        Et10          core2-ISP1.arista.lab         Ethernet10          120
+
+        Et11          core2-ISP2.arista.lab         Ethernet11          120
+
+        Et12          DCI.arista.lab                Ethernet2           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet10          120'
+  leaf1-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 3
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf2-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf2-DC1.atd.lab          Ethernet2           120
+
+        Et6           host1-DC1.arista.lab       Ethernet1           120
+
+        Et7           host1-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet5           120'
+    "show ip interface brief":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 3
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf2-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf2-DC1.atd.lab          Ethernet2           120
+
+        Et6           host1-DC1.arista.lab       Ethernet1           120
+
+        Et7           host1-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet5           120'
+    "show interfaces description":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 3
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf2-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf2-DC1.atd.lab          Ethernet2           120
+
+        Et6           host1-DC1.arista.lab       Ethernet1           120
+
+        Et7           host1-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet5           120'
+    "show version":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 3
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf2-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf2-DC1.atd.lab          Ethernet2           120
+
+        Et6           host1-DC1.arista.lab       Ethernet1           120
+
+        Et7           host1-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet5           120'
+    "show running-config":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 3
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf2-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf2-DC1.atd.lab          Ethernet2           120
+
+        Et6           host1-DC1.arista.lab       Ethernet1           120
+
+        Et7           host1-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet5           120'
+  leaf2-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:10:36 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf1-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf1-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet3           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet3           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet3           120
+
+        Et6           host1-DC1.arista.lab       Ethernet2           120
+
+        Et7           host1-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet6           120'
+    "show ip interface brief":
+      'Last table change time   : 0:10:36 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf1-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf1-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet3           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet3           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet3           120
+
+        Et6           host1-DC1.arista.lab       Ethernet2           120
+
+        Et7           host1-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet6           120'
+    "show interfaces description":
+      'Last table change time   : 0:10:36 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf1-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf1-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet3           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet3           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet3           120
+
+        Et6           host1-DC1.arista.lab       Ethernet2           120
+
+        Et7           host1-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet6           120'
+    "show version":
+      'Last table change time   : 0:10:36 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf1-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf1-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet3           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet3           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet3           120
+
+        Et6           host1-DC1.arista.lab       Ethernet2           120
+
+        Et7           host1-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet6           120'
+    "show running-config":
+      'Last table change time   : 0:10:36 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf1-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf1-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet3           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet3           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet3           120
+
+        Et6           host1-DC1.arista.lab       Ethernet2           120
+
+        Et7           host1-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet6           120'
+  leaf3-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:10:38 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf4-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf4-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet4           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet4           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet4           120
+
+        Et6           host2-DC1.arista.lab       Ethernet1           120
+
+        Et7           host2-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet7           120'
+    "show ip interface brief":
+      'Last table change time   : 0:10:38 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf4-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf4-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet4           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet4           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet4           120
+
+        Et6           host2-DC1.arista.lab       Ethernet1           120
+
+        Et7           host2-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet7           120'
+    "show interfaces description":
+      'Last table change time   : 0:10:38 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf4-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf4-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet4           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet4           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet4           120
+
+        Et6           host2-DC1.arista.lab       Ethernet1           120
+
+        Et7           host2-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet7           120'
+    "show version":
+      'Last table change time   : 0:10:38 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf4-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf4-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet4           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet4           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet4           120
+
+        Et6           host2-DC1.arista.lab       Ethernet1           120
+
+        Et7           host2-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet7           120'
+    "show running-config":
+      'Last table change time   : 0:10:38 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf4-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf4-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet4           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet4           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet4           120
+
+        Et6           host2-DC1.arista.lab       Ethernet1           120
+
+        Et7           host2-DC1.arista.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet7           120'
+  leaf4-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:10:39 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf3-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf3-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet5           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet5           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet5           120
+
+        Et6           host2-DC1.arista.lab       Ethernet2           120
+
+        Et7           host2-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet8           120'
+    "show ip interface brief":
+      'Last table change time   : 0:10:39 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf3-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf3-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet5           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet5           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet5           120
+
+        Et6           host2-DC1.arista.lab       Ethernet2           120
+
+        Et7           host2-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet8           120'
+    "show interfaces description":
+      'Last table change time   : 0:10:39 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf3-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf3-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet5           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet5           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet5           120
+
+        Et6           host2-DC1.arista.lab       Ethernet2           120
+
+        Et7           host2-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet8           120'
+    "show version":
+      'Last table change time   : 0:10:39 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf3-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf3-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet5           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet5           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet5           120
+
+        Et6           host2-DC1.arista.lab       Ethernet2           120
+
+        Et7           host2-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet8           120'
+    "show running-config":
+      'Last table change time   : 0:10:39 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 0
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID         Neighbor Port ID    TTL
+
+        ---------- -------------------------- ---------------------- ---
+
+        Et1           leaf3-DC1.atd.lab          Ethernet1           120
+
+        Et2           leaf3-DC1.atd.lab          Ethernet2           120
+
+        Et3           spine1-DC1.atd.lab         Ethernet5           120
+
+        Et4           spine2-DC1.atd.lab         Ethernet5           120
+
+        Et5           spine3-DC1.atd.lab         Ethernet5           120
+
+        Et6           host2-DC1.arista.lab       Ethernet2           120
+
+        Et7           host2-DC1.arista.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab         Ethernet8           120'
+  spine1-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine2-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet3           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet3           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet3           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet3           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet2           120'
+    "show ip interface brief":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine2-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet3           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet3           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet3           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet3           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet2           120'
+    "show interfaces description":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine2-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet3           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet3           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet3           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet3           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet2           120'
+    "show version":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine2-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet3           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet3           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet3           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet3           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet2           120'
+    "show running-config":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 8
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine2-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet3           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet3           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet3           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet3           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet3           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet2           120'
+  spine2-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:01:47 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 2
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 1
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine1-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet4           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet4           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet4           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet4           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet3           120'
+    "show ip interface brief":
+      'Last table change time   : 0:01:47 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 2
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 1
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine1-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet4           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet4           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet4           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet4           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet3           120'
+    "show interfaces description":
+      'Last table change time   : 0:01:47 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 2
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 1
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine1-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet4           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet4           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet4           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet4           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet3           120'
+    "show version":
+      'Last table change time   : 0:01:47 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 2
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 1
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine1-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet4           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet4           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet4           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet4           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet3           120'
+    "show running-config":
+      'Last table change time   : 0:01:47 ago
+
+        Number of table inserts  : 9
+
+        Number of table deletes  : 2
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 1
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et1           spine1-DC1.atd.lab            Ethernet1           120
+
+        Et3           leaf2-DC1.atd.lab             Ethernet4           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet4           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet4           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet4           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet4           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet3           120'
+  spine3-DC1:
+    "show lldp neighbors":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 7
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et3           leaf2-DC1.atd.lab             Ethernet5           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet5           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet5           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet5           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet5           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet4           120'
+    "show ip interface brief":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 7
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et3           leaf2-DC1.atd.lab             Ethernet5           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet5           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet5           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet5           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet5           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet4           120'
+    "show interfaces description":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 7
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et3           leaf2-DC1.atd.lab             Ethernet5           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet5           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet5           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet5           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet5           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet4           120'
+    "show version":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 7
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et3           leaf2-DC1.atd.lab             Ethernet5           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet5           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet5           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet5           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet5           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet4           120'
+    "show running-config":
+      'Last table change time   : 0:03:47 ago
+
+        Number of table inserts  : 7
+
+        Number of table deletes  : 1
+
+        Number of table drops    : 0
+
+        Number of table age-outs : 0
+
+
+        Port          Neighbor Device ID            Neighbor Port ID    TTL
+
+        ---------- ----------------------------- ---------------------- ---
+
+        Et3           leaf2-DC1.atd.lab             Ethernet5           120
+
+        Et4           leaf3-DC1.atd.lab             Ethernet5           120
+
+        Et5           leaf4-DC1.atd.lab             Ethernet5           120
+
+        Et6           borderleaf1-DC1.atd.lab       Ethernet5           120
+
+        Et7           borderleaf2-DC1.atd.lab       Ethernet5           120
+
+        Et15          OOB-DC1.arista.lab            Ethernet4           120'
