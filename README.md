@@ -47,6 +47,10 @@ edit credentials in vscode: atd-inventory/inventory.yml
 (put your lab password in for ansible_password and ansible_ssh_pass)
 
 
+### Clean up environment
+
+    ansible-playbook playbooks/CVP-lab-reset.yml
+    
 ### Run Playbook to Generate Configuration files
 
 We can make use of tags in AVD to execute a portion of the playbook, in this case generating all the configuration. 
