@@ -28,6 +28,9 @@ The DC1 portion of the Level 5 lab topology consists of 3 Spines, 6 Leafs and 2 
 
 Make sure to reset your lab to the default configlet assignments (BASE configlets and ATD-INFRA). You can use the ATD-Reset-Level5 repo to do this: https://github.com/tonybourkesdnpros/ATD-Reset-Level5
 
+(For Level5 ATD Linux Server)
+
+    > ansible-galaxy collection install arista.cvp --force
 
 ### Clone this Repository
 Make sure you're in the persist directory, then clone this repository:
