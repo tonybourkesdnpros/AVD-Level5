@@ -1,39 +1,33 @@
 svi_profiles:
-  GENERIC:
+  JUMBO:
     mtu: 9000
     enabled: true
-  GENERIC_FULL:
-    name: GENERIC Name
-    mtu: 9000
-    enabled: false
-    ip_address_virtual: 10.1.10.254/24
-  WITH_NO_MTU:
-    enabled: true
-  WITH_SNOOPING:
-    enabled: true
-    igmp_snooping_enabled: false
 
 tenants:
   # Tenant A Specific Information - VRFs / VLANs
-  Tenant_A:
-    mac_vrf_vni_base: 10000
+  ACME_1:
+    mac_vrf_vni_base: 10001
     vrfs:
-      Tenant_A_OP_Zone:
-        vrf_vni: 10
-        vtep_diagnostic:
-          loopback: 100
-          loopback_ip_range: 10.255.1.0/24
+      Red:
+        vrf_vni: 10000
         svis:
-          110:
-            name: Tenant_A_OP_Zone_1
-            tags: [opzone]
+          10:
+            name: VLAN_10
+            tags: [ACME_1]
             enabled: true
+            profile: JUMBO
             ip_address_virtual: 10.1.10.1/24
-    l2vlans:
-      160:
-        vni_override: 55160
-        name: Tenant_A_VMOTION
-        tags: [vmotion]
+          20:
+            name: VLAN_20
+            tags: [ACME_1]
+            enabled: true
+            profile: JUMBO
+            ip_address_virtual: 10.1.20.1/24
+    # l2vlans:
+    #   160:
+    #     vni_override: 55160
+    #     name: Tenant_A_VMOTION
+    #     tags: [vmotion]
   # Tenant_B:
   #   mac_vrf_vni_base: 20000
   #   vrfs:

@@ -6,16 +6,16 @@ all:
         cv_atd1:
           ansible_host: 192.168.0.5
           ansible_user: arista
-          ansible_password: aristaez4z
+          ansible_password: aristagnff
           cv_collection: v3
     ATD_LAB:
       vars:
         ansible_user: arista
-        ansible_ssh_pass: aristaez4z
+        ansible_ssh_pass: aristagnff
       children:
-        ATD_FABRIC:
+        DC1_FABRIC:
           children:
-            ATD_SPINES:
+            DC1_SPINES:
               vars:
                 type: spine
               hosts:
@@ -25,8 +25,7 @@ all:
                   ansible_host: 192.168.0.12
                 spine3-DC1:
                   ansible_host: 192.168.0.13
-                  
-            ATD_LEAFS:
+            DC1_LEAFS:
               vars:
                 type: l3leaf
               children:
@@ -42,15 +41,40 @@ all:
                       ansible_host: 192.168.0.23
                     leaf4-DC1:
                       ansible_host: 192.168.0.24
-                pod3:
-                  hosts:
-                    borderleaf1-DC1:
-                      ansible_host: 192.168.0.25
-                    borderleaf2-DC1:
-                      ansible_host: 192.168.0.26
-            ATD_TENANTS_NETWORKS:
-              children:
-                ATD_LEAFS:
-            ATD_SERVERS:
-              children:
-                ATD_LEAFS:
+        # DC2_FABRIC:
+        #   children:
+        #     DC2_SPINES:
+        #       vars:
+        #         type: spine
+        #       hosts:
+        #         spine1-DC2:
+        #           ansible_host: 192.168.0.14
+        #         spine2-DC2:
+        #           ansible_host: 192.168.0.15
+        #         spine3-DC2:
+        #           ansible_host: 192.168.0.16
+                  
+        #     DC2_LEAFS:
+        #       vars:
+        #         type: l3leaf
+        #       children:
+        #         pod1:
+        #           hosts:
+        #             leaf1-DC1:
+        #               ansible_host: 192.168.0.31
+        #             leaf2-DC1:
+        #               ansible_host: 192.168.0.32
+        #         pod2:
+        #           hosts:
+        #             leaf3-DC1:
+        #               ansible_host: 192.168.0.33
+        #             leaf4-DC1:
+        #               ansible_host: 192.168.0.34
+        # ATD_TENANTS_NETWORKS:
+        #   children:
+        #     DC1:
+        #     DC2:
+        # ATD_SERVERS:
+        #   children:
+        #     DC1_FABRIC:
+        #     DC2_FABRIC:
