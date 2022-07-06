@@ -9,9 +9,7 @@ all:
           ansible_password: aristagnff
           cv_collection: v3
     ATD_LAB:
-      vars:
-        ansible_user: arista
-        ansible_ssh_pass: aristagnff
+
       children:
         DC1_FABRIC:
           children:
@@ -20,11 +18,8 @@ all:
                 type: spine
               hosts:
                 spine1-DC1:
-                  ansible_host: 192.168.0.11
                 spine2-DC1:
-                  ansible_host: 192.168.0.12
                 spine3-DC1:
-                  ansible_host: 192.168.0.13
             DC1_LEAFS:
               vars:
                 type: l3leaf
@@ -32,49 +27,46 @@ all:
                 pod1:
                   hosts:
                     leaf1-DC1:
-                      ansible_host: 192.168.0.21
                     leaf2-DC1:
-                      ansible_host: 192.168.0.22
                 pod2:
                   hosts:
                     leaf3-DC1:
-                      ansible_host: 192.168.0.23
                     leaf4-DC1:
-                      ansible_host: 192.168.0.24
-        # DC2_FABRIC:
-        #   children:
-        #     DC2_SPINES:
-        #       vars:
-        #         type: spine
-        #       hosts:
-        #         spine1-DC2:
-        #           ansible_host: 192.168.0.14
-        #         spine2-DC2:
-        #           ansible_host: 192.168.0.15
-        #         spine3-DC2:
-        #           ansible_host: 192.168.0.16
-                  
-        #     DC2_LEAFS:
-        #       vars:
-        #         type: l3leaf
-        #       children:
-        #         pod1:
-        #           hosts:
-        #             leaf1-DC1:
-        #               ansible_host: 192.168.0.31
-        #             leaf2-DC1:
-        #               ansible_host: 192.168.0.32
-        #         pod2:
-        #           hosts:
-        #             leaf3-DC1:
-        #               ansible_host: 192.168.0.33
-        #             leaf4-DC1:
-        #               ansible_host: 192.168.0.34
-        # ATD_TENANTS_NETWORKS:
-        #   children:
-        #     DC1:
-        #     DC2:
-        # ATD_SERVERS:
-        #   children:
-        #     DC1_FABRIC:
-        #     DC2_FABRIC:
+                pod3:
+                  hosts:
+                    borderleaf1-DC1:
+                    borderleaf2-DC1:
+        DC2_FABRIC:
+          children:
+            DC2_SPINES:
+              vars:
+                type: spine
+              hosts:
+                spine1-DC2:
+                spine2-DC2:
+                spine3-DC2:
+                
+            DC2_LEAFS:
+              vars:
+                type: l3leaf
+              children:
+                pod5:
+                  hosts:
+                    leaf1-DC2:
+                    leaf2-DC2:
+                pod6:
+                  hosts:
+                    leaf3-DC2:
+                    leaf4-DC2:
+                pod7:
+                  hosts:
+                    borderleaf1-DC2:
+                    borderleaf2-DC2:
+        ATD_TENANTS_NETWORKS:
+          children:
+            DC1_FABRIC:
+            DC2_FABRIC:
+        ATD_SERVERS:
+          children:
+            DC1_FABRIC:
+            DC2_FABRIC:

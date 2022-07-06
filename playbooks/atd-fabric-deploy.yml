@@ -1,6 +1,6 @@
 ---
 - name: Manage Arista EOS EVPN/VXLAN Configuration
-  hosts: DC1
+  hosts: DC1_FABRIC
   connection: local
   gather_facts: false
   collections:
@@ -21,8 +21,30 @@
       import_role:
         name: eos_cli_config_gen
 
-- name: Configuration deployment with CVP
-  hosts: DC1_SERVERS
+- name: Manage Arista EOS EVPN/VXLAN Configuration
+  hosts: DC2_FABRIC
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    fabric_dir_name: "{{fabric_name}}"
+    execute_tasks: false
+  tasks:
+
+    - name: generate intended variables
+      # Available tags are: build / debug
+      import_role:
+        name: arista.avd.eos_designs
+
+    - name: generate device intended config and documentation
+      tags: [build, generate]
+      import_role:
+        name: eos_cli_config_gen
+
+- name: Configuration deployment with CVP for DC1
+  hosts: cv_servers
   connection: local
   gather_facts: false
   collections:
@@ -33,7 +55,24 @@
       import_role:
         name: arista.avd.eos_config_deploy_cvp
       vars:
-        container_root: 'DC1'
+        container_root: 'DC1_FABRIC'
         configlets_prefix: 'AVD_DC1'
+        # device_filter: 'DC1'
+        state: present
+
+- name: Configuration deployment with CVP for DC2
+  hosts: cv_servers
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  tasks:
+    - name: provision CVP with AVD configuration
+      import_role:
+        name: arista.avd.eos_config_deploy_cvp
+      vars:
+        container_root: 'DC2_FABRIC'
+        configlets_prefix: 'AVD_DC2'
         # device_filter: 'DC1'
         state: present

@@ -2,7 +2,7 @@
 # L3LS Fabric Values - update these values with caution,
 # SOME CHANGES COULD BE DISRUPTIVE.
 
-fabric_name: DC2
+fabric_name: DC2_FABRIC
 
 # Enable vlan aware bundles
 vxlan_vlan_aware_bundles: true
@@ -63,7 +63,7 @@ l3leaf:
     spanning_tree_mode: mstp
     spanning_tree_priority: 16384
   node_groups:
-    pod1:
+    pod4:
       bgp_as: 65201
       nodes:
         leaf1-DC2:
@@ -74,7 +74,7 @@ l3leaf:
           id: 2
           mgmt_ip: 192.168.0.32/24
           uplink_switch_interfaces: [Ethernet3, Ethernet3, Ethernet3]
-    pod2:
+    pod5:
       bgp_as: 65202
       nodes:
         leaf3-DC2:
@@ -85,17 +85,17 @@ l3leaf:
           id: 4
           mgmt_ip: 192.168.0.34/24
           uplink_switch_interfaces: [Ethernet5, Ethernet5, Ethernet5]
-    # pod3:
-    #   bgp_as: 65103
-    #   nodes:
-    #     borderleaf1-DC2:
-    #       id: 5
-    #       mgmt_ip: 192.168.0.35/24
-    #       uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
-    #     borderleaf2-DC2:
-    #       id: 6
-    #       mgmt_ip: 192.168.0.36/24
-    #       uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]
+    pod6:
+      bgp_as: 65203
+      nodes:
+        borderleaf1-DC2:
+          id: 5
+          mgmt_ip: 192.168.0.35/24
+          uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
+        borderleaf2-DC2:
+          id: 6
+          mgmt_ip: 192.168.0.36/24
+          uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]
 #### Override for vEOS Lab Caveats ####
 
 # Disable update wait-for-convergence and update wait-for-install,
@@ -117,6 +117,17 @@ bfd_multihop:
 #   containers:
 #     DC1_L3LEAFS:
 #       - ASE_GLOBAL-ALIASES
+
+
+cv_configlets:
+  devices:
+    borderleaf1-DC2:
+      - DCI_borderleaf1-DC2
+    borderleaf2-DC2:
+      - DCI_borderleaf2-DC2
+    
+
+
 
 ansible_connection: httpapi
 ansible_network_os: eos
