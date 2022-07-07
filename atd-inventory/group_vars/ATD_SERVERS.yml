@@ -18,7 +18,7 @@ servers:
         profile: VLAN_10
         port_channel:
           state: present
-          description: PortChanne1
+          description: Host1-DC1
           mode: active
   host2-DC1:
     rack: pod2
@@ -27,8 +27,32 @@ servers:
         server_ports: [Eth1, Eth2, Eth3, Eth4]
         switch_ports: [Ethernet6, Ethernet7, Ethernet6, Ethernet7]
         switches: [leaf3-DC1, leaf3-DC1, leaf4-DC1, leaf4-DC1]
+        profile: VLAN_20
+        port_channel:
+          state: present
+          description: Host2-DC1
+          mode: active
+  host1-DC2:
+    rack: pod4
+    adapters:
+      - type: nic
+        server_ports: [Eth1, Eth2, Eth3, Eth4]
+        switch_ports: [Ethernet6, Ethernet7, Ethernet6, Ethernet7]
+        switches: [leaf1-DC2, leaf1-DC2, leaf2-DC2, leaf2-DC2]
         profile: VLAN_10
         port_channel:
           state: present
-          description: PortChanne1
+          description: Host1-DC2
+          mode: active
+  host2-DC2:
+    rack: pod5
+    adapters:
+      - type: nic
+        server_ports: [Eth1, Eth2, Eth3, Eth4]
+        switch_ports: [Ethernet6, Ethernet7, Ethernet6, Ethernet7]
+        switches: [leaf3-DC2, leaf3-DC2, leaf4-DC2, leaf4-DC2]
+        profile: VLAN_20
+        port_channel:
+          state: present
+          description: Host2-DC2
           mode: active

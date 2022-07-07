@@ -225,7 +225,7 @@ port_channel_interfaces:
     - LEAF_PEER_L3
     - MLAG
   Port-Channel6:
-    description: host1-DC1_PortChanne1
+    description: host1-DC1_Host1-DC1
     type: switched
     shutdown: false
     mode: access

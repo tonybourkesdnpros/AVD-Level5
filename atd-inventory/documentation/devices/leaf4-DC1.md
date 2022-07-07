@@ -308,8 +308,8 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | MLAG_PEER_leaf3-DC1_Ethernet1 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1 |
 | Ethernet2 | MLAG_PEER_leaf3-DC1_Ethernet2 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1 |
-| Ethernet6 | host2-DC1_Eth3 | *access | *10 | *- | *- | 6 |
-| Ethernet7 | host2-DC1_Eth4 | *access | *10 | *- | *- | 6 |
+| Ethernet6 | host2-DC1_Eth3 | *access | *20 | *- | *- | 6 |
+| Ethernet7 | host2-DC1_Eth4 | *access | *20 | *- | *- | 6 |
 
 *Inherited from Port-Channel Interface
 
@@ -376,7 +376,7 @@ interface Ethernet7
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel1 | MLAG_PEER_leaf3-DC1_Po1 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel6 | host2-DC1_PortChanne1 | switched | access | 10 | - | - | - | - | 6 | - |
+| Port-Channel6 | host2-DC1_Host2-DC1 | switched | access | 20 | - | - | - | - | 6 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -392,10 +392,10 @@ interface Port-Channel1
    switchport trunk group MLAG
 !
 interface Port-Channel6
-   description host2-DC1_PortChanne1
+   description host2-DC1_Host2-DC1
    no shutdown
    switchport
-   switchport access vlan 10
+   switchport access vlan 20
    mlag 6
 ```
 

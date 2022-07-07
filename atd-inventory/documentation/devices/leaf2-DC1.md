@@ -376,7 +376,7 @@ interface Ethernet7
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel1 | MLAG_PEER_leaf1-DC1_Po1 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel6 | host1-DC1_PortChanne1 | switched | access | 10 | - | - | - | - | 6 | - |
+| Port-Channel6 | host1-DC1_Host1-DC1 | switched | access | 10 | - | - | - | - | 6 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -392,7 +392,7 @@ interface Port-Channel1
    switchport trunk group MLAG
 !
 interface Port-Channel6
-   description host1-DC1_PortChanne1
+   description host1-DC1_Host1-DC1
    no shutdown
    switchport
    switchport access vlan 10

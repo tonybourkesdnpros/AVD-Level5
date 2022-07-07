@@ -372,7 +372,7 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf2-DC1_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC1_PortChanne1\n   no\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC1_Host1-DC1\n   no\
     \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf2-DC1_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf2-DC1_Ethernet2\n\
@@ -464,18 +464,22 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf2-DC2_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_leaf2-DC2_Ethernet1\n\
-    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
-    \ MLAG_PEER_leaf2-DC2_Ethernet2\n   no shutdown\n   channel-group 1 mode active\n\
-    !\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC2_Ethernet2\n   no\
-    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.1/31\n!\n\
-    interface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet2\n   no shutdown\n\
-    \   mtu 9214\n   no switchport\n   ip address 192.168.203.3/31\n!\ninterface Ethernet5\n\
-    \   description P2P_LINK_TO_SPINE3-DC2_Ethernet2\n   no shutdown\n   mtu 9214\n\
-    \   no switchport\n   ip address 192.168.203.5/31\n!\ninterface Loopback0\n  \
-    \ description EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.3/32\n\
-    !\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n\
-    \   ip address 192.168.202.3/32\n!\ninterface Management0\n   description oob_management\n\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC2_Host1-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf2-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf2-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet2\n   no shutdown\n   mtu 9214\n   no switchport\n\
+    \   ip address 192.168.203.1/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet2\n\
+    \   no shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.3/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet2\n   no\
+    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.5/31\n!\n\
+    interface Ethernet6\n   description host1-DC2_Eth1\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host1-DC2_Eth2\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.3/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.3/32\n!\ninterface Management0\n   description oob_management\n\
     \   no shutdown\n   ip address 192.168.0.31/24\n!\ninterface Vlan10\n   description\
     \ VLAN_10\n   no shutdown\n   mtu 9000\n   vrf Red\n   ip address virtual 10.1.10.1/24\n\
     !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   mtu 9000\n   vrf\
@@ -552,7 +556,7 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf1-DC1_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC1_PortChanne1\n   no\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC1_Host1-DC1\n   no\
     \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf1-DC1_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf1-DC1_Ethernet2\n\
@@ -644,18 +648,22 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf1-DC2_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_leaf1-DC2_Ethernet1\n\
-    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
-    \ MLAG_PEER_leaf1-DC2_Ethernet2\n   no shutdown\n   channel-group 1 mode active\n\
-    !\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC2_Ethernet3\n   no\
-    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.7/31\n!\n\
-    interface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet3\n   no shutdown\n\
-    \   mtu 9214\n   no switchport\n   ip address 192.168.203.9/31\n!\ninterface Ethernet5\n\
-    \   description P2P_LINK_TO_SPINE3-DC2_Ethernet3\n   no shutdown\n   mtu 9214\n\
-    \   no switchport\n   ip address 192.168.203.11/31\n!\ninterface Loopback0\n \
-    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.4/32\n\
-    !\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n\
-    \   ip address 192.168.202.3/32\n!\ninterface Management0\n   description oob_management\n\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC2_Host1-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf1-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf1-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet3\n   no shutdown\n   mtu 9214\n   no switchport\n\
+    \   ip address 192.168.203.7/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet3\n\
+    \   no shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.9/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet3\n   no\
+    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.11/31\n!\n\
+    interface Ethernet6\n   description host1-DC2_Eth3\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host1-DC2_Eth4\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.4/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.3/32\n!\ninterface Management0\n   description oob_management\n\
     \   no shutdown\n   ip address 192.168.0.32/24\n!\ninterface Vlan10\n   description\
     \ VLAN_10\n   no shutdown\n   mtu 9000\n   vrf Red\n   ip address virtual 10.1.10.1/24\n\
     !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   mtu 9000\n   vrf\
@@ -732,8 +740,8 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf4-DC1_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_PortChanne1\n   no\
-    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_Host2-DC1\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf4-DC1_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf4-DC1_Ethernet2\n\
     \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
@@ -824,53 +832,57 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf4-DC2_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_leaf4-DC2_Ethernet1\n\
-    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
-    \ MLAG_PEER_leaf4-DC2_Ethernet2\n   no shutdown\n   channel-group 1 mode active\n\
-    !\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC2_Ethernet4\n   no\
-    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.13/31\n!\n\
-    interface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet4\n   no shutdown\n\
-    \   mtu 9214\n   no switchport\n   ip address 192.168.203.15/31\n!\ninterface\
-    \ Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet4\n   no shutdown\n\
-    \   mtu 9214\n   no switchport\n   ip address 192.168.203.17/31\n!\ninterface\
-    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
-    \ 192.168.201.5/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
-    \   no shutdown\n   ip address 192.168.202.5/32\n!\ninterface Management0\n  \
-    \ description oob_management\n   no shutdown\n   ip address 192.168.0.33/24\n\
-    !\ninterface Vlan10\n   description VLAN_10\n   no shutdown\n   mtu 9000\n   vrf\
-    \ Red\n   ip address virtual 10.1.10.1/24\n!\ninterface Vlan20\n   description\
-    \ VLAN_20\n   no shutdown\n   mtu 9000\n   vrf Red\n   ip address virtual 10.1.20.1/24\n\
-    !\ninterface Vlan3999\n   description MLAG_PEER_L3_iBGP: vrf Red\n   no shutdown\n\
-    \   mtu 9214\n   vrf Red\n   ip address 10.255.251.4/31\n!\ninterface Vlan4093\n\
-    \   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 9214\n   ip address\
-    \ 10.255.251.4/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n\
-    \   mtu 9214\n   no autostate\n   ip address 10.255.252.4/31\n!\ninterface Vxlan1\n\
-    \   description leaf3-DC2_VTEP\n   vxlan source-interface Loopback1\n   vxlan\
-    \ virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n\
-    \   vxlan vlan 10 vni 10011\n   vxlan vlan 20 vni 10021\n   vxlan vrf Red vni\
-    \ 1000\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n!\nip routing\nip\
-    \ routing vrf Red\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit\
-    \ 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq 32\n!\nmlag configuration\n\
-    \   domain-id pod5\n   local-interface Vlan4094\n   peer-address 10.255.252.5\n\
-    \   peer-link Port-Channel1\n   reload-delay mlag 300\n   reload-delay non-mlag\
-    \ 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-IN\
-    \ permit 10\n   description Make routes learned over MLAG Peer-link less preferred\
-    \ on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n\
-    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65202\n   router-id\
-    \ 192.168.201.5\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
-    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
-    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
-    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
-    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
-    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65202\n   neighbor\
-    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
-    \ leaf4-DC2\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC2_Host2-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf4-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf4-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet4\n   no shutdown\n   mtu 9214\n   no switchport\n\
+    \   ip address 192.168.203.13/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet4\n\
+    \   no shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.15/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet4\n   no\
+    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.17/31\n!\n\
+    interface Ethernet6\n   description host2-DC2_Eth1\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host2-DC2_Eth2\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.5/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.5/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.33/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   mtu 9000\n   vrf Red\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   mtu 9000\n   vrf\
+    \ Red\n   ip address virtual 10.1.20.1/24\n!\ninterface Vlan3999\n   description\
+    \ MLAG_PEER_L3_iBGP: vrf Red\n   no shutdown\n   mtu 9214\n   vrf Red\n   ip address\
+    \ 10.255.251.4/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n\
+    \   no shutdown\n   mtu 9214\n   ip address 10.255.251.4/31\n!\ninterface Vlan4094\n\
+    \   description MLAG_PEER\n   no shutdown\n   mtu 9214\n   no autostate\n   ip\
+    \ address 10.255.252.4/31\n!\ninterface Vxlan1\n   description leaf3-DC2_VTEP\n\
+    \   vxlan source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address\
+    \ mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10011\n   vxlan\
+    \ vlan 20 vni 10021\n   vxlan vrf Red vni 1000\n!\nip virtual-router mac-address\
+    \ 00:1c:73:00:00:99\n!\nip routing\nip routing vrf Red\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id pod5\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.5\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65202\n   router-id 192.168.201.5\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65202\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf4-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.5 description leaf4-DC2\n   neighbor 192.168.201.11 peer group EVPN-OVERLAY-PEERS\n\
@@ -912,8 +924,8 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf3-DC1_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_PortChanne1\n   no\
-    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_Host2-DC1\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf3-DC1_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf3-DC1_Ethernet2\n\
     \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
@@ -1004,53 +1016,57 @@ CVP_CONFIGLETS:
     \ MLAG\n!\nvrf instance Red\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf3-DC2_Po1\n\
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_leaf3-DC2_Ethernet1\n\
-    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
-    \ MLAG_PEER_leaf3-DC2_Ethernet2\n   no shutdown\n   channel-group 1 mode active\n\
-    !\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC2_Ethernet5\n   no\
-    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.19/31\n!\n\
-    interface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet5\n   no shutdown\n\
-    \   mtu 9214\n   no switchport\n   ip address 192.168.203.21/31\n!\ninterface\
-    \ Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet5\n   no shutdown\n\
-    \   mtu 9214\n   no switchport\n   ip address 192.168.203.23/31\n!\ninterface\
-    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
-    \ 192.168.201.6/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
-    \   no shutdown\n   ip address 192.168.202.5/32\n!\ninterface Management0\n  \
-    \ description oob_management\n   no shutdown\n   ip address 192.168.0.34/24\n\
-    !\ninterface Vlan10\n   description VLAN_10\n   no shutdown\n   mtu 9000\n   vrf\
-    \ Red\n   ip address virtual 10.1.10.1/24\n!\ninterface Vlan20\n   description\
-    \ VLAN_20\n   no shutdown\n   mtu 9000\n   vrf Red\n   ip address virtual 10.1.20.1/24\n\
-    !\ninterface Vlan3999\n   description MLAG_PEER_L3_iBGP: vrf Red\n   no shutdown\n\
-    \   mtu 9214\n   vrf Red\n   ip address 10.255.251.5/31\n!\ninterface Vlan4093\n\
-    \   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 9214\n   ip address\
-    \ 10.255.251.5/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n\
-    \   mtu 9214\n   no autostate\n   ip address 10.255.252.5/31\n!\ninterface Vxlan1\n\
-    \   description leaf4-DC2_VTEP\n   vxlan source-interface Loopback1\n   vxlan\
-    \ virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n\
-    \   vxlan vlan 10 vni 10011\n   vxlan vlan 20 vni 10021\n   vxlan vrf Red vni\
-    \ 1000\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n!\nip routing\nip\
-    \ routing vrf Red\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit\
-    \ 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq 32\n!\nmlag configuration\n\
-    \   domain-id pod5\n   local-interface Vlan4094\n   peer-address 10.255.252.4\n\
-    \   peer-link Port-Channel1\n   reload-delay mlag 300\n   reload-delay non-mlag\
-    \ 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-IN\
-    \ permit 10\n   description Make routes learned over MLAG Peer-link less preferred\
-    \ on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n\
-    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65202\n   router-id\
-    \ 192.168.201.6\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
-    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
-    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
-    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
-    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
-    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65202\n   neighbor\
-    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
-    \ leaf3-DC2\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC2_Host2-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf3-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf3-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet5\n   no shutdown\n   mtu 9214\n   no switchport\n\
+    \   ip address 192.168.203.19/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet5\n\
+    \   no shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.21/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet5\n   no\
+    \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.203.23/31\n!\n\
+    interface Ethernet6\n   description host2-DC2_Eth3\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host2-DC2_Eth4\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.6/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.5/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.34/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   mtu 9000\n   vrf Red\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   mtu 9000\n   vrf\
+    \ Red\n   ip address virtual 10.1.20.1/24\n!\ninterface Vlan3999\n   description\
+    \ MLAG_PEER_L3_iBGP: vrf Red\n   no shutdown\n   mtu 9214\n   vrf Red\n   ip address\
+    \ 10.255.251.5/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n\
+    \   no shutdown\n   mtu 9214\n   ip address 10.255.251.5/31\n!\ninterface Vlan4094\n\
+    \   description MLAG_PEER\n   no shutdown\n   mtu 9214\n   no autostate\n   ip\
+    \ address 10.255.252.5/31\n!\ninterface Vxlan1\n   description leaf4-DC2_VTEP\n\
+    \   vxlan source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address\
+    \ mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 10 vni 10011\n   vxlan\
+    \ vlan 20 vni 10021\n   vxlan vrf Red vni 1000\n!\nip virtual-router mac-address\
+    \ 00:1c:73:00:00:99\n!\nip routing\nip routing vrf Red\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id pod5\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.4\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65202\n   router-id 192.168.201.6\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65202\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf3-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.4 description leaf3-DC2\n   neighbor 192.168.201.11 peer group EVPN-OVERLAY-PEERS\n\

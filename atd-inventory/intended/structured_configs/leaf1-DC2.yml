@@ -224,6 +224,13 @@ port_channel_interfaces:
     trunk_groups:
     - LEAF_PEER_L3
     - MLAG
+  Port-Channel6:
+    description: host1-DC2_Host1-DC2
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: 10
+    mlag: 6
 ethernet_interfaces:
   Ethernet1:
     peer: leaf2-DC2
@@ -272,6 +279,30 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.203.5/31
+  Ethernet6:
+    peer: host1-DC2
+    peer_interface: Eth1
+    peer_type: server
+    description: host1-DC2_Eth1
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: 10
+    channel_group:
+      id: 6
+      mode: active
+  Ethernet7:
+    peer: host1-DC2
+    peer_interface: Eth2
+    peer_type: server
+    description: host1-DC2_Eth2
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: 10
+    channel_group:
+      id: 6
+      mode: active
 mlag_configuration:
   domain_id: pod4
   local_interface: Vlan4094
