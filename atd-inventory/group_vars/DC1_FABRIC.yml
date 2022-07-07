@@ -70,6 +70,8 @@ l3leaf:
           id: 1
           mgmt_ip: 192.168.0.21/24
           uplink_switch_interfaces: [Ethernet2, Ethernet2, Ethernet2]
+          aliases:
+            - 'alias tonyb show ip interface brief'
         leaf2-DC1:
           id: 2
           mgmt_ip: 192.168.0.22/24
