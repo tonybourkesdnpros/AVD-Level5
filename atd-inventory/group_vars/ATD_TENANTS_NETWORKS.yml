@@ -6,7 +6,7 @@ svi_profiles:
 tenants:
   # Tenant A Specific Information - VRFs / VLANs
   ACME_1:
-    mac_vrf_vni_base: 10001
+    mac_vrf_vni_base: 100
     vrfs:
       Red:
         vrf_vni: 1000

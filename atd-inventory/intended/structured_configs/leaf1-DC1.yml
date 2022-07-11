@@ -1,6 +1,6 @@
 router_bgp:
   as: '65101'
-  router_id: 192.168.101.3
+  router_id: 192.168.101.1
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -26,7 +26,7 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
+      ebgp_multihop: '7'
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
@@ -44,28 +44,28 @@ router_bgp:
       description: leaf2-DC1
     192.168.103.0:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65001'
+      remote_as: '65100'
       description: spine1-DC1_Ethernet2
     192.168.103.2:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65001'
+      remote_as: '65100'
       description: spine2-DC1_Ethernet2
     192.168.103.4:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65001'
+      remote_as: '65100'
       description: spine3-DC1_Ethernet2
-    192.168.101.11:
+    192.168.101.111:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine1-DC1
-      remote_as: '65001'
-    192.168.101.12:
+      remote_as: '65100'
+    192.168.101.112:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine2-DC1
-      remote_as: '65001'
-    192.168.101.13:
+      remote_as: '65100'
+    192.168.101.113:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine3-DC1
-      remote_as: '65001'
+      remote_as: '65100'
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -75,8 +75,8 @@ router_bgp:
         activate: true
   vrfs:
     Red:
-      router_id: 192.168.101.3
-      rd: 192.168.101.3:1000
+      router_id: 192.168.101.1
+      rd: 192.168.101.1:1000
       route_targets:
         import:
           evpn:
@@ -89,15 +89,23 @@ router_bgp:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
-  vlan_aware_bundles:
-    Red:
-      rd: 192.168.101.3:1000
+  vlans:
+    10:
+      tenant: ACME_1
+      rd: 192.168.101.1:110
       route_targets:
         both:
-        - 1000:1000
+        - 110:110
       redistribute_routes:
       - learned
-      vlan: 10,20
+    20:
+      tenant: ACME_1
+      rd: 192.168.101.1:120
+      route_targets:
+        both:
+        - 120:120
+      redistribute_routes:
+      - learned
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0
@@ -328,11 +336,11 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.168.101.3/32
+    ip_address: 192.168.101.1/32
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
-    ip_address: 192.168.102.3/32
+    ip_address: 192.168.102.1/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
@@ -357,9 +365,9 @@ vxlan_interface:
       udp_port: 4789
       vlans:
         10:
-          vni: 10011
+          vni: 110
         20:
-          vni: 10021
+          vni: 120
       vrfs:
         Red:
           vni: 1000

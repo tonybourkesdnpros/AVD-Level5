@@ -8,7 +8,7 @@ all:
           ansible_user: arista
           ansible_password: aristagnff
           cv_collection: v3
-    ATD_LAB:
+    ATD_FABRIC:
       vars:
         ansible_user: arista
         ansible_ssh_pass: aristagnff
@@ -66,9 +66,9 @@ all:
                     borderleaf2-DC2:
         ATD_TENANTS_NETWORKS:
           children:
-            DC1_FABRIC:
-            DC2_FABRIC:
+            DC1_LEAFS:
+            DC2_LEAFS:
         ATD_SERVERS:
           children:
-            DC1_FABRIC:
-            DC2_FABRIC:
+            DC1_LEAFS:
+            DC2_LEAFS:

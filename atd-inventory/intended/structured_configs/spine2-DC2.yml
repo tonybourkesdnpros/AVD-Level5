@@ -1,6 +1,6 @@
 router_bgp:
-  as: '65001'
-  router_id: 192.168.201.12
+  as: '65200'
+  router_id: 192.168.101.115
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -17,7 +17,7 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
+      ebgp_multihop: '7'
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
@@ -32,51 +32,51 @@ router_bgp:
     connected:
       route_map: RM-CONN-2-BGP
   neighbors:
-    192.168.203.3:
+    192.168.103.39:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65201'
       description: leaf1-DC2_Ethernet4
-    192.168.203.9:
+    192.168.103.45:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65201'
       description: leaf2-DC2_Ethernet4
-    192.168.203.15:
+    192.168.103.51:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65202'
       description: leaf3-DC2_Ethernet4
-    192.168.203.21:
+    192.168.103.57:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65202'
       description: leaf4-DC2_Ethernet4
-    192.168.203.27:
+    192.168.103.63:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65203'
       description: borderleaf1-DC2_Ethernet4
-    192.168.203.33:
+    192.168.103.69:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65203'
       description: borderleaf2-DC2_Ethernet4
-    192.168.201.7:
+    192.168.101.11:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf1-DC2
       remote_as: '65203'
-    192.168.201.8:
+    192.168.101.12:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf2-DC2
       remote_as: '65203'
-    192.168.201.3:
+    192.168.101.7:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf1-DC2
       remote_as: '65201'
-    192.168.201.4:
+    192.168.101.8:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf2-DC2
       remote_as: '65201'
-    192.168.201.5:
+    192.168.101.9:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf3-DC2
       remote_as: '65202'
-    192.168.201.6:
+    192.168.101.10:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf4-DC2
       remote_as: '65202'
@@ -142,7 +142,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 192.168.203.2/31
+    ip_address: 192.168.103.38/31
   Ethernet3:
     peer: leaf2-DC2
     peer_interface: Ethernet4
@@ -151,7 +151,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 192.168.203.8/31
+    ip_address: 192.168.103.44/31
   Ethernet4:
     peer: leaf3-DC2
     peer_interface: Ethernet4
@@ -160,7 +160,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 192.168.203.14/31
+    ip_address: 192.168.103.50/31
   Ethernet5:
     peer: leaf4-DC2
     peer_interface: Ethernet4
@@ -169,7 +169,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 192.168.203.20/31
+    ip_address: 192.168.103.56/31
   Ethernet6:
     peer: borderleaf1-DC2
     peer_interface: Ethernet4
@@ -178,7 +178,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 192.168.203.26/31
+    ip_address: 192.168.103.62/31
   Ethernet7:
     peer: borderleaf2-DC2
     peer_interface: Ethernet4
@@ -187,17 +187,17 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 192.168.203.32/31
+    ip_address: 192.168.103.68/31
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.168.201.12/32
+    ip_address: 192.168.101.115/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
       10:
-        action: permit 192.168.201.0/24 eq 32
+        action: permit 192.168.101.0/24 eq 32
 route_maps:
   RM-CONN-2-BGP:
     sequence_numbers:

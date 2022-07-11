@@ -308,8 +308,8 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | MLAG_PEER_leaf3-DC1_Ethernet1 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1 |
 | Ethernet2 | MLAG_PEER_leaf3-DC1_Ethernet2 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1 |
-| Ethernet6 | host2-DC1_Eth3 | *access | *20 | *- | *- | 6 |
-| Ethernet7 | host2-DC1_Eth4 | *access | *20 | *- | *- | 6 |
+| Ethernet6 | host2-DC1_Eth3 | *access | *10 | *- | *- | 6 |
+| Ethernet7 | host2-DC1_Eth4 | *access | *10 | *- | *- | 6 |
 
 *Inherited from Port-Channel Interface
 
@@ -376,7 +376,7 @@ interface Ethernet7
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel1 | MLAG_PEER_leaf3-DC1_Po1 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel6 | host2-DC1_Host2-DC1 | switched | access | 20 | - | - | - | - | 6 | - |
+| Port-Channel6 | host2-DC1_Host2-DC1 | switched | access | 10 | - | - | - | - | 6 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -395,7 +395,7 @@ interface Port-Channel6
    description host2-DC1_Host2-DC1
    no shutdown
    switchport
-   switchport access vlan 20
+   switchport access vlan 10
    mlag 6
 ```
 
@@ -407,8 +407,8 @@ interface Port-Channel6
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | EVPN_Overlay_Peering | default | 192.168.101.6/32 |
-| Loopback1 | VTEP_VXLAN_Tunnel_Source | default | 192.168.102.5/32 |
+| Loopback0 | EVPN_Overlay_Peering | default | 192.168.101.4/32 |
+| Loopback1 | VTEP_VXLAN_Tunnel_Source | default | 192.168.102.3/32 |
 
 #### IPv6
 
@@ -425,12 +425,12 @@ interface Port-Channel6
 interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
-   ip address 192.168.101.6/32
+   ip address 192.168.101.4/32
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
-   ip address 192.168.102.5/32
+   ip address 192.168.102.3/32
 ```
 
 ## VLAN Interfaces
@@ -508,8 +508,8 @@ interface Vlan4094
 
 | VLAN | VNI | Flood List | Multicast Group |
 | ---- | --- | ---------- | --------------- |
-| 10 | 10011 | - | - |
-| 20 | 10021 | - | - |
+| 10 | 110 | - | - |
+| 20 | 120 | - | - |
 
 #### VRF to VNI and Multicast Group Mappings
 
@@ -526,8 +526,8 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 10 vni 10011
-   vxlan vlan 20 vni 10021
+   vxlan vlan 10 vni 110
+   vxlan vlan 20 vni 120
    vxlan vrf Red vni 1000
 ```
 
@@ -602,7 +602,7 @@ ip route 0.0.0.0/0 192.168.0.1
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65102|  192.168.101.6 |
+| 65102|  192.168.101.4 |
 
 | BGP Tuning |
 | ---------- |
@@ -621,7 +621,7 @@ ip route 0.0.0.0/0 192.168.0.1
 | Address Family | evpn |
 | Source | Loopback0 |
 | BFD | True |
-| Ebgp multihop | 3 |
+| Ebgp multihop | 7 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
@@ -648,12 +648,12 @@ ip route 0.0.0.0/0 192.168.0.1
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
 | 10.255.251.4 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
-| 192.168.101.11 | 65001 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
-| 192.168.101.12 | 65001 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
-| 192.168.101.13 | 65001 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
-| 192.168.103.18 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
-| 192.168.103.20 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
-| 192.168.103.22 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.101.111 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.112 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.113 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.103.18 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.103.20 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.103.22 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
 | 10.255.251.4 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Red | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
 
 ### Router BGP EVPN Address Family
@@ -664,24 +664,25 @@ ip route 0.0.0.0/0 192.168.0.1
 | ---------- | -------- |
 | EVPN-OVERLAY-PEERS | True |
 
-### Router BGP VLAN Aware Bundles
+### Router BGP VLANs
 
-| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
-| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Red | 192.168.101.6:1000 | 1000:1000 | - | - | learned | 10,20 |
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 10 | 192.168.101.4:110 | 110:110 | - | - | learned |
+| 20 | 192.168.101.4:120 | 120:120 | - | - | learned |
 
 ### Router BGP VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
-| Red | 192.168.101.6:1000 | connected |
+| Red | 192.168.101.4:1000 | connected |
 
 ### Router BGP Device Configuration
 
 ```eos
 !
 router bgp 65102
-   router-id 192.168.101.6
+   router-id 192.168.101.4
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    graceful-restart restart-time 300
@@ -690,7 +691,7 @@ router bgp 65102
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
@@ -708,31 +709,35 @@ router bgp 65102
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
    neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER
    neighbor 10.255.251.4 description leaf3-DC1
-   neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.101.11 remote-as 65001
-   neighbor 192.168.101.11 description spine1-DC1
-   neighbor 192.168.101.12 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.101.12 remote-as 65001
-   neighbor 192.168.101.12 description spine2-DC1
-   neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.101.13 remote-as 65001
-   neighbor 192.168.101.13 description spine3-DC1
+   neighbor 192.168.101.111 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.101.111 remote-as 65100
+   neighbor 192.168.101.111 description spine1-DC1
+   neighbor 192.168.101.112 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.101.112 remote-as 65100
+   neighbor 192.168.101.112 description spine2-DC1
+   neighbor 192.168.101.113 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.101.113 remote-as 65100
+   neighbor 192.168.101.113 description spine3-DC1
    neighbor 192.168.103.18 peer group IPv4-UNDERLAY-PEERS
-   neighbor 192.168.103.18 remote-as 65001
+   neighbor 192.168.103.18 remote-as 65100
    neighbor 192.168.103.18 description spine1-DC1_Ethernet5
    neighbor 192.168.103.20 peer group IPv4-UNDERLAY-PEERS
-   neighbor 192.168.103.20 remote-as 65001
+   neighbor 192.168.103.20 remote-as 65100
    neighbor 192.168.103.20 description spine2-DC1_Ethernet5
    neighbor 192.168.103.22 peer group IPv4-UNDERLAY-PEERS
-   neighbor 192.168.103.22 remote-as 65001
+   neighbor 192.168.103.22 remote-as 65100
    neighbor 192.168.103.22 description spine3-DC1_Ethernet5
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan-aware-bundle Red
-      rd 192.168.101.6:1000
-      route-target both 1000:1000
+   vlan 10
+      rd 192.168.101.4:110
+      route-target both 110:110
       redistribute learned
-      vlan 10,20
+   !
+   vlan 20
+      rd 192.168.101.4:120
+      route-target both 120:120
+      redistribute learned
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
@@ -743,10 +748,10 @@ router bgp 65102
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf Red
-      rd 192.168.101.6:1000
+      rd 192.168.101.4:1000
       route-target import evpn 1000:1000
       route-target export evpn 1000:1000
-      router-id 192.168.101.6
+      router-id 192.168.101.4
       neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
 ```

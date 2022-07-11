@@ -1,6 +1,6 @@
 router_bgp:
-  as: '65001'
-  router_id: 192.168.101.13
+  as: '65100'
+  router_id: 192.168.101.113
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -17,7 +17,7 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
+      ebgp_multihop: '7'
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
@@ -56,27 +56,27 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65103'
       description: borderleaf2-DC1_Ethernet5
-    192.168.101.7:
+    192.168.101.5:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf1-DC1
       remote_as: '65103'
-    192.168.101.8:
+    192.168.101.6:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf2-DC1
       remote_as: '65103'
-    192.168.101.3:
+    192.168.101.1:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf1-DC1
       remote_as: '65101'
-    192.168.101.4:
+    192.168.101.2:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf2-DC1
       remote_as: '65101'
-    192.168.101.5:
+    192.168.101.3:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf3-DC1
       remote_as: '65102'
-    192.168.101.6:
+    192.168.101.4:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf4-DC1
       remote_as: '65102'
@@ -192,7 +192,7 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.168.101.13/32
+    ip_address: 192.168.101.113/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
