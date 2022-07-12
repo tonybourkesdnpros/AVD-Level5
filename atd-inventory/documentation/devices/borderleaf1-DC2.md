@@ -601,7 +601,7 @@ ip route 0.0.0.0/0 192.168.0.1
 | Address Family | evpn |
 | Source | Loopback0 |
 | BFD | True |
-| Ebgp multihop | 7 |
+| Ebgp multihop | 3 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
@@ -644,12 +644,11 @@ ip route 0.0.0.0/0 192.168.0.1
 | ---------- | -------- |
 | EVPN-OVERLAY-PEERS | True |
 
-### Router BGP VLANs
+### Router BGP VLAN Aware Bundles
 
-| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
-| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
-| 10 | 192.168.101.11:110 | 110:110 | - | - | learned |
-| 20 | 192.168.101.11:120 | 120:120 | - | - | learned |
+| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
+| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
+| Red | 192.168.101.11:1000 | 1000:1000 | - | - | learned | 10,20 |
 
 ### Router BGP VRFs
 
@@ -671,7 +670,7 @@ router bgp 65203
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
@@ -709,15 +708,11 @@ router bgp 65203
    neighbor 192.168.103.64 description spine3-DC2_Ethernet6
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan 10
-      rd 192.168.101.11:110
-      route-target both 110:110
+   vlan-aware-bundle Red
+      rd 192.168.101.11:1000
+      route-target both 1000:1000
       redistribute learned
-   !
-   vlan 20
-      rd 192.168.101.11:120
-      route-target both 120:120
-      redistribute learned
+      vlan 10,20
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

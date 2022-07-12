@@ -27,7 +27,7 @@ servers:
         server_ports: [Eth1, Eth2, Eth3, Eth4]
         switch_ports: [Ethernet6, Ethernet7, Ethernet6, Ethernet7]
         switches: [leaf3-DC1, leaf3-DC1, leaf4-DC1, leaf4-DC1]
-        profile: VLAN_10
+        profile: VLAN_20
         port_channel:
           state: present
           description: Host2-DC1
@@ -51,7 +51,7 @@ servers:
         server_ports: [Eth1, Eth2, Eth3, Eth4]
         switch_ports: [Ethernet6, Ethernet7, Ethernet6, Ethernet7]
         switches: [leaf3-DC2, leaf3-DC2, leaf4-DC2, leaf4-DC2]
-        profile: VLAN_10
+        profile: VLAN_20
         port_channel:
           state: present
           description: Host2-DC2

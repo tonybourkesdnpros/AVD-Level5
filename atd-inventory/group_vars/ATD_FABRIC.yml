@@ -5,8 +5,7 @@
 fabric_name: ATD_FABRIC
 
 # Enable vlan aware bundles
-vxlan_vlan_aware_bundles: false
-evpn_ebgp_multihop: 7
+vxlan_vlan_aware_bundles: true
 
 # bgp peer groups passwords
 bgp_peer_groups:

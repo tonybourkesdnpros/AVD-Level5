@@ -308,8 +308,8 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | MLAG_PEER_leaf3-DC1_Ethernet1 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1 |
 | Ethernet2 | MLAG_PEER_leaf3-DC1_Ethernet2 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1 |
-| Ethernet6 | host2-DC1_Eth3 | *access | *10 | *- | *- | 6 |
-| Ethernet7 | host2-DC1_Eth4 | *access | *10 | *- | *- | 6 |
+| Ethernet6 | host2-DC1_Eth3 | *access | *20 | *- | *- | 6 |
+| Ethernet7 | host2-DC1_Eth4 | *access | *20 | *- | *- | 6 |
 
 *Inherited from Port-Channel Interface
 
@@ -376,7 +376,7 @@ interface Ethernet7
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel1 | MLAG_PEER_leaf3-DC1_Po1 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel6 | host2-DC1_Host2-DC1 | switched | access | 10 | - | - | - | - | 6 | - |
+| Port-Channel6 | host2-DC1_Host2-DC1 | switched | access | 20 | - | - | - | - | 6 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -395,7 +395,7 @@ interface Port-Channel6
    description host2-DC1_Host2-DC1
    no shutdown
    switchport
-   switchport access vlan 10
+   switchport access vlan 20
    mlag 6
 ```
 
@@ -621,7 +621,7 @@ ip route 0.0.0.0/0 192.168.0.1
 | Address Family | evpn |
 | Source | Loopback0 |
 | BFD | True |
-| Ebgp multihop | 7 |
+| Ebgp multihop | 3 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
@@ -664,12 +664,11 @@ ip route 0.0.0.0/0 192.168.0.1
 | ---------- | -------- |
 | EVPN-OVERLAY-PEERS | True |
 
-### Router BGP VLANs
+### Router BGP VLAN Aware Bundles
 
-| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
-| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
-| 10 | 192.168.101.4:110 | 110:110 | - | - | learned |
-| 20 | 192.168.101.4:120 | 120:120 | - | - | learned |
+| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
+| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
+| Red | 192.168.101.4:1000 | 1000:1000 | - | - | learned | 10,20 |
 
 ### Router BGP VRFs
 
@@ -691,7 +690,7 @@ router bgp 65102
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
@@ -729,15 +728,11 @@ router bgp 65102
    neighbor 192.168.103.22 description spine3-DC1_Ethernet5
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan 10
-      rd 192.168.101.4:110
-      route-target both 110:110
+   vlan-aware-bundle Red
+      rd 192.168.101.4:1000
+      route-target both 1000:1000
       redistribute learned
-   !
-   vlan 20
-      rd 192.168.101.4:120
-      route-target both 120:120
-      redistribute learned
+      vlan 10,20
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

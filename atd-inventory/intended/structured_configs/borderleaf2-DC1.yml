@@ -26,7 +26,7 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '7'
+      ebgp_multihop: '3'
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
@@ -89,23 +89,15 @@ router_bgp:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
-  vlans:
-    10:
-      tenant: ACME_1
-      rd: 192.168.101.6:110
+  vlan_aware_bundles:
+    Red:
+      rd: 192.168.101.6:1000
       route_targets:
         both:
-        - 110:110
+        - 1000:1000
       redistribute_routes:
       - learned
-    20:
-      tenant: ACME_1
-      rd: 192.168.101.6:120
-      route_targets:
-        both:
-        - 120:120
-      redistribute_routes:
-      - learned
+      vlan: 10,20
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0

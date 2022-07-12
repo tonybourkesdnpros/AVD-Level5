@@ -54,7 +54,7 @@ CVP_CONFIGLETS:
     \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
     \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
     \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
@@ -78,12 +78,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.26 description spine2-DC1_Ethernet6\n   neighbor 192.168.103.28\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.28 remote-as 65100\n\
     \   neighbor 192.168.103.28 description spine3-DC1_Ethernet6\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.5:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.5:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.5:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.5:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.5\n      neighbor 10.255.251.9 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -144,7 +143,7 @@ CVP_CONFIGLETS:
     \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
     \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
     \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
@@ -168,12 +167,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.62 description spine2-DC2_Ethernet6\n   neighbor 192.168.103.64\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.64 remote-as 65200\n\
     \   neighbor 192.168.103.64 description spine3-DC2_Ethernet6\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.11:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.11:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.11:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.11:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.11\n      neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -234,7 +232,7 @@ CVP_CONFIGLETS:
     \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
     \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
     \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
@@ -258,12 +256,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.32 description spine2-DC1_Ethernet7\n   neighbor 192.168.103.34\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.34 remote-as 65100\n\
     \   neighbor 192.168.103.34 description spine3-DC1_Ethernet7\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.6:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.6:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.6:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.6:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.6\n      neighbor 10.255.251.8 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -324,7 +321,7 @@ CVP_CONFIGLETS:
     \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
     \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
     \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
@@ -348,12 +345,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.68 description spine2-DC2_Ethernet7\n   neighbor 192.168.103.70\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.70 remote-as 65200\n\
     \   neighbor 192.168.103.70 description spine3-DC2_Ethernet7\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.12:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.12:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.12:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.12:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.12\n      neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -417,7 +413,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -441,12 +437,11 @@ CVP_CONFIGLETS:
     \ 65100\n   neighbor 192.168.103.2 description spine2-DC1_Ethernet2\n   neighbor\
     \ 192.168.103.4 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.4 remote-as\
     \ 65100\n   neighbor 192.168.103.4 description spine3-DC1_Ethernet2\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.1:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.1:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.1:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.1:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.1\n      neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -510,7 +505,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -535,12 +530,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.38 description spine2-DC2_Ethernet2\n   neighbor 192.168.103.40\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.40 remote-as 65200\n\
     \   neighbor 192.168.103.40 description spine3-DC2_Ethernet2\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.7:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.7:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.7:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.7:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.7\n      neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -604,7 +598,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -628,12 +622,11 @@ CVP_CONFIGLETS:
     \ 65100\n   neighbor 192.168.103.8 description spine2-DC1_Ethernet3\n   neighbor\
     \ 192.168.103.10 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.10 remote-as\
     \ 65100\n   neighbor 192.168.103.10 description spine3-DC1_Ethernet3\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.2:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.2:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.2:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.2:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.2\n      neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -697,7 +690,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -722,12 +715,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.44 description spine2-DC2_Ethernet3\n   neighbor 192.168.103.46\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.46 remote-as 65200\n\
     \   neighbor 192.168.103.46 description spine3-DC2_Ethernet3\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.8:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.8:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.8:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.8:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.8\n      neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -751,7 +743,7 @@ CVP_CONFIGLETS:
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
     \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_Host2-DC1\n   no\
-    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf4-DC1_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf4-DC1_Ethernet2\n\
     \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
@@ -791,7 +783,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -815,12 +807,11 @@ CVP_CONFIGLETS:
     \ 65100\n   neighbor 192.168.103.14 description spine2-DC1_Ethernet4\n   neighbor\
     \ 192.168.103.16 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.16 remote-as\
     \ 65100\n   neighbor 192.168.103.16 description spine3-DC1_Ethernet4\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.3:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.3:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.3:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.3:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.3\n      neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -844,7 +835,7 @@ CVP_CONFIGLETS:
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
     \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC2_Host2-DC2\n   no\
-    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf4-DC2_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf4-DC2_Ethernet2\n\
     \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
@@ -884,7 +875,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -909,12 +900,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.50 description spine2-DC2_Ethernet4\n   neighbor 192.168.103.52\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.52 remote-as 65200\n\
     \   neighbor 192.168.103.52 description spine3-DC2_Ethernet4\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.9:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.9:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.9:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.9:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.9\n      neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -938,7 +928,7 @@ CVP_CONFIGLETS:
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
     \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_Host2-DC1\n   no\
-    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf3-DC1_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf3-DC1_Ethernet2\n\
     \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
@@ -978,7 +968,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -1002,12 +992,11 @@ CVP_CONFIGLETS:
     \ 65100\n   neighbor 192.168.103.20 description spine2-DC1_Ethernet5\n   neighbor\
     \ 192.168.103.22 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.22 remote-as\
     \ 65100\n   neighbor 192.168.103.22 description spine3-DC1_Ethernet5\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.4:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.4:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.4:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.4:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.4\n      neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -1031,7 +1020,7 @@ CVP_CONFIGLETS:
     \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
     \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
     \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC2_Host2-DC2\n   no\
-    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
     \ Ethernet1\n   description MLAG_PEER_leaf3-DC2_Ethernet1\n   no shutdown\n  \
     \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf3-DC2_Ethernet2\n\
     \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
@@ -1071,7 +1060,7 @@ CVP_CONFIGLETS:
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
-    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -1096,12 +1085,11 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.56 description spine2-DC2_Ethernet5\n   neighbor 192.168.103.58\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.58 remote-as 65200\n\
     \   neighbor 192.168.103.58 description spine3-DC2_Ethernet5\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.10:110\n\
-    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
-    \      rd 192.168.101.10:120\n      route-target both 120:120\n      redistribute\
-    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
+    \ 192.168.101.10:1000\n      route-target both 1000:1000\n      redistribute learned\n\
+    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.10:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.10\n      neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -1140,7 +1128,7 @@ CVP_CONFIGLETS:
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source\
     \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
@@ -1206,7 +1194,7 @@ CVP_CONFIGLETS:
     \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
     \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
     \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -1273,7 +1261,7 @@ CVP_CONFIGLETS:
     \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
     \ EVPN-OVERLAY-PEERS next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source\
     \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
@@ -1339,7 +1327,7 @@ CVP_CONFIGLETS:
     \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
     \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
     \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -1406,7 +1394,7 @@ CVP_CONFIGLETS:
     \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
     \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
     \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
@@ -1473,7 +1461,7 @@ CVP_CONFIGLETS:
     \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
     \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
     \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 7\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
     \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
