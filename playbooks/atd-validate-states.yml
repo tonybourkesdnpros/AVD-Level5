@@ -1,5 +1,5 @@
 - name: "Run Fabric states validation"
-  hosts: DC2_FABRIC
+  hosts: ATD_FABRIC
   connection: local
   gather_facts: false
   collections:

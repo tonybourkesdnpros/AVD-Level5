@@ -5,7 +5,6 @@
 fabric_name: ATD_FABRIC
 
 # Enable vlan aware bundles
-vxlan_vlan_aware_bundles: true
 
 # bgp peer groups passwords
 bgp_peer_groups:
@@ -245,3 +244,4 @@ aaa_server_groups:
     servers:
       - server: 192.168.0.1
         # vrf: default
+

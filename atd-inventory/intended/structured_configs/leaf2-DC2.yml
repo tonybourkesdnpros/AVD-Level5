@@ -89,15 +89,23 @@ router_bgp:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
-  vlan_aware_bundles:
-    Red:
-      rd: 192.168.101.8:1000
+  vlans:
+    10:
+      tenant: ACME_1
+      rd: 192.168.101.8:110
       route_targets:
         both:
-        - 1000:1000
+        - 110:110
       redistribute_routes:
       - learned
-      vlan: 10,20
+    20:
+      tenant: ACME_1
+      rd: 192.168.101.8:120
+      route_targets:
+        both:
+        - 120:120
+      redistribute_routes:
+      - learned
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0

@@ -167,11 +167,12 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.62 description spine2-DC2_Ethernet6\n   neighbor 192.168.103.64\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.64 remote-as 65200\n\
     \   neighbor 192.168.103.64 description spine3-DC2_Ethernet6\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
-    \ 192.168.101.11:1000\n      route-target both 1000:1000\n      redistribute learned\n\
-    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.11:110\n\
+    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
+    \      rd 192.168.101.11:120\n      route-target both 120:120\n      redistribute\
+    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.11:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.11\n      neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -345,11 +346,12 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.68 description spine2-DC2_Ethernet7\n   neighbor 192.168.103.70\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.70 remote-as 65200\n\
     \   neighbor 192.168.103.70 description spine3-DC2_Ethernet7\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
-    \ 192.168.101.12:1000\n      route-target both 1000:1000\n      redistribute learned\n\
-    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.12:110\n\
+    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
+    \      rd 192.168.101.12:120\n      route-target both 120:120\n      redistribute\
+    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.12:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.12\n      neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -530,11 +532,12 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.38 description spine2-DC2_Ethernet2\n   neighbor 192.168.103.40\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.40 remote-as 65200\n\
     \   neighbor 192.168.103.40 description spine3-DC2_Ethernet2\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
-    \ 192.168.101.7:1000\n      route-target both 1000:1000\n      redistribute learned\n\
-    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.7:110\n\
+    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
+    \      rd 192.168.101.7:120\n      route-target both 120:120\n      redistribute\
+    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.7:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.7\n      neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -715,11 +718,12 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.44 description spine2-DC2_Ethernet3\n   neighbor 192.168.103.46\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.46 remote-as 65200\n\
     \   neighbor 192.168.103.46 description spine3-DC2_Ethernet3\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
-    \ 192.168.101.8:1000\n      route-target both 1000:1000\n      redistribute learned\n\
-    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.8:110\n\
+    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
+    \      rd 192.168.101.8:120\n      route-target both 120:120\n      redistribute\
+    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.8:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.8\n      neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -900,11 +904,12 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.50 description spine2-DC2_Ethernet4\n   neighbor 192.168.103.52\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.52 remote-as 65200\n\
     \   neighbor 192.168.103.52 description spine3-DC2_Ethernet4\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
-    \ 192.168.101.9:1000\n      route-target both 1000:1000\n      redistribute learned\n\
-    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.9:110\n\
+    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
+    \      rd 192.168.101.9:120\n      route-target both 120:120\n      redistribute\
+    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.9:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.9\n      neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n\
@@ -1085,11 +1090,12 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.103.56 description spine2-DC2_Ethernet5\n   neighbor 192.168.103.58\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.58 remote-as 65200\n\
     \   neighbor 192.168.103.58 description spine3-DC2_Ethernet5\n   redistribute\
-    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Red\n      rd\
-    \ 192.168.101.10:1000\n      route-target both 1000:1000\n      redistribute learned\n\
-    \      vlan 10,20\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.10:110\n\
+    \      route-target both 110:110\n      redistribute learned\n   !\n   vlan 20\n\
+    \      rd 192.168.101.10:120\n      route-target both 120:120\n      redistribute\
+    \ learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Red\n      rd 192.168.101.10:1000\n      route-target\
     \ import evpn 1000:1000\n      route-target export evpn 1000:1000\n      router-id\
     \ 192.168.101.10\n      neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n\

@@ -664,11 +664,12 @@ ip route 0.0.0.0/0 192.168.0.1
 | ---------- | -------- |
 | EVPN-OVERLAY-PEERS | True |
 
-### Router BGP VLAN Aware Bundles
+### Router BGP VLANs
 
-| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
-| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Red | 192.168.101.10:1000 | 1000:1000 | - | - | learned | 10,20 |
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 10 | 192.168.101.10:110 | 110:110 | - | - | learned |
+| 20 | 192.168.101.10:120 | 120:120 | - | - | learned |
 
 ### Router BGP VRFs
 
@@ -728,11 +729,15 @@ router bgp 65202
    neighbor 192.168.103.58 description spine3-DC2_Ethernet5
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan-aware-bundle Red
-      rd 192.168.101.10:1000
-      route-target both 1000:1000
+   vlan 10
+      rd 192.168.101.10:110
+      route-target both 110:110
       redistribute learned
-      vlan 10,20
+   !
+   vlan 20
+      rd 192.168.101.10:120
+      route-target both 120:120
+      redistribute learned
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
