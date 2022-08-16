@@ -1,5 +1,5 @@
 router_bgp:
-  as: '65103'
+  as: 65103
   router_id: 192.168.101.5
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -12,7 +12,6 @@ router_bgp:
       type: ipv4
       remote_as: '65103'
       next_hop_self: true
-      description: borderleaf2-DC1
       password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
       send_community: all
@@ -30,6 +29,22 @@ router_bgp:
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
+    DCI:
+      type: ipv4
+      remote_as: 65000
+      description: Connected to DCI
+      shutdown: false
+      send_community: extended
+      maximum_routes: 12000
+    DCI_EVPN:
+      type: evpn
+      remote_as: 65000
+      description: Connected to DCI EVPN
+      shutdown: false
+      send_community: extended
+      maximum_routes: 0
+      ebgp_multihop: 3
+      update_source: loopback0
   address_family_ipv4:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
@@ -38,6 +53,8 @@ router_bgp:
         activate: true
       EVPN-OVERLAY-PEERS:
         activate: false
+      DCI:
+        activate: true
   neighbors:
     10.255.251.9:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
@@ -66,12 +83,19 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine3-DC1
       remote_as: '65100'
+    192.168.254.1:
+      peer_group: DCI
+      description: To DCI
+    192.168.253.1:
+      peer_group: DCI_EVPN
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
+        activate: true
+      DCI_EVPN:
         activate: true
   vrfs:
     Red:
@@ -272,6 +296,15 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.103.29/31
+  Ethernet12:
+    peer: DCI
+    peer_interface: Ethernet1
+    peer_type: DCI
+    description: To DCI
+    mtu: 9214
+    type: routed
+    shutdown: false
+    ip_address: 192.168.253.0/31
 mlag_configuration:
   domain_id: pod3
   local_interface: Vlan4094

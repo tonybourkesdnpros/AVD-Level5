@@ -1,6 +1,7 @@
 ---
 # L3LS Fabric Values - update these values with caution,
 # SOME CHANGES COULD BE DISRUPTIVE.
+custom_structured_configuration_prefix: ['my_dci_']
 
 fabric_name: ATD_FABRIC
 

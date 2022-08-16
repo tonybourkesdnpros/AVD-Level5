@@ -8,6 +8,9 @@ all:
           ansible_user: arista
           ansible_password: aristagnff
           cv_collection: v3
+    DCI_Interconnect:
+      hosts:
+        DCI:
     ATD_FABRIC:
       vars:
         ansible_user: arista

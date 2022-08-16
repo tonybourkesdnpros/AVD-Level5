@@ -1,4 +1,5 @@
 ---
+
 - name: Manage Arista EOS EVPN/VXLAN Configuration
   hosts: DC1_FABRIC
   connection: local

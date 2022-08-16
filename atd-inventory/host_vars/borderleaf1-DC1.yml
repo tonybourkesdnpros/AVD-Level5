@@ -1,0 +1,45 @@
+my_dci_ethernet_interfaces:
+  Ethernet12:
+    peer: DCI
+    peer_interface: Ethernet1
+    peer_type: DCI
+    description: To DCI
+    mtu: 9214
+    type: routed
+    shutdown: false
+    ip_address: 192.168.253.0/31
+
+my_dci_router_bgp:
+  as: 65103
+  peer_groups:
+    DCI:
+      type: ipv4
+      remote_as: 65000
+      description: "Connected to DCI"
+      shutdown: false
+      send_community: extended 
+      maximum_routes: 12000
+    DCI_EVPN:
+      type: evpn
+      remote_as: 65000
+      description: "Connected to DCI EVPN"
+      shutdown: false
+      send_community: extended 
+      maximum_routes: 0
+      ebgp_multihop: 3
+      update_source: loopback0
+  neighbors:
+    192.168.254.1:
+      peer_group: DCI
+      description: "To DCI"
+    192.168.253.1:
+      peer_group: DCI_EVPN
+  address_family_ipv4:
+    peer_groups:
+      DCI:
+        activate: true
+  address_family_evpn:
+    peer_groups:
+      DCI_EVPN:
+        activate: true
+ 
