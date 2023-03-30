@@ -4,7 +4,7 @@ ethernet_interfaces:
     peer_interface: Ethernet12
     peer_type: DCI
     description: To borderleaf1-DC1
-    mtu: 9214
+    mtu: 
     type: routed
     shutdown: false
     ip_address: 192.168.254.1/31
