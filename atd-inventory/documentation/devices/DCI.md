@@ -50,10 +50,10 @@
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | To borderleaf1-DC1 | routed | - | 192.168.254.1/31 | default | 9214 | false | - | - |
-| Ethernet2 | To borderleaf2-DC1 | routed | - | 192.168.254.3/31 | default | 9214 | false | - | - |
-| Ethernet3 | To borderleaf1-DC2 | routed | - | 192.168.254.5/31 | default | 9214 | false | - | - |
-| Ethernet4 | To borderleaf2-DC2 | routed | - | 192.168.254.7/31 | default | 9214 | false | - | - |
+| Ethernet1 | To borderleaf1-DC1 | routed | - | 192.168.254.1/31 | default | 9214 | False | - | - |
+| Ethernet2 | To borderleaf2-DC1 | routed | - | 192.168.254.3/31 | default | 9214 | False | - | - |
+| Ethernet3 | To borderleaf1-DC2 | routed | - | 192.168.254.5/31 | default | 9214 | False | - | - |
+| Ethernet4 | To borderleaf2-DC2 | routed | - | 192.168.254.7/31 | default | 9214 | False | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -96,7 +96,7 @@ interface Ethernet4
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false |
+| default | False |
 
 ### IP Routing Device Configuration
 
@@ -108,7 +108,7 @@ interface Ethernet4
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false |
+| default | False |
 
 # Multicast
 

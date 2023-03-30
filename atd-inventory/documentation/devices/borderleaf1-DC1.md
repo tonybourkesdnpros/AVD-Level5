@@ -85,7 +85,6 @@ interface Management0
 ### DNS Domain Device Configuration
 
 ```eos
-!
 dns domain atd.lab
 !
 ```
@@ -110,9 +109,9 @@ ip name-server vrf default 192.168.2.1
 
 ### Management API HTTP Summary
 
-| HTTP | HTTPS |
-| ---- | ----- |
-| False | True |
+| HTTP | HTTPS | Default Services |
+| ---- | ----- | ---------------- |
+| False | True | - |
 
 ### Management API VRF Access
 
@@ -155,7 +154,7 @@ username ansible_local privilege 15 role network-admin secret sha512 $6$Dzu11L7y
 
 | VRF | RADIUS Servers |
 | --- | ---------------|
-|  default | 192.168.0.1 |
+| default | 192.168.0.1 |
 
 ### RADIUS Servers Device Configuration
 
@@ -170,7 +169,7 @@ radius-server host 192.168.0.1 key 7 0207165218120E
 
 | Server Group Name | Type  | VRF | IP address |
 | ------------------| ----- | --- | ---------- |
-| atds | radius |  default | 192.168.0.1 |
+| atds | radius | default | 192.168.0.1 |
 
 ### AAA Server Groups Device Configuration
 
@@ -316,10 +315,10 @@ vlan 4094
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet6 | routed | - | 192.168.103.25/31 | default | 9214 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet6 | routed | - | 192.168.103.27/31 | default | 9214 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet6 | routed | - | 192.168.103.29/31 | default | 9214 | false | - | - |
-| Ethernet12 | To DCI | routed | - | 192.168.253.0/31 | default | 9214 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet6 | routed | - | 192.168.103.25/31 | default | 9214 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet6 | routed | - | 192.168.103.27/31 | default | 9214 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet6 | routed | - | 192.168.103.29/31 | default | 9214 | False | - | - |
+| Ethernet12 | To DCI | routed | - | 192.168.253.0/31 | default | 9214 | False | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -428,11 +427,11 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan10 |  VLAN_10  |  Red  |  9000  |  false  |
-| Vlan20 |  VLAN_20  |  Red  |  9000  |  false  |
-| Vlan3999 |  MLAG_PEER_L3_iBGP: vrf Red  |  Red  |  9214  |  false  |
-| Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  9214  |  false  |
-| Vlan4094 |  MLAG_PEER  |  default  |  9214  |  false  |
+| Vlan10 | VLAN_10 | Red | 9000 | False |
+| Vlan20 | VLAN_20 | Red | 9000 | False |
+| Vlan3999 | MLAG_PEER_L3_iBGP: vrf Red | Red | 9214 | False |
+| Vlan4093 | MLAG_PEER_L3_PEERING | default | 9214 | False |
+| Vlan4094 | MLAG_PEER | default | 9214 | False |
 
 #### IPv4
 
@@ -443,7 +442,6 @@ interface Loopback1
 | Vlan3999 |  Red  |  10.255.251.8/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.8/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.8/31  |  -  |  -  |  -  |  -  |  -  |
-
 
 ### VLAN Interfaces Device Configuration
 
@@ -550,7 +548,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true |
+| default | True |
 | default | false |
 | Red | true |
 
@@ -567,7 +565,7 @@ ip routing vrf Red
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false |
+| default | False |
 | default | false |
 | Red | false |
 
@@ -577,7 +575,7 @@ ip routing vrf Red
 
 | VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
-| default  | 0.0.0.0/0 |  192.168.0.1  |  -  |  1  |  -  |  -  |  - |
+| default | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
 
 ### Static Routes Device Configuration
 
@@ -655,18 +653,18 @@ ip route 0.0.0.0/0 192.168.0.1
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD |
-| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- |
-| 10.255.251.9 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
-| 192.168.101.111 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.101.112 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.101.113 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.103.24 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.103.26 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.103.28 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.253.1 | Inherited from peer group DCI_EVPN | default | - | Inherited from peer group DCI_EVPN | Inherited from peer group DCI_EVPN | - | - |
-| 192.168.254.1 | Inherited from peer group DCI | default | - | Inherited from peer group DCI | Inherited from peer group DCI | - | - |
-| 10.255.251.9 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Red | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
+| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
+| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
+| 10.255.251.9 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
+| 192.168.101.111 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.112 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.113 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.103.24 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.103.26 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.103.28 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.253.1 | Inherited from peer group DCI_EVPN | default | - | Inherited from peer group DCI_EVPN | Inherited from peer group DCI_EVPN | - | - | - |
+| 192.168.254.1 | Inherited from peer group DCI | default | - | Inherited from peer group DCI | Inherited from peer group DCI | - | - | - |
+| 10.255.251.9 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Red | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
 
 ### Router BGP EVPN Address Family
 
@@ -700,15 +698,15 @@ router bgp 65103
    graceful-restart restart-time 300
    graceful-restart
    maximum-paths 4 ecmp 4
-   neighbor DCI description Connected to DCI
    neighbor DCI peer group
    neighbor DCI remote-as 65000
+   neighbor DCI description Connected to DCI
    neighbor DCI send-community extended
    neighbor DCI maximum-routes 12000
-   neighbor DCI_EVPN description Connected to DCI EVPN
    neighbor DCI_EVPN peer group
    neighbor DCI_EVPN remote-as 65000
    neighbor DCI_EVPN update-source loopback0
+   neighbor DCI_EVPN description Connected to DCI EVPN
    neighbor DCI_EVPN ebgp-multihop 3
    neighbor DCI_EVPN send-community extended
    neighbor DCI_EVPN maximum-routes 0
@@ -726,6 +724,7 @@ router bgp 65103
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65103
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER description borderleaf2-DC1
    neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
@@ -841,15 +840,15 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 
 #### RM-CONN-2-BGP
 
-| Sequence | Type | Match and/or Set |
-| -------- | ---- | ---------------- |
-| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
 
 #### RM-MLAG-PEER-IN
 
-| Sequence | Type | Match and/or Set |
-| -------- | ---- | ---------------- |
-| 10 | permit | set origin incomplete |
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | - | origin incomplete | - | - |
 
 ### Route-maps Device Configuration
 

@@ -1,5 +1,5 @@
 CVP_CONFIGLETS:
-  AVD_DC2_DCI: "!RANCID-CONTENT-TYPE: arista\n!\ntransceiver qsfp default-mode 4x10G\n\
+  AVD_DC1_DCI: "!RANCID-CONTENT-TYPE: arista\n!\ntransceiver qsfp default-mode 4x10G\n\
     !\nhostname DCI\n!\nno aaa root\nno enable password\n!\ninterface Ethernet1\n\
     \   description To borderleaf1-DC1\n   no shutdown\n   mtu 9214\n   no switchport\n\
     \   ip address 192.168.254.1/31\n!\ninterface Ethernet2\n   description To borderleaf2-DC1\n\
@@ -11,17 +11,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq 32\n   seq 30 permit\
     \ 192.168.103.0/24 eq 32\n   seq 40 permit 192.168.103.0/24 eq 32\n   seq 50 permit\
     \ 192.168.253.0/24 eq 32\n!\nend\n"
-  AVD_DC2_borderleaf1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
+  AVD_DC1_borderleaf1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
     \  exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname borderleaf1-DC1\nip name-server vrf default 8.8.8.8\nip name-server\
-    \ vrf default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -65,11 +65,11 @@ CVP_CONFIGLETS:
     \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
     \ 3\n!\nrouter bgp 65103\n   router-id 192.168.101.5\n   no bgp default ipv4-unicast\n\
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   maximum-paths 4 ecmp 4\n   neighbor DCI description Connected to DCI\n   neighbor\
-    \ DCI peer group\n   neighbor DCI remote-as 65000\n   neighbor DCI send-community\
-    \ extended\n   neighbor DCI maximum-routes 12000\n   neighbor DCI_EVPN description\
-    \ Connected to DCI EVPN\n   neighbor DCI_EVPN peer group\n   neighbor DCI_EVPN\
-    \ remote-as 65000\n   neighbor DCI_EVPN update-source loopback0\n   neighbor DCI_EVPN\
+    \   maximum-paths 4 ecmp 4\n   neighbor DCI peer group\n   neighbor DCI remote-as\
+    \ 65000\n   neighbor DCI description Connected to DCI\n   neighbor DCI send-community\
+    \ extended\n   neighbor DCI maximum-routes 12000\n   neighbor DCI_EVPN peer group\n\
+    \   neighbor DCI_EVPN remote-as 65000\n   neighbor DCI_EVPN update-source loopback0\n\
+    \   neighbor DCI_EVPN description Connected to DCI EVPN\n   neighbor DCI_EVPN\
     \ ebgp-multihop 3\n   neighbor DCI_EVPN send-community extended\n   neighbor DCI_EVPN\
     \ maximum-routes 0\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
     \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
@@ -79,19 +79,20 @@ CVP_CONFIGLETS:
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
     \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65103\n   neighbor\
-    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password\
-    \ 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ route-map RM-MLAG-PEER-IN in\n   neighbor 10.255.251.9 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 10.255.251.9 description borderleaf2-DC1\n   neighbor 192.168.101.111\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.111 remote-as 65100\n\
-    \   neighbor 192.168.101.111 description spine1-DC1\n   neighbor 192.168.101.112\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.112 remote-as 65100\n\
-    \   neighbor 192.168.101.112 description spine2-DC1\n   neighbor 192.168.101.113\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.113 remote-as 65100\n\
-    \   neighbor 192.168.101.113 description spine3-DC1\n   neighbor 192.168.103.24\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.24 remote-as 65100\n\
-    \   neighbor 192.168.103.24 description spine1-DC1_Ethernet6\n   neighbor 192.168.103.26\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf2-DC1\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.9 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.9 description borderleaf2-DC1\n   neighbor 192.168.101.111 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.111 remote-as 65100\n   neighbor\
+    \ 192.168.101.111 description spine1-DC1\n   neighbor 192.168.101.112 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.112 remote-as 65100\n   neighbor\
+    \ 192.168.101.112 description spine2-DC1\n   neighbor 192.168.101.113 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.113 remote-as 65100\n   neighbor\
+    \ 192.168.101.113 description spine3-DC1\n   neighbor 192.168.103.24 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.24 remote-as 65100\n   neighbor\
+    \ 192.168.103.24 description spine1-DC1_Ethernet6\n   neighbor 192.168.103.26\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.26 remote-as 65100\n\
     \   neighbor 192.168.103.26 description spine2-DC1_Ethernet6\n   neighbor 192.168.103.28\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.28 remote-as 65100\n\
@@ -108,17 +109,17 @@ CVP_CONFIGLETS:
     \      router-id 192.168.101.5\n      neighbor 10.255.251.9 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_borderleaf1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
+  AVD_DC1_borderleaf1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
     \  exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname borderleaf1-DC2\nip name-server vrf default 8.8.8.8\nip name-server\
-    \ vrf default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -169,19 +170,20 @@ CVP_CONFIGLETS:
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
     \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65203\n   neighbor\
-    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password\
-    \ 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ route-map RM-MLAG-PEER-IN in\n   neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 10.255.251.21 description borderleaf2-DC2\n   neighbor 192.168.101.114\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.114 remote-as 65200\n\
-    \   neighbor 192.168.101.114 description spine1-DC2\n   neighbor 192.168.101.115\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.115 remote-as 65200\n\
-    \   neighbor 192.168.101.115 description spine2-DC2\n   neighbor 192.168.101.116\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.116 remote-as 65200\n\
-    \   neighbor 192.168.101.116 description spine3-DC2\n   neighbor 192.168.103.60\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.60 remote-as 65200\n\
-    \   neighbor 192.168.103.60 description spine1-DC2_Ethernet6\n   neighbor 192.168.103.62\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf2-DC2\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.21 description borderleaf2-DC2\n   neighbor 192.168.101.114 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.114 remote-as 65200\n   neighbor\
+    \ 192.168.101.114 description spine1-DC2\n   neighbor 192.168.101.115 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.115 remote-as 65200\n   neighbor\
+    \ 192.168.101.115 description spine2-DC2\n   neighbor 192.168.101.116 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.116 remote-as 65200\n   neighbor\
+    \ 192.168.101.116 description spine3-DC2\n   neighbor 192.168.103.60 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.60 remote-as 65200\n   neighbor\
+    \ 192.168.103.60 description spine1-DC2_Ethernet6\n   neighbor 192.168.103.62\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.62 remote-as 65200\n\
     \   neighbor 192.168.103.62 description spine2-DC2_Ethernet6\n   neighbor 192.168.103.64\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.64 remote-as 65200\n\
@@ -197,17 +199,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.11\n      neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_borderleaf2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
+  AVD_DC1_borderleaf2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
     \  exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname borderleaf2-DC1\nip name-server vrf default 8.8.8.8\nip name-server\
-    \ vrf default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -258,19 +260,20 @@ CVP_CONFIGLETS:
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
     \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65103\n   neighbor\
-    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password\
-    \ 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ route-map RM-MLAG-PEER-IN in\n   neighbor 10.255.251.8 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 10.255.251.8 description borderleaf1-DC1\n   neighbor 192.168.101.111\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.111 remote-as 65100\n\
-    \   neighbor 192.168.101.111 description spine1-DC1\n   neighbor 192.168.101.112\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.112 remote-as 65100\n\
-    \   neighbor 192.168.101.112 description spine2-DC1\n   neighbor 192.168.101.113\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.113 remote-as 65100\n\
-    \   neighbor 192.168.101.113 description spine3-DC1\n   neighbor 192.168.103.30\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.30 remote-as 65100\n\
-    \   neighbor 192.168.103.30 description spine1-DC1_Ethernet7\n   neighbor 192.168.103.32\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf1-DC1\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.8 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.8 description borderleaf1-DC1\n   neighbor 192.168.101.111 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.111 remote-as 65100\n   neighbor\
+    \ 192.168.101.111 description spine1-DC1\n   neighbor 192.168.101.112 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.112 remote-as 65100\n   neighbor\
+    \ 192.168.101.112 description spine2-DC1\n   neighbor 192.168.101.113 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.113 remote-as 65100\n   neighbor\
+    \ 192.168.101.113 description spine3-DC1\n   neighbor 192.168.103.30 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.30 remote-as 65100\n   neighbor\
+    \ 192.168.103.30 description spine1-DC1_Ethernet7\n   neighbor 192.168.103.32\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.32 remote-as 65100\n\
     \   neighbor 192.168.103.32 description spine2-DC1_Ethernet7\n   neighbor 192.168.103.34\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.34 remote-as 65100\n\
@@ -285,17 +288,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.6\n      neighbor 10.255.251.8 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_borderleaf2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
+  AVD_DC1_borderleaf2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n \
     \  exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname borderleaf2-DC2\nip name-server vrf default 8.8.8.8\nip name-server\
-    \ vrf default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -346,19 +349,20 @@ CVP_CONFIGLETS:
     \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
     \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65203\n   neighbor\
-    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password\
-    \ 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ route-map RM-MLAG-PEER-IN in\n   neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 10.255.251.20 description borderleaf1-DC2\n   neighbor 192.168.101.114\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.114 remote-as 65200\n\
-    \   neighbor 192.168.101.114 description spine1-DC2\n   neighbor 192.168.101.115\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.115 remote-as 65200\n\
-    \   neighbor 192.168.101.115 description spine2-DC2\n   neighbor 192.168.101.116\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.116 remote-as 65200\n\
-    \   neighbor 192.168.101.116 description spine3-DC2\n   neighbor 192.168.103.66\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.66 remote-as 65200\n\
-    \   neighbor 192.168.103.66 description spine1-DC2_Ethernet7\n   neighbor 192.168.103.68\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf1-DC2\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.20 description borderleaf1-DC2\n   neighbor 192.168.101.114 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.114 remote-as 65200\n   neighbor\
+    \ 192.168.101.114 description spine1-DC2\n   neighbor 192.168.101.115 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.115 remote-as 65200\n   neighbor\
+    \ 192.168.101.115 description spine2-DC2\n   neighbor 192.168.101.116 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.116 remote-as 65200\n   neighbor\
+    \ 192.168.101.116 description spine3-DC2\n   neighbor 192.168.103.66 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.66 remote-as 65200\n   neighbor\
+    \ 192.168.103.66 description spine1-DC2_Ethernet7\n   neighbor 192.168.103.68\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.68 remote-as 65200\n\
     \   neighbor 192.168.103.68 description spine2-DC2_Ethernet7\n   neighbor 192.168.103.70\
     \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.70 remote-as 65200\n\
@@ -374,17 +378,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.12\n      neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf1-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -439,8 +443,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65101\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf2-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.1 description leaf2-DC1\n   neighbor 192.168.101.111 peer group EVPN-OVERLAY-PEERS\n\
@@ -465,17 +470,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.1\n      neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf1-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -530,8 +535,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65201\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf2-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.13 description leaf2-DC2\n   neighbor 192.168.101.114 peer group\
@@ -558,17 +564,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.7\n      neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf2-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -623,8 +629,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65101\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf1-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.0 description leaf1-DC1\n   neighbor 192.168.101.111 peer group EVPN-OVERLAY-PEERS\n\
@@ -649,17 +656,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.2\n      neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf2-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -714,8 +721,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65201\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf1-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.12 description leaf1-DC2\n   neighbor 192.168.101.114 peer group\
@@ -742,17 +750,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.8\n      neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf3-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf3-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf3-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -807,8 +815,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65102\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf4-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.5 description leaf4-DC1\n   neighbor 192.168.101.111 peer group EVPN-OVERLAY-PEERS\n\
@@ -833,17 +842,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.3\n      neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf3-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf3-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf3-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -898,8 +907,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65202\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf4-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.17 description leaf4-DC2\n   neighbor 192.168.101.114 peer group\
@@ -926,17 +936,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.9\n      neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf4-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf4-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf4-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -991,8 +1001,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65102\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf3-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.4 description leaf3-DC1\n   neighbor 192.168.101.111 peer group EVPN-OVERLAY-PEERS\n\
@@ -1017,17 +1028,17 @@ CVP_CONFIGLETS:
     \ 192.168.101.4\n      neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_leaf4-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_leaf4-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname leaf4-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 16384\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
-    \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3999\n   name\
     \ MLAG_iBGP_Red\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
     \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
@@ -1082,8 +1093,9 @@ CVP_CONFIGLETS:
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65202\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
-    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf3-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
     \ in\n   neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
     \ 10.255.251.16 description leaf3-DC2\n   neighbor 192.168.101.114 peer group\
@@ -1110,15 +1122,15 @@ CVP_CONFIGLETS:
     \ 192.168.101.10\n      neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n\
     \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_spine1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_spine1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname spine1-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode none\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode none\n!\naaa group server radius atds\n\
+    \   server 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local\
     \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC1_Ethernet3\n   no\
     \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.103.0/31\n!\n\
@@ -1176,15 +1188,15 @@ CVP_CONFIGLETS:
     \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
     \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
     \   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_spine1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_spine1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname spine1-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode none\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode none\n!\naaa group server radius atds\n\
+    \   server 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local\
     \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC2_Ethernet3\n   no\
     \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.103.36/31\n!\n\
@@ -1243,15 +1255,15 @@ CVP_CONFIGLETS:
     \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
     \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
     \   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_spine2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_spine2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname spine2-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode none\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode none\n!\naaa group server radius atds\n\
+    \   server 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local\
     \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC1_Ethernet4\n   no\
     \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.103.2/31\n!\n\
@@ -1309,15 +1321,15 @@ CVP_CONFIGLETS:
     \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
     \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
     \   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_spine2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_spine2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname spine2-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode none\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode none\n!\naaa group server radius atds\n\
+    \   server 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local\
     \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC2_Ethernet4\n   no\
     \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.103.38/31\n!\n\
@@ -1376,15 +1388,15 @@ CVP_CONFIGLETS:
     \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
     \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
     \   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_spine3-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_spine3-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname spine3-DC1\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode none\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode none\n!\naaa group server radius atds\n\
+    \   server 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local\
     \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC1_Ethernet5\n   no\
     \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.103.4/31\n!\n\
@@ -1443,15 +1455,15 @@ CVP_CONFIGLETS:
     \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
     \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
     \   !\n   vrf default\n      no shutdown\n!\nend\n"
-  AVD_DC2_spine3-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+  AVD_DC1_spine3-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
     \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
     \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
     \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
     !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
     !\nhostname spine3-DC2\nip name-server vrf default 8.8.8.8\nip name-server vrf\
-    \ default 192.168.2.1\n!\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
-    \ key 7 0207165218120E\n!\naaa group server radius atds\n   server 192.168.0.1\n\
-    !\nspanning-tree mode none\n!\nno aaa root\nno enable password\n!\nusername ansible_local\
+    \ default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1 key\
+    \ 7 0207165218120E\n!\nspanning-tree mode none\n!\naaa group server radius atds\n\
+    \   server 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local\
     \ privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC2_Ethernet5\n   no\
     \ shutdown\n   mtu 9214\n   no switchport\n   ip address 192.168.103.40/31\n!\n\
@@ -1511,29 +1523,29 @@ CVP_CONFIGLETS:
     \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
     \   !\n   vrf default\n      no shutdown\n!\nend\n"
 CVP_TOPOLOGY:
-  DC2_FABRIC:
+  DC1_FABRIC:
     parent_container: Tenant
-  DC2_LEAFS:
-    parent_container: DC2_FABRIC
-  DC2_SPINES:
+  DC1_LEAFS:
+    parent_container: DC1_FABRIC
+  DC1_SPINES:
     devices:
-    - spine1-DC2
-    - spine2-DC2
-    - spine3-DC2
-    parent_container: DC2_FABRIC
-  pod5:
+    - spine1-DC1
+    - spine2-DC1
+    - spine3-DC1
+    parent_container: DC1_FABRIC
+  pod1:
     devices:
-    - leaf1-DC2
-    - leaf2-DC2
-    parent_container: DC2_LEAFS
-  pod6:
+    - leaf1-DC1
+    - leaf2-DC1
+    parent_container: DC1_LEAFS
+  pod2:
     devices:
-    - leaf3-DC2
-    - leaf4-DC2
-    parent_container: DC2_LEAFS
-  pod7:
+    - leaf3-DC1
+    - leaf4-DC1
+    parent_container: DC1_LEAFS
+  pod3:
     devices:
-    - borderleaf1-DC2
-    - borderleaf2-DC2
-    parent_container: DC2_LEAFS
+    - borderleaf1-DC1
+    - borderleaf2-DC1
+    parent_container: DC1_LEAFS
 changed: false

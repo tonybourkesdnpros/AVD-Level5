@@ -85,7 +85,6 @@ interface Management0
 ### DNS Domain Device Configuration
 
 ```eos
-!
 dns domain atd.lab
 !
 ```
@@ -110,9 +109,9 @@ ip name-server vrf default 192.168.2.1
 
 ### Management API HTTP Summary
 
-| HTTP | HTTPS |
-| ---- | ----- |
-| False | True |
+| HTTP | HTTPS | Default Services |
+| ---- | ----- | ---------------- |
+| False | True | - |
 
 ### Management API VRF Access
 
@@ -155,7 +154,7 @@ username ansible_local privilege 15 role network-admin secret sha512 $6$Dzu11L7y
 
 | VRF | RADIUS Servers |
 | --- | ---------------|
-|  default | 192.168.0.1 |
+| default | 192.168.0.1 |
 
 ### RADIUS Servers Device Configuration
 
@@ -170,7 +169,7 @@ radius-server host 192.168.0.1 key 7 0207165218120E
 
 | Server Group Name | Type  | VRF | IP address |
 | ------------------| ----- | --- | ---------- |
-| atds | radius |  default | 192.168.0.1 |
+| atds | radius | default | 192.168.0.1 |
 
 ### AAA Server Groups Device Configuration
 
@@ -318,9 +317,9 @@ vlan 4094
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet3 | P2P_LINK_TO_SPINE1-DC2_Ethernet3 | routed | - | 192.168.103.43/31 | default | 9214 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_SPINE2-DC2_Ethernet3 | routed | - | 192.168.103.45/31 | default | 9214 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_SPINE3-DC2_Ethernet3 | routed | - | 192.168.103.47/31 | default | 9214 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_SPINE1-DC2_Ethernet3 | routed | - | 192.168.103.43/31 | default | 9214 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_SPINE2-DC2_Ethernet3 | routed | - | 192.168.103.45/31 | default | 9214 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_SPINE3-DC2_Ethernet3 | routed | - | 192.168.103.47/31 | default | 9214 | False | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -440,11 +439,11 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan10 |  VLAN_10  |  Red  |  9000  |  false  |
-| Vlan20 |  VLAN_20  |  Red  |  9000  |  false  |
-| Vlan3999 |  MLAG_PEER_L3_iBGP: vrf Red  |  Red  |  9214  |  false  |
-| Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  9214  |  false  |
-| Vlan4094 |  MLAG_PEER  |  default  |  9214  |  false  |
+| Vlan10 | VLAN_10 | Red | 9000 | False |
+| Vlan20 | VLAN_20 | Red | 9000 | False |
+| Vlan3999 | MLAG_PEER_L3_iBGP: vrf Red | Red | 9214 | False |
+| Vlan4093 | MLAG_PEER_L3_PEERING | default | 9214 | False |
+| Vlan4094 | MLAG_PEER | default | 9214 | False |
 
 #### IPv4
 
@@ -455,7 +454,6 @@ interface Loopback1
 | Vlan3999 |  Red  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.13/31  |  -  |  -  |  -  |  -  |  -  |
-
 
 ### VLAN Interfaces Device Configuration
 
@@ -562,7 +560,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true |
+| default | True |
 | default | false |
 | Red | true |
 
@@ -579,7 +577,7 @@ ip routing vrf Red
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false |
+| default | False |
 | default | false |
 | Red | false |
 
@@ -589,7 +587,7 @@ ip routing vrf Red
 
 | VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
-| default  | 0.0.0.0/0 |  192.168.0.1  |  -  |  1  |  -  |  -  |  - |
+| default | 0.0.0.0/0 | 192.168.0.1 | - | 1 | - | - | - |
 
 ### Static Routes Device Configuration
 
@@ -647,16 +645,16 @@ ip route 0.0.0.0/0 192.168.0.1
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD |
-| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- |
-| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
-| 192.168.101.114 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.101.115 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.101.116 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.103.42 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.103.44 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.103.46 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Red | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
+| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
+| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
+| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
+| 192.168.101.114 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.115 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.116 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.103.42 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.103.44 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.103.46 | 65200 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Red | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
 
 ### Router BGP EVPN Address Family
 
@@ -704,6 +702,7 @@ router bgp 65201
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65201
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf1-DC2
    neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
@@ -818,15 +817,15 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 
 #### RM-CONN-2-BGP
 
-| Sequence | Type | Match and/or Set |
-| -------- | ---- | ---------------- |
-| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
 
 #### RM-MLAG-PEER-IN
 
-| Sequence | Type | Match and/or Set |
-| -------- | ---- | ---------------- |
-| 10 | permit | set origin incomplete |
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | permit | - | origin incomplete | - | - |
 
 ### Route-maps Device Configuration
 

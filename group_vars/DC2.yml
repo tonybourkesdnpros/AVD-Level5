@@ -1,0 +1,84 @@
+---
+spine:
+  defaults:
+    platform: cEOS-LAB
+    bgp_as: 65200
+    loopback_ipv4_pool: 192.168.201.0/24
+    bgp_defaults:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+      - 'graceful-restart restart-time 300'
+      - 'graceful-restart'
+    mlag: false
+  nodes:
+    spine1-DC2:
+      id: 14
+      mgmt_ip: 192.168.0.14/24
+    spine2-DC2:
+      id: 15
+      mgmt_ip: 192.168.0.15/24
+    spine3-DC2:
+      id: 16
+      mgmt_ip: 192.168.0.16/24
+
+
+l3leaf:
+  defaults:
+    platform: cEOS-LAB
+    bgp_as: 65201-65299
+    loopback_ipv4_pool: 192.168.201.0/24
+    loopback_ipv4_offset: 0
+    vtep_loopback_ipv4_pool: 192.168.202.0/24
+    uplink_interfaces: [Ethernet3, Ethernet4, Ethernet5, Ethernet6, Ethernet7]
+    uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+    uplink_ipv4_pool: 192.168.203.0/24
+    mlag_interfaces: [Ethernet1, Ethernet2]
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    virtual_router_mac_address: 00:1c:73:00:00:99
+    bgp_defaults:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+      - 'graceful-restart restart-time 300'
+      - 'graceful-restart'
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+  node_groups:
+    mlag4:
+      nodes:
+        leaf1-DC2:
+          id: 7
+          mgmt_ip: 192.168.0.31/24
+          uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+          uplink_switch_interfaces: [Ethernet2, Ethernet2, Ethernet2]
+        leaf2-DC2:
+          id: 8
+          mgmt_ip: 192.168.0.32/24
+          uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+          uplink_switch_interfaces: [Ethernet3, Ethernet3, Ethernet3]
+    mlag5:
+      nodes:
+        leaf3-DC2:
+          id: 9
+          mgmt_ip: 192.168.0.33/24
+          uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+          uplink_switch_interfaces: [Ethernet4, Ethernet4, Ethernet4]
+        leaf4-DC2:
+          id: 10
+          mgmt_ip: 192.168.0.34/24
+          uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+          uplink_switch_interfaces: [Ethernet5, Ethernet5, Ethernet5]
+    mlag6:
+      nodes:
+        borderleaf1-DC2:
+          bgp_as: 65203
+          id: 11
+          mgmt_ip: 192.168.0.35/24
+          uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+          uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
+        borderleaf2-DC2:
+          bgp_as: 65203
+          id: 12
+          mgmt_ip: 192.168.0.36/24
+          uplink_switches: [spine1-DC2, spine2-DC2, spine3-DC2]
+          uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]

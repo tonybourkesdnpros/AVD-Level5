@@ -1,14 +1,14 @@
 ---
 
 - name: Manage Arista EOS EVPN/VXLAN Configuration
-  hosts: DC1_FABRIC
+  hosts: FABRIC
   connection: local
   gather_facts: false
   collections:
     - arista.avd
     - arista.cvp
   vars:
-    fabric_dir_name: "{{fabric_name}}"
+    fabric_dir_name: "{{ fabric_name }}"
     execute_tasks: false
   tasks:
 
