@@ -1,0 +1,89 @@
+---
+all:
+  children:
+    CVP_cluster:
+      hosts:
+        cvp1:
+          ansible_httpapi_host: 192.168.0.5
+          ansible_host: 192.168.0.5
+          ansible_user: arista
+          ansible_password: aristat0fe
+          ansible_connection: httpapi
+          ansible_httpapi_use_ssl: True
+          ansible_httpapi_validate_certs: False
+          ansible_network_os: eos
+          ansible_httpapi_port: 443
+          cv_collection: v3
+    # DCI_Interconnect:
+    #   hosts:
+    #     DCI:
+    FABRIC:
+      vars:
+        ansible_user: arista
+        ansible_ssh_pass: aristat0fe
+        ansible_connection: httpapi
+        ansible_network_os: eos
+        ansible_become: true
+        ansible_become_method: enable
+        ansible_httpapi_use_ssl: true
+        ansible_httpapi_validate_certs: false
+      children:
+        DC1:
+          children:
+            DC1_SPINES:
+              vars:
+                type: spine
+              hosts:
+                spine1-DC1:
+                spine2-DC1:
+                spine3-DC1:
+            DC1_LEAFS:
+              vars:
+                type: l3leaf
+              children:
+                mlag1:
+                  hosts:
+                    leaf1-DC1:
+                    leaf2-DC1:
+                mlag2:
+                  hosts:
+                    leaf3-DC1:
+                    leaf4-DC1:
+                mlag3:
+                  hosts:
+                    borderleaf1-DC1:
+                    borderleaf2-DC1:
+        DC2:
+          children:
+            DC2_SPINES:
+              vars:
+                type: spine
+              hosts:
+                spine1-DC2:
+                spine2-DC2:
+                spine3-DC2:
+                
+            DC2_LEAFS:
+              vars:
+                type: l3leaf
+              children:
+                mlag5:
+                  hosts:
+                    leaf1-DC2:
+                    leaf2-DC2:
+                mlag6:
+                  hosts:
+                    leaf3-DC2:
+                    leaf4-DC2:
+                mlag7:
+                  hosts:
+                    borderleaf1-DC2:
+                    borderleaf2-DC2:
+        EVPN_SERVICES:
+          children:
+            DC1_LEAFS:
+            DC2_LEAFS:
+        ENDPOINTS:
+          children:
+            DC1_LEAFS:
+            DC2_LEAFS:

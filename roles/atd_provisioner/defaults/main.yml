@@ -1,3 +1,0 @@
----
-# defaults file for atd-provisioner
-execute_tasks: False

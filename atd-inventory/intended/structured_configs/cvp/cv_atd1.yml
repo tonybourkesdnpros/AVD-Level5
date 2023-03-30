@@ -3,53 +3,51 @@ CVP_DEVICES:
   - fqdn: borderleaf1-DC1
     parentContainerName: pod3
     configlets:
-      - AVD_borderleaf1-DC1
+      - DCI_borderleaf1-DC1
+      - AVD_DC1_borderleaf1-DC1
   - fqdn: borderleaf2-DC1
     parentContainerName: pod3
     configlets:
-      - AVD_borderleaf2-DC1
+      - DCI_borderleaf2-DC1
+      - AVD_DC1_borderleaf2-DC1
   - fqdn: leaf1-DC1
     parentContainerName: pod1
     configlets:
-      - AVD_leaf1-DC1
+      - AVD_DC1_leaf1-DC1
   - fqdn: leaf2-DC1
     parentContainerName: pod1
     configlets:
-      - AVD_leaf2-DC1
+      - AVD_DC1_leaf2-DC1
   - fqdn: leaf3-DC1
     parentContainerName: pod2
     configlets:
-      - AVD_leaf3-DC1
+      - AVD_DC1_leaf3-DC1
   - fqdn: leaf4-DC1
     parentContainerName: pod2
     configlets:
-      - AVD_leaf4-DC1
+      - AVD_DC1_leaf4-DC1
   - fqdn: spine1-DC1
-    parentContainerName: ATD_SPINES
+    parentContainerName: DC1_SPINES
     configlets:
-      - AVD_spine1-DC1
+      - AVD_DC1_spine1-DC1
   - fqdn: spine2-DC1
-    parentContainerName: ATD_SPINES
+    parentContainerName: DC1_SPINES
     configlets:
-      - AVD_spine2-DC1
+      - AVD_DC1_spine2-DC1
   - fqdn: spine3-DC1
-    parentContainerName: ATD_SPINES
+    parentContainerName: DC1_SPINES
     configlets:
-      - AVD_spine3-DC1
+      - AVD_DC1_spine3-DC1
 CVP_CONTAINERS:
-  ATD_FABRIC:
+  DC1_FABRIC:
     parentContainerName: Tenant
-  ATD_LEAFS:
-    parentContainerName: ATD_FABRIC
-  ATD_SERVERS:
-    parentContainerName: ATD_FABRIC
-  ATD_SPINES:
-    parentContainerName: ATD_FABRIC
-  ATD_TENANTS_NETWORKS:
-    parentContainerName: ATD_FABRIC
+  DC1_LEAFS:
+    parentContainerName: DC1_FABRIC
+  DC1_SPINES:
+    parentContainerName: DC1_FABRIC
   pod1:
-    parentContainerName: ATD_LEAFS
+    parentContainerName: DC1_LEAFS
   pod2:
-    parentContainerName: ATD_LEAFS
+    parentContainerName: DC1_LEAFS
   pod3:
-    parentContainerName: ATD_LEAFS
+    parentContainerName: DC1_LEAFS

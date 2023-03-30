@@ -1,0 +1,1565 @@
+CVP_CONFIGLETS:
+  AVD_borderleaf1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+    \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
+    \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
+    \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
+    !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
+    !\nhostname borderleaf1-DC1\nip name-server vrf default 8.8.8.8\nip name-server\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_borderleaf2-DC1_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_borderleaf2-DC1_Ethernet1\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
+    \ MLAG_PEER_borderleaf2-DC1_Ethernet2\n   no shutdown\n   channel-group 1 mode\
+    \ active\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC1_Ethernet6\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.25/31\n\
+    !\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC1_Ethernet6\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.27/31\n!\n\
+    interface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC1_Ethernet6\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.29/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.101.5/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
+    \   no shutdown\n   ip address 192.168.102.5/32\n!\ninterface Management0\n  \
+    \ description oob_management\n   no shutdown\n   ip address 192.168.0.25/24\n\
+    !\ninterface Vlan10\n   description VLAN_10\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.10.1/24\n!\ninterface Vlan20\n   description VLAN_20\n\
+    \   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.20.1/24\n!\ninterface\
+    \ Vlan3099\n   description MLAG_PEER_L3_iBGP: vrf VRF_1\n   no shutdown\n   mtu\
+    \ 1500\n   vrf VRF_1\n   ip address 10.255.251.8/31\n!\ninterface Vlan4093\n \
+    \  description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address\
+    \ 10.255.251.8/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n\
+    \   mtu 1500\n   no autostate\n   ip address 10.255.252.8/31\n!\ninterface Vxlan1\n\
+    \   description borderleaf1-DC1_VTEP\n   vxlan source-interface Loopback1\n  \
+    \ vxlan virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port\
+    \ 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vrf VRF_1\
+    \ vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n!\nip routing\n\
+    ip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit\
+    \ 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq 32\n!\nmlag configuration\n\
+    \   domain-id mlag3\n   local-interface Vlan4094\n   peer-address 10.255.252.9\n\
+    \   peer-link Port-Channel1\n   reload-delay mlag 300\n   reload-delay non-mlag\
+    \ 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
+    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-IN\
+    \ permit 10\n   description Make routes learned over MLAG Peer-link less preferred\
+    \ on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n\
+    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65103\n   router-id\
+    \ 192.168.101.5\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
+    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
+    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65103\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf2-DC1\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.9 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.9 description borderleaf2-DC1\n   neighbor 192.168.101.11 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.11 remote-as 65100\n   neighbor\
+    \ 192.168.101.11 description spine1-DC1\n   neighbor 192.168.101.12 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.12 remote-as 65100\n   neighbor\
+    \ 192.168.101.12 description spine2-DC1\n   neighbor 192.168.101.13 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.13 remote-as 65100\n   neighbor\
+    \ 192.168.101.13 description spine3-DC1\n   neighbor 192.168.103.24 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.24 remote-as 65100\n   neighbor\
+    \ 192.168.103.24 description spine1-DC1_Ethernet6\n   neighbor 192.168.103.26\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.26 remote-as 65100\n\
+    \   neighbor 192.168.103.26 description spine2-DC1_Ethernet6\n   neighbor 192.168.103.28\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.28 remote-as 65100\n\
+    \   neighbor 192.168.103.28 description spine3-DC1_Ethernet6\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.5:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.101.5:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.101.5:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.101.5\n      neighbor 10.255.251.9 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_borderleaf1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+    \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
+    \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
+    \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
+    !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
+    !\nhostname borderleaf1-DC2\nip name-server vrf default 8.8.8.8\nip name-server\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_borderleaf2-DC2_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_borderleaf2-DC2_Ethernet1\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
+    \ MLAG_PEER_borderleaf2-DC2_Ethernet2\n   no shutdown\n   channel-group 1 mode\
+    \ active\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC2_Ethernet6\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.61/31\n\
+    !\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet6\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.63/31\n!\n\
+    interface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet6\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.65/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.201.11/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
+    \   no shutdown\n   ip address 192.168.202.11/32\n!\ninterface Management0\n \
+    \  description oob_management\n   no shutdown\n   ip address 192.168.0.35/24\n\
+    !\ninterface Vlan10\n   description VLAN_10\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.10.1/24\n!\ninterface Vlan20\n   description VLAN_20\n\
+    \   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.20.1/24\n!\ninterface\
+    \ Vlan3099\n   description MLAG_PEER_L3_iBGP: vrf VRF_1\n   no shutdown\n   mtu\
+    \ 1500\n   vrf VRF_1\n   ip address 10.255.251.20/31\n!\ninterface Vlan4093\n\
+    \   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address\
+    \ 10.255.251.20/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n\
+    \   mtu 1500\n   no autostate\n   ip address 10.255.252.20/31\n!\ninterface Vxlan1\n\
+    \   description borderleaf1-DC2_VTEP\n   vxlan source-interface Loopback1\n  \
+    \ vxlan virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port\
+    \ 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vrf VRF_1\
+    \ vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n!\nip routing\n\
+    ip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit\
+    \ 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq 32\n!\nmlag configuration\n\
+    \   domain-id mlag6\n   local-interface Vlan4094\n   peer-address 10.255.252.21\n\
+    \   peer-link Port-Channel1\n   reload-delay mlag 300\n   reload-delay non-mlag\
+    \ 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
+    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-IN\
+    \ permit 10\n   description Make routes learned over MLAG Peer-link less preferred\
+    \ on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n\
+    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65203\n   router-id\
+    \ 192.168.201.11\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
+    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
+    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65203\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf2-DC2\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.21 description borderleaf2-DC2\n   neighbor 192.168.201.14 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.14 remote-as 65200\n   neighbor\
+    \ 192.168.201.14 description spine1-DC2\n   neighbor 192.168.201.15 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.15 remote-as 65200\n   neighbor\
+    \ 192.168.201.15 description spine2-DC2\n   neighbor 192.168.201.16 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.16 remote-as 65200\n   neighbor\
+    \ 192.168.201.16 description spine3-DC2\n   neighbor 192.168.203.60 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.60 remote-as 65200\n   neighbor\
+    \ 192.168.203.60 description spine1-DC2_Ethernet6\n   neighbor 192.168.203.62\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.62 remote-as 65200\n\
+    \   neighbor 192.168.203.62 description spine2-DC2_Ethernet6\n   neighbor 192.168.203.64\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.64 remote-as 65200\n\
+    \   neighbor 192.168.203.64 description spine3-DC2_Ethernet6\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.201.11:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.201.11:10020\n      route-target both 10020:10020\n   \
+    \   redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.201.11:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.201.11\n      neighbor 10.255.251.21 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_borderleaf2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+    \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
+    \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
+    \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
+    !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
+    !\nhostname borderleaf2-DC1\nip name-server vrf default 8.8.8.8\nip name-server\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_borderleaf1-DC1_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_borderleaf1-DC1_Ethernet1\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
+    \ MLAG_PEER_borderleaf1-DC1_Ethernet2\n   no shutdown\n   channel-group 1 mode\
+    \ active\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC1_Ethernet7\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.31/31\n\
+    !\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC1_Ethernet7\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.33/31\n!\n\
+    interface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC1_Ethernet7\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.35/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.101.6/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
+    \   no shutdown\n   ip address 192.168.102.5/32\n!\ninterface Management0\n  \
+    \ description oob_management\n   no shutdown\n   ip address 192.168.0.26/24\n\
+    !\ninterface Vlan10\n   description VLAN_10\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.10.1/24\n!\ninterface Vlan20\n   description VLAN_20\n\
+    \   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.20.1/24\n!\ninterface\
+    \ Vlan3099\n   description MLAG_PEER_L3_iBGP: vrf VRF_1\n   no shutdown\n   mtu\
+    \ 1500\n   vrf VRF_1\n   ip address 10.255.251.9/31\n!\ninterface Vlan4093\n \
+    \  description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address\
+    \ 10.255.251.9/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n\
+    \   mtu 1500\n   no autostate\n   ip address 10.255.252.9/31\n!\ninterface Vxlan1\n\
+    \   description borderleaf2-DC1_VTEP\n   vxlan source-interface Loopback1\n  \
+    \ vxlan virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port\
+    \ 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vrf VRF_1\
+    \ vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n!\nip routing\n\
+    ip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit\
+    \ 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq 32\n!\nmlag configuration\n\
+    \   domain-id mlag3\n   local-interface Vlan4094\n   peer-address 10.255.252.8\n\
+    \   peer-link Port-Channel1\n   reload-delay mlag 300\n   reload-delay non-mlag\
+    \ 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
+    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-IN\
+    \ permit 10\n   description Make routes learned over MLAG Peer-link less preferred\
+    \ on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n\
+    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65103\n   router-id\
+    \ 192.168.101.6\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
+    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
+    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65103\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf1-DC1\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.8 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.8 description borderleaf1-DC1\n   neighbor 192.168.101.11 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.11 remote-as 65100\n   neighbor\
+    \ 192.168.101.11 description spine1-DC1\n   neighbor 192.168.101.12 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.12 remote-as 65100\n   neighbor\
+    \ 192.168.101.12 description spine2-DC1\n   neighbor 192.168.101.13 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.13 remote-as 65100\n   neighbor\
+    \ 192.168.101.13 description spine3-DC1\n   neighbor 192.168.103.30 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.30 remote-as 65100\n   neighbor\
+    \ 192.168.103.30 description spine1-DC1_Ethernet7\n   neighbor 192.168.103.32\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.32 remote-as 65100\n\
+    \   neighbor 192.168.103.32 description spine2-DC1_Ethernet7\n   neighbor 192.168.103.34\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.34 remote-as 65100\n\
+    \   neighbor 192.168.103.34 description spine3-DC1_Ethernet7\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.6:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.101.6:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.101.6:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.101.6\n      neighbor 10.255.251.8 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_borderleaf2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec\
+    \ /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default\
+    \ -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent\
+    \ -taillogs\n   no shutdown\n!\nvlan internal order ascending range 1006 1199\n\
+    !\ntransceiver qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n\
+    !\nhostname borderleaf2-DC2\nip name-server vrf default 8.8.8.8\nip name-server\
+    \ vrf default 192.168.2.1\ndns domain atd.lab\n!\nradius-server host 192.168.0.1\
+    \ key 7 0207165218120E\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
+    spanning-tree mst 0 priority 16384\n!\naaa group server radius atds\n   server\
+    \ 192.168.0.1\n!\nno enable password\nno aaa root\n!\nusername ansible_local privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_borderleaf1-DC2_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Ethernet1\n   description MLAG_PEER_borderleaf1-DC2_Ethernet1\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet2\n   description\
+    \ MLAG_PEER_borderleaf1-DC2_Ethernet2\n   no shutdown\n   channel-group 1 mode\
+    \ active\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE1-DC2_Ethernet7\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.67/31\n\
+    !\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet7\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.69/31\n!\n\
+    interface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet7\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.71/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.201.12/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
+    \   no shutdown\n   ip address 192.168.202.11/32\n!\ninterface Management0\n \
+    \  description oob_management\n   no shutdown\n   ip address 192.168.0.36/24\n\
+    !\ninterface Vlan10\n   description VLAN_10\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.10.1/24\n!\ninterface Vlan20\n   description VLAN_20\n\
+    \   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.20.1/24\n!\ninterface\
+    \ Vlan3099\n   description MLAG_PEER_L3_iBGP: vrf VRF_1\n   no shutdown\n   mtu\
+    \ 1500\n   vrf VRF_1\n   ip address 10.255.251.21/31\n!\ninterface Vlan4093\n\
+    \   description MLAG_PEER_L3_PEERING\n   no shutdown\n   mtu 1500\n   ip address\
+    \ 10.255.251.21/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n\
+    \   mtu 1500\n   no autostate\n   ip address 10.255.252.21/31\n!\ninterface Vxlan1\n\
+    \   description borderleaf2-DC2_VTEP\n   vxlan source-interface Loopback1\n  \
+    \ vxlan virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port\
+    \ 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n   vxlan vrf VRF_1\
+    \ vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n!\nip routing\n\
+    ip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit\
+    \ 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq 32\n!\nmlag configuration\n\
+    \   domain-id mlag6\n   local-interface Vlan4094\n   peer-address 10.255.252.20\n\
+    \   peer-link Port-Channel1\n   reload-delay mlag 300\n   reload-delay non-mlag\
+    \ 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
+    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nroute-map RM-MLAG-PEER-IN\
+    \ permit 10\n   description Make routes learned over MLAG Peer-link less preferred\
+    \ on spines to ensure optimal routing\n   set origin incomplete\n!\nrouter bfd\n\
+    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65203\n   router-id\
+    \ 192.168.201.12\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
+    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
+    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ peer group\n   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65203\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description\
+    \ borderleaf1-DC2\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
+    \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.20 description borderleaf1-DC2\n   neighbor 192.168.201.14 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.14 remote-as 65200\n   neighbor\
+    \ 192.168.201.14 description spine1-DC2\n   neighbor 192.168.201.15 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.15 remote-as 65200\n   neighbor\
+    \ 192.168.201.15 description spine2-DC2\n   neighbor 192.168.201.16 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.16 remote-as 65200\n   neighbor\
+    \ 192.168.201.16 description spine3-DC2\n   neighbor 192.168.203.66 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.66 remote-as 65200\n   neighbor\
+    \ 192.168.203.66 description spine1-DC2_Ethernet7\n   neighbor 192.168.203.68\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.68 remote-as 65200\n\
+    \   neighbor 192.168.203.68 description spine2-DC2_Ethernet7\n   neighbor 192.168.203.70\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.70 remote-as 65200\n\
+    \   neighbor 192.168.203.70 description spine3-DC2_Ethernet7\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.201.12:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.201.12:10020\n      route-target both 10020:10020\n   \
+    \   redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.201.12:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.201.12\n      neighbor 10.255.251.20 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf1-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf2-DC1_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC1_Host1-DC1\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf2-DC1_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf2-DC1_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC1_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.103.1/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC1_Ethernet2\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.3/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC1_Ethernet2\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.5/31\n!\n\
+    interface Ethernet6\n   description host1-DC1_Eth1\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host1-DC1_Eth2\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.101.1/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.102.1/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.21/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.0/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.0/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.0/31\n\
+    !\ninterface Vxlan1\n   description leaf1-DC1_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag1\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.1\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65101\n   router-id 192.168.101.1\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65101\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf2-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.1 description leaf2-DC1\n   neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.11 remote-as 65100\n   neighbor 192.168.101.11 description\
+    \ spine1-DC1\n   neighbor 192.168.101.12 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.12 remote-as 65100\n   neighbor 192.168.101.12 description spine2-DC1\n\
+    \   neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.13\
+    \ remote-as 65100\n   neighbor 192.168.101.13 description spine3-DC1\n   neighbor\
+    \ 192.168.103.0 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.0 remote-as\
+    \ 65100\n   neighbor 192.168.103.0 description spine1-DC1_Ethernet2\n   neighbor\
+    \ 192.168.103.2 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.2 remote-as\
+    \ 65100\n   neighbor 192.168.103.2 description spine2-DC1_Ethernet2\n   neighbor\
+    \ 192.168.103.4 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.4 remote-as\
+    \ 65100\n   neighbor 192.168.103.4 description spine3-DC1_Ethernet2\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.1:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.101.1:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.101.1:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.101.1\n      neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf1-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf2-DC2_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC2_Host1-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf2-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf2-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet2\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.203.37/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet2\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.39/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet2\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.41/31\n!\n\
+    interface Ethernet6\n   description host1-DC2_Eth1\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host1-DC2_Eth2\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.7/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.7/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.31/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.12/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.12/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.12/31\n\
+    !\ninterface Vxlan1\n   description leaf1-DC2_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag4\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.13\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65207\n   router-id 192.168.201.7\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65207\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf2-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.13 description leaf2-DC2\n   neighbor 192.168.201.14 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.14 remote-as 65200\n   neighbor 192.168.201.14 description\
+    \ spine1-DC2\n   neighbor 192.168.201.15 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.15 remote-as 65200\n   neighbor 192.168.201.15 description spine2-DC2\n\
+    \   neighbor 192.168.201.16 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.16\
+    \ remote-as 65200\n   neighbor 192.168.201.16 description spine3-DC2\n   neighbor\
+    \ 192.168.203.36 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.36 remote-as\
+    \ 65200\n   neighbor 192.168.203.36 description spine1-DC2_Ethernet2\n   neighbor\
+    \ 192.168.203.38 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.38 remote-as\
+    \ 65200\n   neighbor 192.168.203.38 description spine2-DC2_Ethernet2\n   neighbor\
+    \ 192.168.203.40 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.40 remote-as\
+    \ 65200\n   neighbor 192.168.203.40 description spine3-DC2_Ethernet2\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.201.7:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.201.7:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.201.7:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.201.7\n      neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf2-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf1-DC1_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC1_Host1-DC1\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf1-DC1_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf1-DC1_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC1_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.103.7/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC1_Ethernet3\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.9/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC1_Ethernet3\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.11/31\n!\n\
+    interface Ethernet6\n   description host1-DC1_Eth3\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host1-DC1_Eth4\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.101.2/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.102.1/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.22/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.1/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.1/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.1/31\n\
+    !\ninterface Vxlan1\n   description leaf2-DC1_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag1\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.0\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65101\n   router-id 192.168.101.2\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65101\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf1-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.0 description leaf1-DC1\n   neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.11 remote-as 65100\n   neighbor 192.168.101.11 description\
+    \ spine1-DC1\n   neighbor 192.168.101.12 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.12 remote-as 65100\n   neighbor 192.168.101.12 description spine2-DC1\n\
+    \   neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.13\
+    \ remote-as 65100\n   neighbor 192.168.101.13 description spine3-DC1\n   neighbor\
+    \ 192.168.103.6 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.6 remote-as\
+    \ 65100\n   neighbor 192.168.103.6 description spine1-DC1_Ethernet3\n   neighbor\
+    \ 192.168.103.8 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.8 remote-as\
+    \ 65100\n   neighbor 192.168.103.8 description spine2-DC1_Ethernet3\n   neighbor\
+    \ 192.168.103.10 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.10 remote-as\
+    \ 65100\n   neighbor 192.168.103.10 description spine3-DC1_Ethernet3\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.2:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.101.2:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.101.2:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.101.2\n      neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf2-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf1-DC2_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host1-DC2_Host1-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 10\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf1-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf1-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet3\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.203.43/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet3\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.45/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet3\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.47/31\n!\n\
+    interface Ethernet6\n   description host1-DC2_Eth3\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host1-DC2_Eth4\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.8/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.7/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.32/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.13/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.13/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.13/31\n\
+    !\ninterface Vxlan1\n   description leaf2-DC2_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag4\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.12\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65207\n   router-id 192.168.201.8\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65207\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf1-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.12 description leaf1-DC2\n   neighbor 192.168.201.14 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.14 remote-as 65200\n   neighbor 192.168.201.14 description\
+    \ spine1-DC2\n   neighbor 192.168.201.15 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.15 remote-as 65200\n   neighbor 192.168.201.15 description spine2-DC2\n\
+    \   neighbor 192.168.201.16 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.16\
+    \ remote-as 65200\n   neighbor 192.168.201.16 description spine3-DC2\n   neighbor\
+    \ 192.168.203.42 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.42 remote-as\
+    \ 65200\n   neighbor 192.168.203.42 description spine1-DC2_Ethernet3\n   neighbor\
+    \ 192.168.203.44 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.44 remote-as\
+    \ 65200\n   neighbor 192.168.203.44 description spine2-DC2_Ethernet3\n   neighbor\
+    \ 192.168.203.46 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.46 remote-as\
+    \ 65200\n   neighbor 192.168.203.46 description spine3-DC2_Ethernet3\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.201.8:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.201.8:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.201.8:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.201.8\n      neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf3-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf3-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf4-DC1_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_Host2-DC1\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf4-DC1_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf4-DC1_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC1_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.103.13/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC1_Ethernet4\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.15/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC1_Ethernet4\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.17/31\n!\n\
+    interface Ethernet6\n   description host2-DC1_Eth1\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host2-DC1_Eth2\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.101.3/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.102.3/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.23/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.4/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.4/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.4/31\n\
+    !\ninterface Vxlan1\n   description leaf3-DC1_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag2\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.5\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65103\n   router-id 192.168.101.3\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65103\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf4-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.5 description leaf4-DC1\n   neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.11 remote-as 65100\n   neighbor 192.168.101.11 description\
+    \ spine1-DC1\n   neighbor 192.168.101.12 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.12 remote-as 65100\n   neighbor 192.168.101.12 description spine2-DC1\n\
+    \   neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.13\
+    \ remote-as 65100\n   neighbor 192.168.101.13 description spine3-DC1\n   neighbor\
+    \ 192.168.103.12 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.12 remote-as\
+    \ 65100\n   neighbor 192.168.103.12 description spine1-DC1_Ethernet4\n   neighbor\
+    \ 192.168.103.14 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.14 remote-as\
+    \ 65100\n   neighbor 192.168.103.14 description spine2-DC1_Ethernet4\n   neighbor\
+    \ 192.168.103.16 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.16 remote-as\
+    \ 65100\n   neighbor 192.168.103.16 description spine3-DC1_Ethernet4\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.3:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.101.3:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.101.3:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.101.3\n      neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf3-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf3-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf4-DC2_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC2_Host2-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf4-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf4-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet4\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.203.49/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet4\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.51/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet4\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.53/31\n!\n\
+    interface Ethernet6\n   description host2-DC2_Eth1\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host2-DC2_Eth2\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.9/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.9/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.33/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.16/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.16/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.16/31\n\
+    !\ninterface Vxlan1\n   description leaf3-DC2_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag5\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.17\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65209\n   router-id 192.168.201.9\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65209\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf4-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.17 description leaf4-DC2\n   neighbor 192.168.201.14 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.14 remote-as 65200\n   neighbor 192.168.201.14 description\
+    \ spine1-DC2\n   neighbor 192.168.201.15 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.15 remote-as 65200\n   neighbor 192.168.201.15 description spine2-DC2\n\
+    \   neighbor 192.168.201.16 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.16\
+    \ remote-as 65200\n   neighbor 192.168.201.16 description spine3-DC2\n   neighbor\
+    \ 192.168.203.48 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.48 remote-as\
+    \ 65200\n   neighbor 192.168.203.48 description spine1-DC2_Ethernet4\n   neighbor\
+    \ 192.168.203.50 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.50 remote-as\
+    \ 65200\n   neighbor 192.168.203.50 description spine2-DC2_Ethernet4\n   neighbor\
+    \ 192.168.203.52 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.52 remote-as\
+    \ 65200\n   neighbor 192.168.203.52 description spine3-DC2_Ethernet4\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.201.9:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.201.9:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.201.9:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.201.9\n      neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf4-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf4-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf3-DC1_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC1_Host2-DC1\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf3-DC1_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf3-DC1_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC1_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.103.19/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC1_Ethernet5\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.21/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC1_Ethernet5\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.23/31\n!\n\
+    interface Ethernet6\n   description host2-DC1_Eth3\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host2-DC1_Eth4\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.101.4/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.102.3/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.24/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.5/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.5/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.5/31\n\
+    !\ninterface Vxlan1\n   description leaf4-DC1_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.101.0/24 eq 32\n   seq 20 permit 192.168.102.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag2\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.4\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65103\n   router-id 192.168.101.4\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65103\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf3-DC1\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.4 description leaf3-DC1\n   neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.11 remote-as 65100\n   neighbor 192.168.101.11 description\
+    \ spine1-DC1\n   neighbor 192.168.101.12 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.12 remote-as 65100\n   neighbor 192.168.101.12 description spine2-DC1\n\
+    \   neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.13\
+    \ remote-as 65100\n   neighbor 192.168.101.13 description spine3-DC1\n   neighbor\
+    \ 192.168.103.18 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.18 remote-as\
+    \ 65100\n   neighbor 192.168.103.18 description spine1-DC1_Ethernet5\n   neighbor\
+    \ 192.168.103.20 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.20 remote-as\
+    \ 65100\n   neighbor 192.168.103.20 description spine2-DC1_Ethernet5\n   neighbor\
+    \ 192.168.103.22 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.22 remote-as\
+    \ 65100\n   neighbor 192.168.103.22 description spine3-DC1_Ethernet5\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.101.4:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.101.4:10020\n      route-target both 10020:10020\n    \
+    \  redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.101.4:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.101.4\n      neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_leaf4-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname leaf4-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst\
+    \ 0 priority 16384\n!\naaa group server radius atds\n   server 192.168.0.1\n!\n\
+    no enable password\nno aaa root\n!\nusername ansible_local privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nvlan 10\n   name VLAN_10\n!\nvlan 20\n   name VLAN_20\n!\nvlan 3099\n   name\
+    \ MLAG_iBGP_VRF_1\n   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group\
+    \ MLAG\n!\nvrf instance VRF_1\n!\ninterface Port-Channel1\n   description MLAG_PEER_leaf3-DC2_Po1\n\
+    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 2-4094\n   switchport\
+    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
+    \ MLAG\n!\ninterface Port-Channel6\n   description host2-DC2_Host2-DC2\n   no\
+    \ shutdown\n   switchport\n   switchport access vlan 20\n   mlag 6\n!\ninterface\
+    \ Ethernet1\n   description MLAG_PEER_leaf3-DC2_Ethernet1\n   no shutdown\n  \
+    \ channel-group 1 mode active\n!\ninterface Ethernet2\n   description MLAG_PEER_leaf3-DC2_Ethernet2\n\
+    \   no shutdown\n   channel-group 1 mode active\n!\ninterface Ethernet3\n   description\
+    \ P2P_LINK_TO_SPINE1-DC2_Ethernet5\n   no shutdown\n   mtu 1500\n   no switchport\n\
+    \   ip address 192.168.203.55/31\n!\ninterface Ethernet4\n   description P2P_LINK_TO_SPINE2-DC2_Ethernet5\n\
+    \   no shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.57/31\n\
+    !\ninterface Ethernet5\n   description P2P_LINK_TO_SPINE3-DC2_Ethernet5\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.59/31\n!\n\
+    interface Ethernet6\n   description host2-DC2_Eth3\n   no shutdown\n   channel-group\
+    \ 6 mode active\n!\ninterface Ethernet7\n   description host2-DC2_Eth4\n   no\
+    \ shutdown\n   channel-group 6 mode active\n!\ninterface Loopback0\n   description\
+    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.201.10/32\n!\ninterface\
+    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
+    \ 192.168.202.9/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.34/24\n!\ninterface Vlan10\n   description\
+    \ VLAN_10\n   no shutdown\n   vrf VRF_1\n   ip address virtual 10.1.10.1/24\n\
+    !\ninterface Vlan20\n   description VLAN_20\n   no shutdown\n   vrf VRF_1\n  \
+    \ ip address virtual 10.1.20.1/24\n!\ninterface Vlan3099\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf VRF_1\n   no shutdown\n   mtu 1500\n   vrf VRF_1\n   ip address 10.255.251.17/31\n\
+    !\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n   no shutdown\n \
+    \  mtu 1500\n   ip address 10.255.251.17/31\n!\ninterface Vlan4094\n   description\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.17/31\n\
+    !\ninterface Vxlan1\n   description leaf4-DC2_VTEP\n   vxlan source-interface\
+    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
+    \   vxlan udp-port 4789\n   vxlan vlan 10 vni 10010\n   vxlan vlan 20 vni 10020\n\
+    \   vxlan vrf VRF_1 vni 100\n!\nip virtual-router mac-address 00:1c:73:00:00:99\n\
+    !\nip routing\nip routing vrf VRF_1\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.201.0/24 eq 32\n   seq 20 permit 192.168.202.0/24 eq\
+    \ 32\n!\nmlag configuration\n   domain-id mlag5\n   local-interface Vlan4094\n\
+    \   peer-address 10.255.252.16\n   peer-link Port-Channel1\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route 0.0.0.0/0 192.168.0.1\n!\nroute-map\
+    \ RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65209\n   router-id 192.168.201.10\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n\
+    \   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER remote-as 65209\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER description leaf3-DC2\n \
+    \  neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n   neighbor\
+    \ MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 10.255.251.16 description leaf3-DC2\n   neighbor 192.168.201.14 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.14 remote-as 65200\n   neighbor 192.168.201.14 description\
+    \ spine1-DC2\n   neighbor 192.168.201.15 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.15 remote-as 65200\n   neighbor 192.168.201.15 description spine2-DC2\n\
+    \   neighbor 192.168.201.16 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.16\
+    \ remote-as 65200\n   neighbor 192.168.201.16 description spine3-DC2\n   neighbor\
+    \ 192.168.203.54 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.54 remote-as\
+    \ 65200\n   neighbor 192.168.203.54 description spine1-DC2_Ethernet5\n   neighbor\
+    \ 192.168.203.56 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.56 remote-as\
+    \ 65200\n   neighbor 192.168.203.56 description spine2-DC2_Ethernet5\n   neighbor\
+    \ 192.168.203.58 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.58 remote-as\
+    \ 65200\n   neighbor 192.168.203.58 description spine3-DC2_Ethernet5\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   vlan 10\n      rd 192.168.201.10:10010\n\
+    \      route-target both 10010:10010\n      redistribute learned\n   !\n   vlan\
+    \ 20\n      rd 192.168.201.10:10020\n      route-target both 10020:10020\n   \
+    \   redistribute learned\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
+    \ activate\n   !\n   vrf VRF_1\n      rd 192.168.201.10:100\n      route-target\
+    \ import evpn 100:100\n      route-target export evpn 100:100\n      router-id\
+    \ 192.168.201.10\n      neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\n!\nmanagement api http-commands\n   protocol https\n\
+    \   no shutdown\n   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_spine1-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname spine1-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode none\n!\naaa group server radius atds\n   server 192.168.0.1\n\
+    !\nno enable password\nno aaa root\n!\nusername ansible_local privilege 15 role\
+    \ network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC1_Ethernet3\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.0/31\n!\n\
+    interface Ethernet3\n   description P2P_LINK_TO_LEAF2-DC1_Ethernet3\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.6/31\n!\ninterface Ethernet4\n\
+    \   description P2P_LINK_TO_LEAF3-DC1_Ethernet3\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.12/31\n!\ninterface Ethernet5\n \
+    \  description P2P_LINK_TO_LEAF4-DC1_Ethernet3\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.18/31\n!\ninterface Ethernet6\n \
+    \  description P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet3\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.24/31\n!\ninterface Ethernet7\n \
+    \  description P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet3\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.30/31\n!\ninterface Loopback0\n \
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.101.11/32\n\
+    !\ninterface Management0\n   description oob_management\n   no shutdown\n   ip\
+    \ address 192.168.0.11/24\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.101.0/24 eq 32\n!\nip route 0.0.0.0/0 192.168.0.1\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
+    \ 65100\n   router-id 192.168.101.11\n   no bgp default ipv4-unicast\n   distance\
+    \ bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor 192.168.101.1\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.1 remote-as 65101\n \
+    \  neighbor 192.168.101.1 description leaf1-DC1\n   neighbor 192.168.101.2 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.2 remote-as 65101\n   neighbor\
+    \ 192.168.101.2 description leaf2-DC1\n   neighbor 192.168.101.3 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.3 remote-as 65103\n   neighbor 192.168.101.3 description\
+    \ leaf3-DC1\n   neighbor 192.168.101.4 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.4 remote-as 65103\n   neighbor 192.168.101.4 description leaf4-DC1\n\
+    \   neighbor 192.168.101.5 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.5\
+    \ remote-as 65103\n   neighbor 192.168.101.5 description borderleaf1-DC1\n   neighbor\
+    \ 192.168.101.6 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.6 remote-as\
+    \ 65103\n   neighbor 192.168.101.6 description borderleaf2-DC1\n   neighbor 192.168.103.1\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.1 remote-as 65101\n\
+    \   neighbor 192.168.103.1 description leaf1-DC1_Ethernet3\n   neighbor 192.168.103.7\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.7 remote-as 65101\n\
+    \   neighbor 192.168.103.7 description leaf2-DC1_Ethernet3\n   neighbor 192.168.103.13\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.13 remote-as 65103\n\
+    \   neighbor 192.168.103.13 description leaf3-DC1_Ethernet3\n   neighbor 192.168.103.19\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.19 remote-as 65103\n\
+    \   neighbor 192.168.103.19 description leaf4-DC1_Ethernet3\n   neighbor 192.168.103.25\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.25 remote-as 65103\n\
+    \   neighbor 192.168.103.25 description borderleaf1-DC1_Ethernet3\n   neighbor\
+    \ 192.168.103.31 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.31 remote-as\
+    \ 65103\n   neighbor 192.168.103.31 description borderleaf2-DC1_Ethernet3\n  \
+    \ redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
+    \      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n  \
+    \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
+    \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
+    \   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_spine1-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname spine1-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode none\n!\naaa group server radius atds\n   server 192.168.0.1\n\
+    !\nno enable password\nno aaa root\n!\nusername ansible_local privilege 15 role\
+    \ network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC2_Ethernet3\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.36/31\n!\n\
+    interface Ethernet3\n   description P2P_LINK_TO_LEAF2-DC2_Ethernet3\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.42/31\n!\ninterface\
+    \ Ethernet4\n   description P2P_LINK_TO_LEAF3-DC2_Ethernet3\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.48/31\n!\ninterface\
+    \ Ethernet5\n   description P2P_LINK_TO_LEAF4-DC2_Ethernet3\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.54/31\n!\ninterface\
+    \ Ethernet6\n   description P2P_LINK_TO_BORDERLEAF1-DC2_Ethernet3\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.60/31\n!\ninterface\
+    \ Ethernet7\n   description P2P_LINK_TO_BORDERLEAF2-DC2_Ethernet3\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.66/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.201.14/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.14/24\n!\nip routing\n!\nip prefix-list\
+    \ PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 192.168.201.0/24 eq 32\n!\nip route\
+    \ 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address\
+    \ prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n   multihop interval 1200\
+    \ min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id 192.168.201.14\n\
+    \   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n   graceful-restart\
+    \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
+    \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
+    \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor 192.168.201.7 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.7 remote-as 65207\n   neighbor 192.168.201.7 description\
+    \ leaf1-DC2\n   neighbor 192.168.201.8 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.8 remote-as 65207\n   neighbor 192.168.201.8 description leaf2-DC2\n\
+    \   neighbor 192.168.201.9 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.9\
+    \ remote-as 65209\n   neighbor 192.168.201.9 description leaf3-DC2\n   neighbor\
+    \ 192.168.201.10 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.10 remote-as\
+    \ 65209\n   neighbor 192.168.201.10 description leaf4-DC2\n   neighbor 192.168.201.11\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.11 remote-as 65203\n\
+    \   neighbor 192.168.201.11 description borderleaf1-DC2\n   neighbor 192.168.201.12\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.12 remote-as 65203\n\
+    \   neighbor 192.168.201.12 description borderleaf2-DC2\n   neighbor 192.168.203.37\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.37 remote-as 65207\n\
+    \   neighbor 192.168.203.37 description leaf1-DC2_Ethernet3\n   neighbor 192.168.203.43\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.43 remote-as 65207\n\
+    \   neighbor 192.168.203.43 description leaf2-DC2_Ethernet3\n   neighbor 192.168.203.49\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.49 remote-as 65209\n\
+    \   neighbor 192.168.203.49 description leaf3-DC2_Ethernet3\n   neighbor 192.168.203.55\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.55 remote-as 65209\n\
+    \   neighbor 192.168.203.55 description leaf4-DC2_Ethernet3\n   neighbor 192.168.203.61\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.61 remote-as 65203\n\
+    \   neighbor 192.168.203.61 description borderleaf1-DC2_Ethernet3\n   neighbor\
+    \ 192.168.203.67 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.67 remote-as\
+    \ 65203\n   neighbor 192.168.203.67 description borderleaf2-DC2_Ethernet3\n  \
+    \ redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
+    \      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n  \
+    \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
+    \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
+    \   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_spine2-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname spine2-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode none\n!\naaa group server radius atds\n   server 192.168.0.1\n\
+    !\nno enable password\nno aaa root\n!\nusername ansible_local privilege 15 role\
+    \ network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC1_Ethernet4\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.2/31\n!\n\
+    interface Ethernet3\n   description P2P_LINK_TO_LEAF2-DC1_Ethernet4\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.8/31\n!\ninterface Ethernet4\n\
+    \   description P2P_LINK_TO_LEAF3-DC1_Ethernet4\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.14/31\n!\ninterface Ethernet5\n \
+    \  description P2P_LINK_TO_LEAF4-DC1_Ethernet4\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.20/31\n!\ninterface Ethernet6\n \
+    \  description P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet4\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.26/31\n!\ninterface Ethernet7\n \
+    \  description P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet4\n   no shutdown\n   mtu 1500\n\
+    \   no switchport\n   ip address 192.168.103.32/31\n!\ninterface Loopback0\n \
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.101.12/32\n\
+    !\ninterface Management0\n   description oob_management\n   no shutdown\n   ip\
+    \ address 192.168.0.12/24\n!\nip routing\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.101.0/24 eq 32\n!\nip route 0.0.0.0/0 192.168.0.1\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
+    \ 65100\n   router-id 192.168.101.12\n   no bgp default ipv4-unicast\n   distance\
+    \ bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS next-hop-unchanged\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor 192.168.101.1\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.1 remote-as 65101\n \
+    \  neighbor 192.168.101.1 description leaf1-DC1\n   neighbor 192.168.101.2 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.2 remote-as 65101\n   neighbor\
+    \ 192.168.101.2 description leaf2-DC1\n   neighbor 192.168.101.3 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.3 remote-as 65103\n   neighbor 192.168.101.3 description\
+    \ leaf3-DC1\n   neighbor 192.168.101.4 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.4 remote-as 65103\n   neighbor 192.168.101.4 description leaf4-DC1\n\
+    \   neighbor 192.168.101.5 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.5\
+    \ remote-as 65103\n   neighbor 192.168.101.5 description borderleaf1-DC1\n   neighbor\
+    \ 192.168.101.6 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.6 remote-as\
+    \ 65103\n   neighbor 192.168.101.6 description borderleaf2-DC1\n   neighbor 192.168.103.3\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.3 remote-as 65101\n\
+    \   neighbor 192.168.103.3 description leaf1-DC1_Ethernet4\n   neighbor 192.168.103.9\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.9 remote-as 65101\n\
+    \   neighbor 192.168.103.9 description leaf2-DC1_Ethernet4\n   neighbor 192.168.103.15\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.15 remote-as 65103\n\
+    \   neighbor 192.168.103.15 description leaf3-DC1_Ethernet4\n   neighbor 192.168.103.21\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.21 remote-as 65103\n\
+    \   neighbor 192.168.103.21 description leaf4-DC1_Ethernet4\n   neighbor 192.168.103.27\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.27 remote-as 65103\n\
+    \   neighbor 192.168.103.27 description borderleaf1-DC1_Ethernet4\n   neighbor\
+    \ 192.168.103.33 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.33 remote-as\
+    \ 65103\n   neighbor 192.168.103.33 description borderleaf2-DC1_Ethernet4\n  \
+    \ redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
+    \      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n  \
+    \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
+    \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
+    \   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_spine2-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname spine2-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode none\n!\naaa group server radius atds\n   server 192.168.0.1\n\
+    !\nno enable password\nno aaa root\n!\nusername ansible_local privilege 15 role\
+    \ network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC2_Ethernet4\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.38/31\n!\n\
+    interface Ethernet3\n   description P2P_LINK_TO_LEAF2-DC2_Ethernet4\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.44/31\n!\ninterface\
+    \ Ethernet4\n   description P2P_LINK_TO_LEAF3-DC2_Ethernet4\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.50/31\n!\ninterface\
+    \ Ethernet5\n   description P2P_LINK_TO_LEAF4-DC2_Ethernet4\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.56/31\n!\ninterface\
+    \ Ethernet6\n   description P2P_LINK_TO_BORDERLEAF1-DC2_Ethernet4\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.62/31\n!\ninterface\
+    \ Ethernet7\n   description P2P_LINK_TO_BORDERLEAF2-DC2_Ethernet4\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.68/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.201.15/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.15/24\n!\nip routing\n!\nip prefix-list\
+    \ PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 192.168.201.0/24 eq 32\n!\nip route\
+    \ 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address\
+    \ prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n   multihop interval 1200\
+    \ min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id 192.168.201.15\n\
+    \   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n   graceful-restart\
+    \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
+    \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
+    \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor 192.168.201.7 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.7 remote-as 65207\n   neighbor 192.168.201.7 description\
+    \ leaf1-DC2\n   neighbor 192.168.201.8 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.8 remote-as 65207\n   neighbor 192.168.201.8 description leaf2-DC2\n\
+    \   neighbor 192.168.201.9 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.9\
+    \ remote-as 65209\n   neighbor 192.168.201.9 description leaf3-DC2\n   neighbor\
+    \ 192.168.201.10 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.10 remote-as\
+    \ 65209\n   neighbor 192.168.201.10 description leaf4-DC2\n   neighbor 192.168.201.11\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.11 remote-as 65203\n\
+    \   neighbor 192.168.201.11 description borderleaf1-DC2\n   neighbor 192.168.201.12\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.12 remote-as 65203\n\
+    \   neighbor 192.168.201.12 description borderleaf2-DC2\n   neighbor 192.168.203.39\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.39 remote-as 65207\n\
+    \   neighbor 192.168.203.39 description leaf1-DC2_Ethernet4\n   neighbor 192.168.203.45\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.45 remote-as 65207\n\
+    \   neighbor 192.168.203.45 description leaf2-DC2_Ethernet4\n   neighbor 192.168.203.51\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.51 remote-as 65209\n\
+    \   neighbor 192.168.203.51 description leaf3-DC2_Ethernet4\n   neighbor 192.168.203.57\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.57 remote-as 65209\n\
+    \   neighbor 192.168.203.57 description leaf4-DC2_Ethernet4\n   neighbor 192.168.203.63\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.63 remote-as 65203\n\
+    \   neighbor 192.168.203.63 description borderleaf1-DC2_Ethernet4\n   neighbor\
+    \ 192.168.203.69 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.69 remote-as\
+    \ 65203\n   neighbor 192.168.203.69 description borderleaf2-DC2_Ethernet4\n  \
+    \ redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
+    \      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n  \
+    \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
+    \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
+    \   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_spine3-DC1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname spine3-DC1\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode none\n!\naaa group server radius atds\n   server 192.168.0.1\n\
+    !\nno enable password\nno aaa root\n!\nusername ansible_local privilege 15 role\
+    \ network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC1_Ethernet5\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.103.4/31\n!\n\
+    interface Ethernet3\n   description P2P_LINK_TO_LEAF2-DC1_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.10/31\n!\ninterface\
+    \ Ethernet4\n   description P2P_LINK_TO_LEAF3-DC1_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.16/31\n!\ninterface\
+    \ Ethernet5\n   description P2P_LINK_TO_LEAF4-DC1_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.22/31\n!\ninterface\
+    \ Ethernet6\n   description P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.28/31\n!\ninterface\
+    \ Ethernet7\n   description P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.103.34/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.101.13/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.13/24\n!\nip routing\n!\nip prefix-list\
+    \ PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 192.168.101.0/24 eq 32\n!\nip route\
+    \ 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address\
+    \ prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n   multihop interval 1200\
+    \ min-rx 1200 multiplier 3\n!\nrouter bgp 65100\n   router-id 192.168.101.13\n\
+    \   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n   graceful-restart\
+    \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
+    \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
+    \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor 192.168.101.1 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.101.1 remote-as 65101\n   neighbor 192.168.101.1 description\
+    \ leaf1-DC1\n   neighbor 192.168.101.2 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.101.2 remote-as 65101\n   neighbor 192.168.101.2 description leaf2-DC1\n\
+    \   neighbor 192.168.101.3 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.3\
+    \ remote-as 65103\n   neighbor 192.168.101.3 description leaf3-DC1\n   neighbor\
+    \ 192.168.101.4 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.4 remote-as\
+    \ 65103\n   neighbor 192.168.101.4 description leaf4-DC1\n   neighbor 192.168.101.5\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.5 remote-as 65103\n \
+    \  neighbor 192.168.101.5 description borderleaf1-DC1\n   neighbor 192.168.101.6\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.101.6 remote-as 65103\n \
+    \  neighbor 192.168.101.6 description borderleaf2-DC1\n   neighbor 192.168.103.5\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.5 remote-as 65101\n\
+    \   neighbor 192.168.103.5 description leaf1-DC1_Ethernet5\n   neighbor 192.168.103.11\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.11 remote-as 65101\n\
+    \   neighbor 192.168.103.11 description leaf2-DC1_Ethernet5\n   neighbor 192.168.103.17\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.17 remote-as 65103\n\
+    \   neighbor 192.168.103.17 description leaf3-DC1_Ethernet5\n   neighbor 192.168.103.23\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.23 remote-as 65103\n\
+    \   neighbor 192.168.103.23 description leaf4-DC1_Ethernet5\n   neighbor 192.168.103.29\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.29 remote-as 65103\n\
+    \   neighbor 192.168.103.29 description borderleaf1-DC1_Ethernet5\n   neighbor\
+    \ 192.168.103.35 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.103.35 remote-as\
+    \ 65103\n   neighbor 192.168.103.35 description borderleaf2-DC1_Ethernet5\n  \
+    \ redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
+    \      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n  \
+    \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
+    \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
+    \   !\n   vrf default\n      no shutdown\n!\nend\n"
+  AVD_spine3-DC2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
+    \ -cvaddr=192.168.0.5:9910 -cvauth=key,atd-lab -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
+    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs\n   no shutdown\n\
+    !\nvlan internal order ascending range 1006 1199\n!\ntransceiver qsfp default-mode\
+    \ 4x10G\n!\nservice routing protocols model multi-agent\n!\nhostname spine3-DC2\n\
+    ip name-server vrf default 8.8.8.8\nip name-server vrf default 192.168.2.1\ndns\
+    \ domain atd.lab\n!\nradius-server host 192.168.0.1 key 7 0207165218120E\n!\n\
+    spanning-tree mode none\n!\naaa group server radius atds\n   server 192.168.0.1\n\
+    !\nno enable password\nno aaa root\n!\nusername ansible_local privilege 15 role\
+    \ network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_LEAF1-DC2_Ethernet5\n   no\
+    \ shutdown\n   mtu 1500\n   no switchport\n   ip address 192.168.203.40/31\n!\n\
+    interface Ethernet3\n   description P2P_LINK_TO_LEAF2-DC2_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.46/31\n!\ninterface\
+    \ Ethernet4\n   description P2P_LINK_TO_LEAF3-DC2_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.52/31\n!\ninterface\
+    \ Ethernet5\n   description P2P_LINK_TO_LEAF4-DC2_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.58/31\n!\ninterface\
+    \ Ethernet6\n   description P2P_LINK_TO_BORDERLEAF1-DC2_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.64/31\n!\ninterface\
+    \ Ethernet7\n   description P2P_LINK_TO_BORDERLEAF2-DC2_Ethernet5\n   no shutdown\n\
+    \   mtu 1500\n   no switchport\n   ip address 192.168.203.70/31\n!\ninterface\
+    \ Loopback0\n   description EVPN_Overlay_Peering\n   no shutdown\n   ip address\
+    \ 192.168.201.16/32\n!\ninterface Management0\n   description oob_management\n\
+    \   no shutdown\n   ip address 192.168.0.16/24\n!\nip routing\n!\nip prefix-list\
+    \ PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 192.168.201.0/24 eq 32\n!\nip route\
+    \ 0.0.0.0/0 192.168.0.1\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address\
+    \ prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n   multihop interval 1200\
+    \ min-rx 1200 multiplier 3\n!\nrouter bgp 65200\n   router-id 192.168.201.16\n\
+    \   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n   graceful-restart\
+    \ restart-time 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor\
+    \ EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged\n\
+    \   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
+    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
+    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ peer group\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
+    \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
+    \ maximum-routes 12000\n   neighbor 192.168.201.7 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.201.7 remote-as 65207\n   neighbor 192.168.201.7 description\
+    \ leaf1-DC2\n   neighbor 192.168.201.8 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.201.8 remote-as 65207\n   neighbor 192.168.201.8 description leaf2-DC2\n\
+    \   neighbor 192.168.201.9 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.9\
+    \ remote-as 65209\n   neighbor 192.168.201.9 description leaf3-DC2\n   neighbor\
+    \ 192.168.201.10 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.10 remote-as\
+    \ 65209\n   neighbor 192.168.201.10 description leaf4-DC2\n   neighbor 192.168.201.11\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.11 remote-as 65203\n\
+    \   neighbor 192.168.201.11 description borderleaf1-DC2\n   neighbor 192.168.201.12\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.201.12 remote-as 65203\n\
+    \   neighbor 192.168.201.12 description borderleaf2-DC2\n   neighbor 192.168.203.41\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.41 remote-as 65207\n\
+    \   neighbor 192.168.203.41 description leaf1-DC2_Ethernet5\n   neighbor 192.168.203.47\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.47 remote-as 65207\n\
+    \   neighbor 192.168.203.47 description leaf2-DC2_Ethernet5\n   neighbor 192.168.203.53\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.53 remote-as 65209\n\
+    \   neighbor 192.168.203.53 description leaf3-DC2_Ethernet5\n   neighbor 192.168.203.59\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.59 remote-as 65209\n\
+    \   neighbor 192.168.203.59 description leaf4-DC2_Ethernet5\n   neighbor 192.168.203.65\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.65 remote-as 65203\n\
+    \   neighbor 192.168.203.65 description borderleaf1-DC2_Ethernet5\n   neighbor\
+    \ 192.168.203.71 peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.203.71 remote-as\
+    \ 65203\n   neighbor 192.168.203.71 description borderleaf2-DC2_Ethernet5\n  \
+    \ redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
+    \      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n  \
+    \    no neighbor EVPN-OVERLAY-PEERS activate\n      neighbor IPv4-UNDERLAY-PEERS\
+    \ activate\n!\nmanagement api http-commands\n   protocol https\n   no shutdown\n\
+    \   !\n   vrf default\n      no shutdown\n!\nend\n"
+CVP_TOPOLOGY:
+  DC1:
+    parent_container: FABRIC
+  DC1_LEAFS:
+    parent_container: DC1
+  DC1_SPINES:
+    devices:
+    - spine1-DC1
+    - spine2-DC1
+    - spine3-DC1
+    parent_container: DC1
+  DC2:
+    parent_container: FABRIC
+  DC2_LEAFS:
+    parent_container: DC2
+  DC2_SPINES:
+    devices:
+    - spine1-DC2
+    - spine2-DC2
+    - spine3-DC2
+    parent_container: DC2
+  ENDPOINTS:
+    devices: []
+    parent_container: FABRIC
+  EVPN_SERVICES:
+    devices: []
+    parent_container: FABRIC
+  FABRIC:
+    parent_container: Tenant
+  mlag1:
+    devices:
+    - leaf1-DC1
+    - leaf2-DC1
+    parent_container: DC1_LEAFS
+  mlag2:
+    devices:
+    - leaf3-DC1
+    - leaf4-DC1
+    parent_container: DC1_LEAFS
+  mlag3:
+    devices:
+    - borderleaf1-DC1
+    - borderleaf2-DC1
+    parent_container: DC1_LEAFS
+  mlag5:
+    devices:
+    - leaf1-DC2
+    - leaf2-DC2
+    parent_container: DC2_LEAFS
+  mlag6:
+    devices:
+    - leaf3-DC2
+    - leaf4-DC2
+    parent_container: DC2_LEAFS
+  mlag7:
+    devices:
+    - borderleaf1-DC2
+    - borderleaf2-DC2
+    parent_container: DC2_LEAFS
+changed: false

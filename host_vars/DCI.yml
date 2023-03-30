@@ -1,0 +1,51 @@
+ethernet_interfaces:
+  Ethernet1:
+    peer: borderleaf1-DC1
+    peer_interface: Ethernet12
+    peer_type: DCI
+    description: To borderleaf1-DC1
+    mtu: 
+    type: routed
+    shutdown: false
+    ip_address: 192.168.254.1/31
+  Ethernet2:
+    peer: borderleaf2-DC1
+    peer_interface: Ethernet12
+    peer_type: DCI
+    description: To borderleaf2-DC1
+    mtu: 9214
+    type: routed
+    shutdown: false
+    ip_address: 192.168.254.3/31
+  Ethernet3:
+    peer: borderleaf1-DC2
+    peer_interface: Ethernet12
+    peer_type: DCI
+    description: To borderleaf1-DC2
+    mtu: 9214
+    type: routed
+    shutdown: false
+    ip_address: 192.168.254.5/31
+  Ethernet4:
+    peer: borderleaf2-DC2
+    peer_interface: Ethernet12
+    peer_type: DCI
+    description: To borderleaf2-DC2
+    mtu: 9214
+    type: routed
+    shutdown: false
+    ip_address: 192.168.254.7/31
+
+prefix_lists:
+  LOOPBACK:
+    sequence_numbers:
+      10:
+        action: "permit 192.168.101.0/24 eq 32"
+      20:
+        action: "permit 192.168.102.0/24 eq 32"
+      30:
+        action: "permit 192.168.103.0/24 eq 32"
+      40:
+        action: "permit 192.168.103.0/24 eq 32"
+      50: 
+        action: "permit 192.168.253.0/24 eq 32"

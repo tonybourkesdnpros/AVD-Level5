@@ -1,6 +1,6 @@
 router_bgp:
   as: '65103'
-  router_id: 192.0.200.8
+  router_id: 192.168.101.6
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -12,6 +12,7 @@ router_bgp:
       type: ipv4
       remote_as: '65103'
       next_hop_self: true
+      description: borderleaf1-DC1
       password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
       send_community: all
@@ -41,30 +42,30 @@ router_bgp:
     10.255.251.8:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: borderleaf1-DC1
-    172.31.255.30:
+    192.168.103.30:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65001'
+      remote_as: '65100'
       description: spine1-DC1_Ethernet7
-    172.31.255.32:
+    192.168.103.32:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65001'
+      remote_as: '65100'
       description: spine2-DC1_Ethernet7
-    172.31.255.34:
+    192.168.103.34:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65001'
+      remote_as: '65100'
       description: spine3-DC1_Ethernet7
-    192.0.200.11:
+    192.168.101.111:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine1-DC1
-      remote_as: '65001'
-    192.0.200.12:
+      remote_as: '65100'
+    192.168.101.112:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine2-DC1
-      remote_as: '65001'
-    192.0.200.13:
+      remote_as: '65100'
+    192.168.101.113:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine3-DC1
-      remote_as: '65001'
+      remote_as: '65100'
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -73,43 +74,34 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: true
   vrfs:
-    Tenant_A_OP_Zone:
-      router_id: 192.0.200.8
-      rd: 192.0.200.8:10
+    Red:
+      router_id: 192.168.101.6
+      rd: 192.168.101.6:1000
       route_targets:
         import:
           evpn:
-          - '10:10'
+          - 1000:1000
         export:
           evpn:
-          - '10:10'
+          - 1000:1000
       neighbors:
         10.255.251.8:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
   vlan_aware_bundles:
-    Tenant_A_OP_Zone:
-      rd: 192.0.200.8:10
+    Red:
+      rd: 192.168.101.6:1000
       route_targets:
         both:
-        - '10:10'
+        - 1000:1000
       redistribute_routes:
       - learned
-      vlan: 110
-    Tenant_A_VMOTION:
-      tenant: Tenant_A
-      rd: 192.0.200.8:55160
-      route_targets:
-        both:
-        - 55160:55160
-      redistribute_routes:
-      - learned
-      vlan: 160
+      vlan: 10,20
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0
-  gateway: 10.255.0.1
+  gateway: 192.168.0.1
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
@@ -147,8 +139,8 @@ local_users:
 vrfs:
   default:
     ip_routing: false
-  Tenant_A_OP_Zone:
-    tenant: Tenant_A
+  Red:
+    tenant: ACME_1
     ip_routing: true
 management_interfaces:
   Management0:
@@ -156,7 +148,7 @@ management_interfaces:
     shutdown: false
     vrf: default
     ip_address: 192.168.0.26/24
-    gateway: 10.255.0.1
+    gateway: 192.168.0.1
     type: oob
 management_api_http:
   enable_vrfs:
@@ -173,17 +165,17 @@ vlans:
     name: MLAG_PEER
     trunk_groups:
     - MLAG
-  110:
-    tenant: Tenant_A
-    name: Tenant_A_OP_Zone_1
-  3009:
-    tenant: Tenant_A
-    name: MLAG_iBGP_Tenant_A_OP_Zone
+  10:
+    tenant: ACME_1
+    name: VLAN_10
+  20:
+    tenant: ACME_1
+    name: VLAN_20
+  3999:
+    tenant: ACME_1
+    name: MLAG_iBGP_Red
     trunk_groups:
     - LEAF_PEER_L3
-  160:
-    tenant: Tenant_A
-    name: Tenant_A_VMOTION
 vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
@@ -196,20 +188,30 @@ vlan_interfaces:
     ip_address: 10.255.252.9/31
     no_autostate: true
     mtu: 9214
-  Vlan110:
-    tenant: Tenant_A
+  Vlan10:
+    tenant: ACME_1
     tags:
-    - opzone
-    description: Tenant_A_OP_Zone_1
+    - ACME_1
+    description: VLAN_10
     shutdown: false
-    vrf: Tenant_A_OP_Zone
+    vrf: Red
     ip_address_virtual: 10.1.10.1/24
-  Vlan3009:
-    tenant: Tenant_A
+    mtu: 9000
+  Vlan20:
+    tenant: ACME_1
+    tags:
+    - ACME_1
+    description: VLAN_20
+    shutdown: false
+    vrf: Red
+    ip_address_virtual: 10.1.20.1/24
+    mtu: 9000
+  Vlan3999:
+    tenant: ACME_1
     type: underlay_peering
     shutdown: false
-    description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone'
-    vrf: Tenant_A_OP_Zone
+    description: 'MLAG_PEER_L3_iBGP: vrf Red'
+    vrf: Red
     ip_address: 10.255.251.9/31
     mtu: 9214
 port_channel_interfaces:
@@ -251,7 +253,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 172.31.255.31/31
+    ip_address: 192.168.103.31/31
   Ethernet4:
     peer: spine2-DC1
     peer_interface: Ethernet7
@@ -260,7 +262,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 172.31.255.33/31
+    ip_address: 192.168.103.33/31
   Ethernet5:
     peer: spine3-DC1
     peer_interface: Ethernet7
@@ -269,7 +271,7 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     shutdown: false
-    ip_address: 172.31.255.35/31
+    ip_address: 192.168.103.35/31
 mlag_configuration:
   domain_id: pod3
   local_interface: Vlan4094
@@ -295,23 +297,18 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.0.200.8/32
+    ip_address: 192.168.101.6/32
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
-    ip_address: 192.0.254.7/32
-  Loopback100:
-    description: Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
-    shutdown: false
-    vrf: Tenant_A_OP_Zone
-    ip_address: 10.255.1.8/32
+    ip_address: 192.168.102.5/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
       10:
-        action: permit 192.0.200.0/24 eq 32
+        action: permit 192.168.101.0/24 eq 32
       20:
-        action: permit 192.0.254.0/24 eq 32
+        action: permit 192.168.102.0/24 eq 32
 router_bfd:
   multihop:
     interval: 1200
@@ -319,10 +316,7 @@ router_bfd:
     multiplier: 3
 ip_igmp_snooping:
   globally_enabled: true
-ip_virtual_router_mac_address: 00:1c:73:00:dc:01
-virtual_source_nat_vrfs:
-  Tenant_A_OP_Zone:
-    ip_address: 10.255.1.8
+ip_virtual_router_mac_address: 00:1c:73:00:00:99
 vxlan_interface:
   Vxlan1:
     description: borderleaf2-DC1_VTEP
@@ -331,10 +325,10 @@ vxlan_interface:
       virtual_router_encapsulation_mac_address: mlag-system-id
       udp_port: 4789
       vlans:
-        110:
-          vni: 10110
-        160:
-          vni: 55160
+        10:
+          vni: 110
+        20:
+          vni: 120
       vrfs:
-        Tenant_A_OP_Zone:
-          vni: 10
+        Red:
+          vni: 1000

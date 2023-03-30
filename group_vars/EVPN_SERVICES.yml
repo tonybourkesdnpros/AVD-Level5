@@ -1,0 +1,18 @@
+tenants:
+  # Tenant A Specific Information - VRFs / VLANs
+  ACME:
+    mac_vrf_vni_base: 10000
+    vrfs:
+      VRF_1:
+        vrf_vni: 100
+        svis:
+          10:
+            name: VLAN_10
+            tags: [ACME_1]
+            enabled: true
+            ip_address_virtual: 10.1.10.1/24
+          20:
+            name: VLAN_20
+            tags: [ACME_1]
+            enabled: true
+            ip_address_virtual: 10.1.20.1/24
