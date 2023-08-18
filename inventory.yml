@@ -7,7 +7,7 @@ all:
           ansible_httpapi_host: 192.168.0.5
           ansible_host: 192.168.0.5
           ansible_user: arista
-          ansible_password: aristat0fe
+          ansible_password: aristak6in
           ansible_connection: httpapi
           ansible_httpapi_use_ssl: True
           ansible_httpapi_validate_certs: False
@@ -20,7 +20,7 @@ all:
     FABRIC:
       vars:
         ansible_user: arista
-        ansible_ssh_pass: aristat0fe
+        ansible_ssh_pass: aristak6in
         ansible_connection: httpapi
         ansible_network_os: eos
         ansible_become: true
